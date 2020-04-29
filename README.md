@@ -25,7 +25,7 @@ Main GUI is based on <a href="https://themeforest.net/item/cork-responsive-admin
 ***
 ### Download links
 
-You can download the latest version of Nautilus for Windows, macOS and Debian based systems (Ubuntu, mint, etc.) from the releases page.
+You can download the latest version of Nautilus for Windows, macOS and Debian based systems (Ubuntu, mint, etc.) from the <a href="https://github.com/djsracing/Nautilus/releases">releases page</a>.
 
 ***
 ### Build from source
