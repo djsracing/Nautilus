@@ -16,6 +16,7 @@
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
     <link href="assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
@@ -47,6 +48,11 @@
                             </form>
                         </div>
                         <p id="response"></p>
+                        <p>Render graphs</p>
+                        <label class="switch s-primary  mb-4 mr-2">
+                            <input type="checkbox" checked="" id="renderGraphsBtn">
+                            <span class="slider round"></span>
+                        </label>
                     </div>
                 </li>
             </ul>
@@ -73,7 +79,7 @@
                         </a>
                     </li>
                     <li class="nav-item theme-text">
-                        <a href="index.html" class="nav-link"> DJSRacing </a>
+                        <a href="index.html" class="nav-link"> Menu </a>
                     </li>
                 </ul>
 
@@ -647,9 +653,9 @@
                     <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
                         <div class="widget widget-chart-one">
                             <div class="widget-heading">
-                                <h5 class="">Revenue</h5>
+                                <h5 class="">Acceleration</h5>
                                 <ul class="tabs tab-pills">
-                                    <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">Monthly</a></li>
+                                    <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">60s</a></li>
                                 </ul>
                             </div>
 
@@ -674,20 +680,22 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 layout-spacing">
+                    <div class="col-xl-4 col-lg-12 col-md-6 col-sm-12 col-12 layout-spacing">
                         <div class="widget-two">
                             <div class="widget-content">
                                 <div class="w-numeric-value">
-                                    <div class="w-content">
-                                        <span class="w-value">Daily sales</span>
-                                        <span class="w-numeric-title">Go to columns for details.</span>
-                                    </div>
                                     <div class="w-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-disc"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                                    </div>
+                                    <div class="w-content">
+                                        <span class="w-value">Motor RPM</span>
+                                        <span class="w-numeric-title">60s</span>
                                     </div>
                                 </div>
-                                <div class="w-chart">
-                                    <div id="daily-sales"></div>
+                                <div class="widget-content">    
+                                    <div class="w-chart">
+                                        <div id="hybrid_followers3"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -776,11 +784,11 @@
                             <div class="widget-content">
                                 <div class="w-numeric-value">
                                     <div class="w-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                                     </div>
                                     <div class="w-content">
-                                        <span class="w-value">3,192</span>
-                                        <span class="w-numeric-title">Total Orders</span>
+                                        <span class="w-value">Charge</span>
+                                        <span class="w-numeric-title">60s</span>
                                     </div>
                                 </div>
                                 <div class="w-chart">
@@ -1241,15 +1249,12 @@
         });
     </script>
     <script src="assets/js/custom.js"></script>
-    <script src='../renderFile.js'></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="plugins/apex/apexcharts.min.js"></script>
     <script src="assets/js/dashboard/dash_2.js"></script>
-    <script src="plugins/sweetalerts/sweetalert2.min.js"></script>
-    <script src="plugins/sweetalerts/custom-sweetalert.js"></script>
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-
+    <!-- BEGIN PAGE ELECTRON SCRIPTS -->
+    <script src='../renderFile.js'></script>
 </body>
 </html>

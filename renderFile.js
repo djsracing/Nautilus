@@ -1,12 +1,18 @@
-const { remote, ipcRenderer } = require('electron');
-const { handleForm} = remote.require('./main');
+const {remote, ipcRenderer} = require('electron');
+const {handleForm} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
 
 const submitFormButton = document.querySelector("#portForm");
 const responseParagraph = document.getElementById('response');
+const renderGraphsButton = document.querySelector('#renderGraphsBtn');
+
+renderGraphsButton.checked = true;
 
 // Stores the current state of COM Port toggle
 var portToggle = false;
+
+// Decide whether to render graphs
+var renderGraphs = true;
 
 submitFormButton.addEventListener("submit", function(event){
         event.preventDefault();   // stop the form from submitting
@@ -16,7 +22,7 @@ submitFormButton.addEventListener("submit", function(event){
 });
 
 ipcRenderer.on('form-received', function(event, args){
-  responseParagraph.innerHTML = args
+  responseParagraph.innerHTML = "Connected to " + args;
     /*
         you could choose to submit the form here after the main process completes
         and use this as a processing step
@@ -24,7 +30,7 @@ ipcRenderer.on('form-received', function(event, args){
 });
 
 ipcRenderer.on('action-port', function(event, args) {
-  if(portToggle==false) {
+  if(!portToggle) {
     document.getElementById("portContainer").setAttribute("class", "nav-item dropdown user-profile-dropdown order-lg-0 order-1 show")
     document.getElementById("userProfileDropdown").setAttribute("aria-expanded", "true");
     document.getElementById("containerFadeIn").setAttribute("class", "dropdown-menu position-absolute e-animated e-fadeInUp show")
@@ -37,39 +43,38 @@ ipcRenderer.on('action-port', function(event, args) {
   }
 })
 
-var labels_dat = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-var series_dat = [12, 17, 7, 17, 23, 18, 38];
+renderGraphsButton.addEventListener('change', function(event) {
+  console.log(submitFormButton.checked + ' boi');
+  event.preventDefault();
+  if(!this.checked) {
+    renderGraphs = false;
+  } else {
+    renderGraphs = true;
+  }
+});
 
 ipcRenderer.on('ser-data', function (event,data) {
-    responseParagraph.innerHTML = data;
-    labels_dat.push('M');
-    series_dat.push(Number(data.split(',')[0]));
+  if(renderGraphs) {
+    //Update acceleration chart
+    chart1.updateSeries([{
+      name: 'AccelX',
+      data: data.split(',').slice(0, -2),
+    }, {
+        name: 'AccelY',
+        data: data.split(',').slice(0, -2),
+    }]);
 
-    dataDailySalesChart = {
-        labels: labels_dat,
-        series: [
-          series_dat
-        ]
-      };
+    // Update state of charge chart
+    d_2C_2.updateSeries([{
+      name: 'charge_percent',
+      data: data.split(',').slice(0, -2),
+    }]);
 
-    optionsDailySalesChart = {
-      chartPadding: {
-        top: 0,
-        right: 0,
-        bottom: -25,
-        left: -35
-      },axisX: {
-          showGrid: true,
-          showLabel: false
-      },
-      axisY: {
-          showGrid: true,
-          showLabel: false
-      },
-      showPoint: false,
-      lineSmooth: true,
-      fullWidth: true
-    }
-    dailySalesChart = null;
-    dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+    // Updatee Motor RPM chart
+    d_2C_1.updateSeries([{
+      name: 'RPM',
+      data: data.split(',').slice(0,-2),
+    }]);
+  } 
+  responseParagraph.innerHTML = data;
 });

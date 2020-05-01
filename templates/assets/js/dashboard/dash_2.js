@@ -17,75 +17,46 @@ try {
 */
 var d_2options1 = {
   chart: {
-        height: 160,
-        type: 'bar',
-        stacked: true,
-        stackType: '100%',
-        toolbar: {
-          show: false,
-        }
+    id: 'sparkline1',
+    type: 'area',
+    height: 160,
+    sparkline: {
+      enabled: true
     },
-    dataLabels: {
-        enabled: false,
-    },
-    stroke: {
-        show: true,
-        width: 1,
-    },
-    colors: ['#e2a03f', '#e0e6ed'],
-    responsive: [{
-        breakpoint: 480,
-        options: {
-            legend: {
-                position: 'bottom',
-                offsetX: -10,
-                offsetY: 0
-            }
-        }
-    }],
-    series: [{
-        name: 'Sales',
-        data: [44, 55, 41, 67, 22, 43, 21]
-    },{
-        name: 'Last Week',
-        data: [13, 23, 20, 8, 13, 27, 33]
-    }],
-    xaxis: {
-        labels: {
-            show: false,
-        },
-        categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'],
-    },
-    yaxis: {
-        show: false
-    },
-    fill: {
-        opacity: 1
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false,
-            endingShape: 'rounded',
-            columnWidth: '25%',
-        }
-    },
-    legend: {
-        show: false,
-    },
-    grid: {
-        show: false,
-        xaxis: {
-            lines: {
-                show: false
-            }
-        },
-        padding: {
-          top: 10,
-          right: 0,
-          bottom: -40,
-          left: 0
-        }, 
-    },
+  },
+  stroke: {
+      curve: 'smooth',
+      width: 2,
+  },
+  fill: {
+    opacity: 1,
+  },
+  series: [{
+    name: 'RPM',
+    data: [28, 50, 36, 60, 38, 52, 38 ]
+  }],
+  labels: ['1', '2', '3', '4', '5', '6', '7'],
+  yaxis: {
+    min: 0
+  },
+  colors: ['#009688'],
+  tooltip: {
+    enabled: false,
+    x: {
+      show: false,
+    }
+  },
+  fill: {
+      type:"gradient",
+      gradient: {
+          type: "vertical",
+          shadeIntensity: 1,
+          inverseColors: !1,
+          opacityFrom: .40,
+          opacityTo: .05,
+          stops: [45, 100]
+      }
+  },
 }
 
 /*
@@ -111,12 +82,23 @@ var d_2options2 = {
     opacity: 1,
   },
   series: [{
-    name: 'Sales',
+    name: 'charge_percent',
     data: [28, 40, 36, 52, 38, 60, 38, 52, 36, 40]
   }],
   labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
   yaxis: {
-    min: 0
+    labels: {
+      formatter: function(value, index) {
+        return (value)
+      },
+      offsetX: -22,
+      offsetY: 0,
+      style: {
+          fontSize: '12px',
+          fontFamily: 'Nunito, sans-serif',
+          cssClass: 'apexcharts-yaxis-title',
+      },
+    }
   },
   grid: {
     padding: {
@@ -138,6 +120,7 @@ var d_2options2 = {
       }
   },
   tooltip: {
+    enabled: false,
     x: {
       show: false,
     },
@@ -228,7 +211,7 @@ var options1 = {
   }]
   },
   subtitle: {
-    text: 'Total Profit',
+    text: 'm/s²',
     align: 'left',
     margin: 0,
     offsetX: -10,
@@ -236,11 +219,11 @@ var options1 = {
     floating: false,
     style: {
       fontSize: '14px',
-      color:  '#888ea8'
+      color:  '#bfc9d4'
     }
   },
-  title: {
-    text: '$10,840',
+  title: {  
+    text: '⠀',
     align: 'left',
     margin: 0,
     offsetX: -10,
@@ -258,10 +241,10 @@ var options1 = {
       lineCap: 'square'
   },
   series: [{
-      name: 'Income',
+      name: 'AccelX',
       data: [16800, 16800, 15500, 17800, 15500, 17000, 19000, 16000, 15000, 17000, 14000, 17000]
   }, {
-      name: 'Expenses',
+      name: 'AccelY',
       data: [16500, 17500, 16200, 17300, 16000, 19500, 16000, 17000, 16000, 19000, 18000, 19000]
   }],
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -288,7 +271,7 @@ var options1 = {
   yaxis: {
     labels: {
       formatter: function(value, index) {
-        return (value / 1000) + 'K'
+        return (value)
       },
       offsetX: -22,
       offsetY: 0,
@@ -342,6 +325,7 @@ var options1 = {
     }
   },
   tooltip: {
+    enabled: false,
     theme: 'dark',
     marker: {
       show: true,
@@ -489,8 +473,8 @@ var options = {
         Daily Sales | Render
     ============================
 */
-var d_2C_1 = new ApexCharts(document.querySelector("#daily-sales"), d_2options1);
-d_2C_1.render();
+var d_2C_1 = new ApexCharts(document.querySelector("#hybrid_followers3"), d_2options1);
+    d_2C_1.render()
 
 /*
     ============================
