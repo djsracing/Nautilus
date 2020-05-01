@@ -1,9 +1,8 @@
 // Imports
-const electron = require('electron');
+const {app, BrowserWindow, Menu, ipcMain} = require('electron');
 const url = require('url');
 const path = require('path');
 const SerialPort = require('serialport');
-const {app, BrowserWindow, Menu, ipcMain} = electron;
 
 // Set environment
 process.env.NODE_ENV = 'development';
@@ -15,6 +14,7 @@ const Readline = SerialPort.parsers.Readline;
 let mainWindow;
 let changePort;
 let port;
+let parser;
 
 // Listen for app to be ready
 app.on('ready', function() {
@@ -48,29 +48,17 @@ exports.handleForm = function handleForm(targetWindow, com_port) {
     
     // Set serial port
     port = null;
-    var parser = new Readline();
+    parser = null;
     port = new SerialPort(com_port, {
         baudRate: 9600,
         flowControl: false,
         parser: new SerialPort.parsers.Readline("\n")
     });
+    parser = new Readline();
     port.pipe(parser);
     parser.on('data', function(data) {
         mainWindow.webContents.send('ser-data', data);
     });
-    parser.on('close', function () {
-        console.log('on.disconnect');
-        port = null;
-        parser = null;
-    });
-    parser.on('uncaughtException', function(err) {
-        port = null;
-        parser = null;
-    });
-    parser.on('error', function() {
-        port = null;
-        parser = null;
-    })
     targetWindow.webContents.send('form-received', com_port);
 };
 
