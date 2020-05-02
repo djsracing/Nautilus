@@ -41,9 +41,9 @@ var d_2options1 = {
   },
   colors: ['#009688'],
   tooltip: {
-    enabled: false,
+    enabled: true,
     x: {
-      show: false,
+      show: true,
     }
   },
   fill: {
@@ -82,7 +82,7 @@ var d_2options2 = {
     opacity: 1,
   },
   series: [{
-    name: 'charge_percent',
+    name: 'Charge %',
     data: [28, 40, 36, 52, 38, 60, 38, 52, 36, 40]
   }],
   labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
@@ -120,9 +120,9 @@ var d_2options2 = {
       }
   },
   tooltip: {
-    enabled: false,
+    enabled: true,
     x: {
-      show: false,
+      show: true,
     },
     theme: 'dark'
   },
@@ -360,104 +360,41 @@ var options1 = {
         Sales By Category | Options
     ==================================
 */
-var options = {
-    chart: {
-        type: 'donut',
-        width: 380
-    },
-    colors: ['#5c1ac3', '#e2a03f', '#e7515a', '#e2a03f'],
-    dataLabels: {
+var sline = {
+  chart: {
+    height: 350,
+    type: 'line',
+    zoom: {
       enabled: false
     },
-    legend: {
-        position: 'bottom',
-        horizontalAlign: 'center',
-        fontSize: '14px',
-        markers: {
-          width: 10,
-          height: 10,
-        },
-        itemMargin: {
-          horizontal: 0,
-          vertical: 8
-        }
+    toolbar: {
+      show: false,
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    curve: 'smooth'
+  },
+  series: [{
+    name: "Coordinates",
+    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+  }],
+  title: {
+    show: false,
+  },
+  grid: {
+    show: false,
+  },
+  xaxis: {
+    labels: {
+      show: false
     },
-    plotOptions: {
-      pie: {
-        donut: {
-          size: '65%',
-          background: 'transparent',
-          labels: {
-            show: true,
-            name: {
-              show: true,
-              fontSize: '29px',
-              fontFamily: 'Nunito, sans-serif',
-              color: undefined,
-              offsetY: -10
-            },
-            value: {
-              show: true,
-              fontSize: '26px',
-              fontFamily: 'Nunito, sans-serif',
-              color: '#bfc9d4',
-              offsetY: 16,
-              formatter: function (val) {
-                return val
-              }
-            },
-            total: {
-              show: true,
-              showAlways: true,
-              label: 'Total',
-              color: '#888ea8',
-              formatter: function (w) {
-                return w.globals.seriesTotals.reduce( function(a, b) {
-                  return a + b
-                }, 0)
-              }
-            }
-          }
-        }
-      }
-    },
-    stroke: {
-      show: true,
-      width: 25,
-      colors: '#0e1726'
-    },
-    series: [985, 737, 270],
-    labels: ['Apparel', 'Electronic', 'Others'],
-    responsive: [{
-        breakpoint: 1599,
-        options: {
-            chart: {
-                width: '350px',
-                height: '400px'
-            },
-            legend: {
-                position: 'bottom'
-            }
-        },
-
-        breakpoint: 1439,
-        options: {
-            chart: {
-                width: '250px',
-                height: '390px'
-            },
-            legend: {
-                position: 'bottom'
-            },
-            plotOptions: {
-              pie: {
-                donut: {
-                  size: '65%',
-                }
-              }
-            }
-        },
-    }]
+    axisBorder: {
+      show: false,
+    }
+  }
 }
 
 
@@ -502,8 +439,8 @@ chart1.render();
     =================================
 */
 var chart = new ApexCharts(
-    document.querySelector("#chart-2"),
-    options
+  document.querySelector("#s-line"),
+  sline
 );
 
 chart.render();
