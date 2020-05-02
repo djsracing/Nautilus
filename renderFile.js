@@ -66,7 +66,7 @@ ipcRenderer.on('ser-data', function (event,data) {
 
     // Update state of charge chart
     d_2C_2.updateSeries([{
-      name: 'charge_percent',
+      name: 'Charge %',
       data: data.split(',').slice(0, -2),
     }]);
 
