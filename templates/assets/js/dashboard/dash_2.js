@@ -247,7 +247,7 @@ var options1 = {
       name: 'AccelY',
       data: [16500, 17500, 16200, 17300, 16000, 19500, 16000, 17000, 16000, 19000, 18000, 19000]
   }],
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  labels: [],
   xaxis: {
     axisBorder: {
       show: false
@@ -444,14 +444,6 @@ var chart = new ApexCharts(
 );
 
 chart.render();
-
-/*
-    =============================================
-        Perfect Scrollbar | Recent Activities
-    =============================================
-*/
-const ps = new PerfectScrollbar(document.querySelector('.mt-container'));
-
 
 } catch(e) {
     console.log(e);
