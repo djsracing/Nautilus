@@ -383,7 +383,8 @@
 */
 @media (max-width: 2132px) {
   .note-container.note-grid .note-item {
-    max-width: 32%; } }
+    max-height: 25%;
+    max-width: 16%; } }
 
 @media (max-width: 1199px) {
   .note-container.note-grid .note-item {

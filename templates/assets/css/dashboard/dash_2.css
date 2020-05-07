@@ -210,6 +210,9 @@
 .widget-three .widget-content .summary-list:nth-child(3) .w-icon {
     background: #e2a03f ;
 }
+.widget-three .widget-content .summary-list:nth-child(4) .w-icon {
+    background: #1b55e2;
+}
 .widget-three .widget-content .summary-list:nth-child(1) .w-icon svg {
     color: #dccff7;
 }
