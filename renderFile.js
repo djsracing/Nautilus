@@ -5,6 +5,7 @@ const currentWindow = remote.getCurrentWindow();
 const submitFormButton = document.querySelector("#portForm");
 const responseParagraph = document.getElementById('response');
 const renderGraphsButton = document.querySelector('#renderGraphsBtn');
+const submitMapButton = document.querySelector("#submit_map");
 
 renderGraphsButton.checked = true;
 
@@ -19,6 +20,13 @@ submitFormButton.addEventListener("submit", function(event){
         let port_name = document.getElementById("port_input").value;
         // console.log(port_name)
         handleForm(currentWindow, port_name)
+});
+
+submitMapButton.addEventListener("submit", function(event){
+  event.preventDefault();   // stop the form from submitting
+  // let port_name = document.getElementById("port_input").value;
+  // console.log(port_name)
+  // handleForm(currentWindow, port_name)
 });
 
 ipcRenderer.on('form-received', function(event, args){
@@ -44,7 +52,7 @@ ipcRenderer.on('action-port', function(event, args) {
 })
 
 renderGraphsButton.addEventListener('change', function(event) {
-  console.log(submitFormButton.checked + ' boi');
+  // console.log(submitFormButton.checked + ' boi');
   event.preventDefault();
   if(!this.checked) {
     renderGraphs = false;
