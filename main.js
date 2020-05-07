@@ -27,7 +27,7 @@ app.on('ready', function() {
     });
     // Load html into window
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'templates/index2.html'),
+        pathname: path.join(__dirname, 'templates/dashboard.html'),
         protocol:'file:',
         slashes: true
     }));
