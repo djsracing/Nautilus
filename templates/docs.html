@@ -14,6 +14,8 @@
 
     <!-- BEGIN PAGE LEVEL STYLE -->
     <link href="assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
+    <link href="assets/css/tables/table-basic.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
     <!-- END PAGE LEVEL STYLE -->
 </head>
@@ -66,7 +68,7 @@
                 <ul class="navbar-nav theme-brand flex-row  text-center">
                     <li class="nav-item theme-logo">
                         <a href="index.html">
-                            <img src="assets/img/90x90.jpg" class="navbar-logo" alt="logo">
+                            <img src="assets/img/djsr.jpg" class="navbar-logo" alt="logo">
                         </a>
                     </li>
                     <li class="nav-item theme-text">
@@ -76,7 +78,7 @@
 
                 <ul class="list-unstyled menu-categories" id="accordionExample">
                     <li class="menu">
-                        <a href="index2.html" aria-expanded="false" class="dropdown-toggle">
+                        <a href="dashboard.html" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                                 <span>Dashboard</span>
@@ -89,7 +91,7 @@
                     </li>
 
                     <li class="menu">
-                        <a href="apps_todoList.html" aria-expanded="false" class="dropdown-toggle">
+                        <a href="customize.html" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 <span>Customize</span>
@@ -98,7 +100,7 @@
                     </li>
 
                     <li class="menu">
-                        <a href="apps_scrumboard.html" aria-expanded="false" class="dropdown-toggle">
+                        <a href="#" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
                                 <span>CSV Mode</span>
@@ -107,7 +109,7 @@
                     </li>
 
                     <li class="menu">
-                        <a href="charts_apex.html" aria-expanded="false" class="dropdown-toggle">
+                        <a href="plot.html" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
                                 <span>Plot</span>
@@ -126,6 +128,15 @@
                             </div>
                         </a>
                     </li>
+
+                    <li class="menu disabled">
+                        <a href="#" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                <span>ZED Cloud</span>
+                            </div>
+                        </a>
+                    </li>
                 
                 </ul>
                 
@@ -138,21 +149,141 @@
         <div id="content" class="main-content">
             <div class="container">
                 <div class="container">
-
+                    <div id="navSection" data-spy="affix" class="nav sidenav">
+                        <div class="sidenav-content">
+                            <a href="#gettingStarted" class="nav-link active">Getting Started</a>
+                            <a href="#windows" class="nav-link">Windows</a>
+                            <a href="#linux" class="nav-link">Linux</a>
+                            <a href="#arithmetic" class="nav-link">JavaScript Arithmetic</a>
+                            <a href="#math" class="nav-link">Math</a>
+                            <a href="#zedCloud" class="nav-link">ZED Cloud</a>
+                            <a href="#sensors" class="nav-link">Sensors and Mapping</a>
+                        </div>
+                    </div>
                     <div id="basic" class="row layout-spacing  layout-top-spacing">
                         <div class="col-lg-12">
                             <div class="statbox widget box box-shadow">
-                                <div class="widget-header">
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                            <h4> Basic </h4>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="widget-content widget-content-area">
-                                    <div id="markdown">
-                                        <h1>Basic Example</h1>
+                                    <h1 id="basic-example">Documentation</h1>
+                                    <p>This app was developed with Electron and NodeJS as its backend. You can toggle the developer tools by <code>Ctrl+I</code> (if you have installed from source).</p>
+                                    <br>
+                                    <h2 id="gettingStarted">Getting Started</h2>
+                                    <ul>
+                                        <li>Install Arduino IDE and the required drivers</li>
+                                        <li>Note the COM Port assigned to your microcontroller in device manager.</li>
+                                    </ul>
+                                    <br>
+                                    <h3 id="windows">Windows</h3>
+                                    <p>COM ports in Windows follow the format <code>COM[0-9]</code> and are not case sensitive.</p>
+                                    <br>
+                                    <h3 id="linux">Ubuntu and Debian based systems</h3>
+                                    <p>Linux usually assigns <code>/dev/ttyACM0</code> for microcontrollers.</p>
+                                    <p>You can give R/W access (chmod 777) to the current user by -</p>
+                                    <div>
+                                    <code>
+                                        sudo usermod -a -G dialout &lt;user_name&gt;<br>
+                                        sudo chmod a+rw /dev/ttyACM0
+                                    </code>
                                     </div>
+                                    <br>
+                                    <h2 id="arithmetic">JavaScript Arithmetic</h2>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-4">
+                                            <thead>
+                                                <tr>
+                                                    <th>Operator</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>+</td>
+                                                    <td>Addition</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>-</td>
+                                                    <td>Subtraction</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>*</td>
+                                                    <td>Multiplication</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>**</td>
+                                                    <td>Exponentiation</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>/</td>
+                                                    <td>Division</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>%</td>
+                                                    <td>Modulus</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>++</td>
+                                                    <td>Increment</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>--</td>
+                                                    <td>Decrement</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br>
+                                    <h2 id="math">Math</h2>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-4">
+                                            <thead>
+                                                <tr>
+                                                    <th>Function</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Math.PI;</td>
+                                                    <td>3.141592653589793</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Math.round(x)</td>
+                                                    <td>Returns the value rounded to its nearest integer</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Math.pow(x,y)</td>
+                                                    <td>Returns the value of x to the power of y</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Math.sqrt(x)</td>
+                                                    <td>Returns the square root of x</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Math.abs(x)</td>
+                                                    <td>Returns the absolute (positive) value of x</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Math.sin(x)</td>
+                                                    <td>Returns the sine (a value between -1 and 1) of the angle x (given in radians)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Math.cos(x)</td>
+                                                    <td>Returns the cosine (a value between -1 and 1) of the angle x (given in radians)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Math.log(x)</td>
+                                                    <td>Returns the natural logarithm (base E) of x</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Math.log2(x)</td>
+                                                    <td>Returns the natural logarithm (base 2) of x</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br>
+                                    <h2 id="zedCloud">ZED Cloud</h2>
+                                    <p>ZED Cloud will be available as a part of this application once it is out of private beta.</p>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +297,18 @@
     <!-- END MAIN CONTAINER -->
     
     
-    
+    <!-- Electron Styles -->
+    <style>
+        *, *::after, *::before {
+            -webkit-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-app-region: no-drag;
+            cursor: default;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script>let $ = require('jquery');</script>
     <script>require('popper.js');</script>
