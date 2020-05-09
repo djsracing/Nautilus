@@ -179,7 +179,7 @@
       fill: rgba(0, 23, 55, 0.08); }
   .note-container.note-grid .note-item {
     position: relative;
-    padding: 16px 16px;
+    /* padding: 16px 16px; */
     margin-right: 0;
     margin-left: 5px;
     margin-bottom: 18px;
@@ -383,7 +383,7 @@
 */
 @media (max-width: 2132px) {
   .note-container.note-grid .note-item {
-    max-height: 25%;
+    max-height: 20%;
     max-width: 16%; } }
 
 @media (max-width: 1199px) {
