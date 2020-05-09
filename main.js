@@ -23,7 +23,8 @@ app.on('ready', function() {
         webPreferences: {
             // Enable Node.js integration
             nodeIntegration: true
-        }
+        },
+        icon: __dirname + '/templates/assets/img/djsr.jpg'
     });
     // Load html into window
     mainWindow.loadURL(url.format({
@@ -34,6 +35,7 @@ app.on('ready', function() {
     mainWindow.setBackgroundColor('#050715');
     mainWindow.once('ready-to-show', function (){
         mainWindow.show();
+        mainWindow.focus();
     });
 
     // Build menu from template
