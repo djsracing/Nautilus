@@ -8,8 +8,8 @@
     "start": "electron .",
     "scss": "node-sass --watch assets/scss -o assets/css",
     "package-mac": "electron-packager . Nautilus --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-    "package-win": "electron-packager . Nautilus --overwrite --asar --platform=win32 --arch=x64 --icon=assets/icons/win/Icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Nautilus\"",
-    "package-linux": "electron-packager . Nautilus --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
+    "package-win": "electron-packager . Nautilus --overwrite --platform=win32 --arch=x64 --icon=assets/icons/win/Icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Nautilus\"",
+    "package-linux": "electron-packager . Nautilus --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
   },
   "author": "Atharva Pusalkar",
   "license": "MIT",
@@ -19,9 +19,12 @@
     "chartist-plugin-tooltip": "0.0.11",
     "darkmode-js": "^1.5.5",
     "jquery": "^3.5.0",
-    "node-sass": "^4.14.0",
+    "node-sass": "^4.14.1",
     "popper.js": "^2.0.0-next.2",
-    "serialport": "^8.0.7"
+    "serialport": "^8.0.7",
+    "yargs-parser": "^18.1.3",
+    "sweetalert2": "^9.10.12",
+    "select2": "^4.0.13"
   },
   "devDependencies": {
     "custom-electron-titlebar": "^3.2.2-hotfix62",
@@ -30,8 +33,6 @@
     "electron-package": "^0.1.0",
     "electron-packager": "^14.2.1",
     "electron-rebuild": "^1.10.1",
-    "select2": "^4.0.13",
-    "showdown": "^1.9.1",
-    "sweetalert2": "^9.10.12"
+    "showdown": "^1.9.1"
   }
 }
