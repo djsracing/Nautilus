@@ -22,13 +22,6 @@ submitFormButton.addEventListener("submit", function(event){
         handleForm(currentWindow, port_name)
 });
 
-submitMapButton.addEventListener("submit", function(event){
-  event.preventDefault();   // stop the form from submitting
-  // let port_name = document.getElementById("port_input").value;
-  // console.log(port_name)
-  // handleForm(currentWindow, port_name)
-});
-
 ipcRenderer.on('form-received', function(event, args){
   responseParagraph.innerHTML = "Connected to " + args;
     /*
