@@ -1,51 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Select2 | CORK - Multipurpose Bootstrap Dashboard Template </title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+    <title>Nautilus | Customize</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet" />
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!--  BEGIN CUSTOM STYLE FILE  -->
-    <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css" />
     <link href="assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min.css" />
     <link href="plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-    <link href="plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/file-upload/file-upload-with-preview.min.css" rel="stylesheet" type="text/css">
     <!--  END CUSTOM STYLE FILE  -->
 </head>
+
 <body class="alt-menu sidebar-noneoverflow" data-spy="scroll" data-target="#navSection" data-offset="100">
-    
     <!--  BEGIN NAVBAR  -->
     <div class="header-container fixed-top">
         <header class="header navbar navbar-expand-sm expand-header">
-            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </a>
 
             <ul class="navbar-item flex-row ml-auto">
-
-                <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1" id="portContainer">
+                <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1" id="portContainer">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
                     </a>
                     <div class="dropdown-menu position-absolute e-animated e-fadeInUp" aria-labelledby="userProfileDropdown" id="containerFadeIn">
-                        <div class="form-group" style="border-bottom: 1px solid white;">
+                        <div class="form-group">
                             <p>COM Port <code></code></p>
                             <form action="#" id="portForm">
-                                <input id="port_input" type="text" placeholder="Eg. COM4" class="form-control" required="">
-                                <input type="submit" class="mt-4 btn btn-primary success" id="submit_port">
+                                <input id="port_input" type="text" placeholder="Eg. COM4" class="form-control" required="" />
+                                <input type="submit" class="mt-4 btn btn-primary success" id="submit_port" />
                             </form>
-                            &nbsp;
                         </div>
                         <p id="response"></p>
                         <p>Render graphs</p>
-                        <label class="switch s-primary  mb-4 mr-2">
-                            <input type="checkbox" checked="" id="renderGraphsBtn">
+                        <label class="switch s-primary mb-4 mr-2">
+                            <input type="checkbox" checked="" id="renderGraphsBtn" />
                             <span class="slider round"></span>
                         </label>
                         <!-- <select class="form-control  basic">
@@ -62,20 +70,17 @@
 
     <!--  BEGIN MAIN CONTAINER  -->
     <div class="main-container sidebar-closed sbar-open" id="container">
-
         <div class="overlay"></div>
         <div class="cs-overlay"></div>
         <div class="search-overlay"></div>
 
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
-            
             <nav id="sidebar">
-
-                <ul class="navbar-nav theme-brand flex-row  text-center">
+                <ul class="navbar-nav theme-brand flex-row text-center">
                     <li class="nav-item theme-logo">
                         <a href="#">
-                            <img src="assets/img/djsr.jpg" class="navbar-logo" alt="logo">
+                            <img src="assets/img/djsr.jpg" class="navbar-logo" alt="logo" />
                         </a>
                     </li>
                     <li class="nav-item theme-text">
@@ -87,23 +92,36 @@
                     <li class="menu">
                         <a href="dashboard.html" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
                                 <span>Dashboard</span>
                             </div>
                             <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
                             </div>
                         </a>
                     </li>
 
                     <li class="menu menu-heading">
-                        <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg><span>Menu</span></div>
+                        <div class="heading">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg>
+                            <span>Menu</span>
+                        </div>
                     </li>
 
                     <li class="menu active">
                         <a href="customize.html" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
                                 <span>Customize</span>
                             </div>
                         </a>
@@ -112,8 +130,13 @@
                     <li class="menu">
                         <a href="#" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-                                <span>CSV Mode</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                                </svg>
+                                <span>Analysis</span>
                             </div>
                         </a>
                     </li>
@@ -121,7 +144,10 @@
                     <li class="menu">
                         <a href="plot.html" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart">
+                                    <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                                    <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                                </svg>
                                 <span>Plot</span>
                             </div>
                         </a>
@@ -130,25 +156,28 @@
                     <li class="menu">
                         <a href="docs.html" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                </svg>
                                 <span>Documentation</span>
                             </div>
                         </a>
                     </li>
 
                     <li class="menu disabled">
-                        <a href="#" aria-expanded="false" class="dropdown-toggle">
+                        <a href="zed.html" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                    <circle cx="12" cy="13" r="4"></circle>
+                                </svg>
                                 <span>ZED Cloud</span>
                             </div>
                         </a>
                     </li>
-                
                 </ul>
-                
             </nav>
-
         </div>
         <!--  END SIDEBAR  -->
 
@@ -156,54 +185,463 @@
         <div id="content" class="main-content">
             <div class="container">
                 <div class="container">
-                    
-                    <div class="row layout-top-spacing" id="cancel-row">
-                    
-                        <div id="fs2Basic" class="col-lg-12 layout-spacing">
-                            <div class="statbox widget box box-shadow">
-                                <div class="widget-header">
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                            <br>
-                                            <h2>⠀Customize</h2>
-                                        </div>            
+                    <div class="col-lg2 layout-spacing">
+                        <div class="row layout-top-spacing" id="cancel-row">
+                            <div id="fs2Basic" class="col-lg-12 layout-spacing">
+                                <div class="statbox widget box box-shadow">
+                                    <div class="widget-header">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                <br />
+                                                <h1>Customize</h1>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="widget-content widget-content-area">
-                                    <!-- <form> -->
+                                    <div class="widget-content widget-content-area">
+                                        <!-- <form> -->
+                                        <h2>Mapping</h2>
                                         <p>Sensor</p>
-                                        <select class="form-control  basic">
+                                        <select class="form-control basic">
                                             <option selected="selected">Sensor #1</option>
                                             <option>Sensor #2</option>
                                             <option>Sensor #3</option>
-                                        </select>
-                                        <br>
-                                        <br>
-                                        <p for="email1">Expression</p>
-                                        <label>Use <code>raw_input</code> to denote raw input voltage.</label>
-                                        <input type="text" class="form-control" id="country" placeholder="Type something..." autocomplete="off">                                        
-                                        <br>
-                                        <p for="email1">Mapping</p>
-                                        <select class="form-control  basic">
-                                            <option selected="selected">Mapping #1</option>
-                                            <option>Mapping #2</option>
-                                        </select>                                      
-                                        <input type="submit" class="mt-4 btn btn-primary success" id="submit_map">
-                                    <!-- </form> -->
-                                    <div class="code-section-container show-code">
-                                                
-                                        <button class="btn toggle-code-snippet"><span>Example</span></button>
-                                        <!-- <p></p> -->
-                                        <div class="code-section text-left">
-                                            <pre>
-// Expressions are evaluated in JavaScript format
+                                            <option>Sensor #4</option>
+                                            <option>Sensor #5</option>
+                                            <option>Sensor #6</option>
+                                            <option>Sensor #7</option>
+                                            <option>Sensor #8</option>
+                                            <option>Sensor #9</option>
+                                            <option>Sensor #10</option>
+                                            <option>Sensor #11</option>
+                                            <option>Sensor #12</option>
+                                            <option>Sensor #13</option>
+                                            <option>Sensor #14</option>
+                                            <option>Sensor #15</option>
+                                            <option>Sensor #16</option>
+                                            <option>Sensor #17</option>
+                                            <option>Sensor #18</option>
+                                            <option>Sensor #19</option>
+                                            <option>Sensor #20</option>
+                                            <option>Sensor #21</option>
+                                            <option>Sensor #22</option>
+                                            <option>Sensor #23</option>
+                                            <option>Sensor #24</option>
+                                            <option>Sensor #25</option>
+                                            <option>Sensor #26</option>
+                                            <option>Sensor #27</option>
+                                            <option>Sensor #28</option>
+                                            <option>Sensor #29</option>
+                                            <option>Sensor #30</option>
+                                            <option>Sensor #31</option>
+                                            <option>Sensor #32</option>
 
-raw_input * Math.log('sensor_id') + c;
-</pre>
+                                        </select>
+                                        <br />
+                                        <br />
+                                        <p>Expression</p>
+                                        <label>Use <code>x</code> to denote raw input voltage.</label>
+                                        <input type="text" class="form-control" id="country" placeholder="Mapping 1..." autocomplete="off" />
+                                        <br />
+                                        <input type="text" class="form-control" id="country" placeholder="Mapping 2..." autocomplete="off" />
+                                        <br>
+                                        <p for="email1">Units</p>
+                                        <input type="text" class="form-control" id="country" placeholder="Type something..." autocomplete="off" />
+                                        <input type="submit" class="mt-4 btn btn-primary success" id="submit_map" />
+                                        <div class="code-section-container show-code">
+                                            <button class="btn toggle-code-snippet"><span>Example</span></button>
+                                            <!-- <p></p> -->
+                                            <div class="code-section text-left">
+                                                <pre>
+    // Expressions are evaluated in JavaScript format
+    
+    raw_input * Math.log('sensor_id') + c;
+
+                                                    </pre>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <p>
+                                            You can read the <a href="docs.html"><mark class="bg-primary br-6">docs</mark></a> for more info.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-lg2 layout-spacing">
+                                    <div class="widget-content widget-content-area">
+                                        <h2>Rename Sensors</h2>
+                                        <p>Sensor</p>
+                                        <select class="form-control basic">
+                                            <option selected="selected">Sensor #1</option>
+                                            <option>Sensor #2</option>
+                                            <option>Sensor #3</option>
+                                            <option>Sensor #4</option>
+                                            <option>Sensor #5</option>
+                                            <option>Sensor #6</option>
+                                            <option>Sensor #7</option>
+                                            <option>Sensor #8</option>
+                                            <option>Sensor #9</option>
+                                            <option>Sensor #10</option>
+                                            <option>Sensor #11</option>
+                                            <option>Sensor #12</option>
+                                            <option>Sensor #13</option>
+                                            <option>Sensor #14</option>
+                                            <option>Sensor #15</option>
+                                            <option>Sensor #16</option>
+                                            <option>Sensor #17</option>
+                                            <option>Sensor #18</option>
+                                            <option>Sensor #19</option>
+                                            <option>Sensor #20</option>
+                                            <option>Sensor #21</option>
+                                            <option>Sensor #22</option>
+                                            <option>Sensor #23</option>
+                                            <option>Sensor #24</option>
+                                            <option>Sensor #25</option>
+                                            <option>Sensor #26</option>
+                                            <option>Sensor #27</option>
+                                            <option>Sensor #28</option>
+                                            <option>Sensor #29</option>
+                                            <option>Sensor #30</option>
+                                            <option>Sensor #31</option>
+                                            <option>Sensor #32</option>
+                                        </select>
+                                        <br />
+                                        <br />
+                                        <p for="email1">New name</p>
+                                        <input type="text" class="form-control" id="country" placeholder="Type something..." autocomplete="off" />
+                                        <br />
+                                        <input type="submit" class="mt-4 btn btn-primary success" id="submit_name" />
+                                        <br />
+                                        <br />
+                                        <h2>Load Variables</h2>
+                                        <br>
+                                        <p>Sensor Names</p>
+                                        <div class="custom-file-container" data-upload-id="myFirstImage">
+                                            <label>Upload (Single File) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+                                            <label class="custom-file-container__custom-file">
+                                                <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="application/JSON">
+                                                <input type="hidden" name="MAX_FILE_SIZE" value="104857603333" />
+                                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                            </label>
+                                            <div class="custom-file-container__image-preview" hidden></div>
+                                        </div>
+                                        <input type="submit" class="mt-4 btn btn-primary success" id="load_names" />
+                                        <br>
+                                        <br>
+                                        <p>Mapping</p>
+                                        <div class="custom-file-container" data-upload-id="mySecondImage">
+                                            <label>Upload (Single File) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+                                            <label class="custom-file-container__custom-file">
+                                                <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="application/JSON">
+                                                <input type="hidden" name="MAX_FILE_SIZE" value="104857603333" />
+                                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                            </label>
+                                            <div class="custom-file-container__image-preview" hidden></div>
+                                        </div>
+                                        <input type="submit" class="mt-4 btn btn-primary success" id="load_mappings" />
+                                        <br>
+                                        &nbsp;
+                                        <h2>Current Configuration</h2>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered mb-4">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sensor ID</th>
+                                                        <th>Name</th>
+                                                        <th>Mapping 1</th>
+                                                        <th>Unit</th>
+                                                        <th>Mapping 2</th>
+                                                        <th>Unit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Sensor #1</td>
+                                                        <td id="sensor_1_name"></td>
+                                                        <td id="sensor_1_mapping1"></td>
+                                                        <td id="sensor_1_unit1"></td>
+                                                        <td id="sensor_1_mapping2"></td>
+                                                        <td id="sensor_1_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #2</td>
+                                                        <td id="sensor_2_name"></td>
+                                                        <td id="sensor_2_mapping1"></td>
+                                                        <td id="sensor_2_unit1"></td>
+                                                        <td id="sensor_2_mapping2"></td>
+                                                        <td id="sensor_2_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #3</td>
+                                                        <td id="sensor_3_name"></td>
+                                                        <td id="sensor_3_mapping1"></td>
+                                                        <td id="sensor_3_unit1"></td>
+                                                        <td id="sensor_3_mapping2"></td>
+                                                        <td id="sensor_3_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #4</td>
+                                                        <td id="sensor_4_name"></td>
+                                                        <td id="sensor_4_mapping1"></td>
+                                                        <td id="sensor_4_unit1"></td>
+                                                        <td id="sensor_4_mapping2"></td>
+                                                        <td id="sensor_4_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #5</td>
+                                                        <td id="sensor_5_name"></td>
+                                                        <td id="sensor_5_mapping1"></td>
+                                                        <td id="sensor_5_unit1"></td>
+                                                        <td id="sensor_5_mapping2"></td>
+                                                        <td id="sensor_5_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #6</td>
+                                                        <td id="sensor_6_name"></td>
+                                                        <td id="sensor_6_mapping1"></td>
+                                                        <td id="sensor_6_unit1"></td>
+                                                        <td id="sensor_6_mapping2"></td>
+                                                        <td id="sensor_6_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #7</td>
+                                                        <td id="sensor_7_name"></td>
+                                                        <td id="sensor_7_mapping1"></td>
+                                                        <td id="sensor_7_unit1"></td>
+                                                        <td id="sensor_7_mapping2"></td>
+                                                        <td id="sensor_7_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #8</td>
+                                                        <td id="sensor_8_name"></td>
+                                                        <td id="sensor_8_mapping1"></td>
+                                                        <td id="sensor_8_unit1"></td>
+                                                        <td id="sensor_8_mapping2"></td>
+                                                        <td id="sensor_8_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #9</td>
+                                                        <td id="sensor_9_name"></td>
+                                                        <td id="sensor_9_mapping1"></td>
+                                                        <td id="sensor_9_unit1"></td>
+                                                        <td id="sensor_9_mapping2"></td>
+                                                        <td id="sensor_9_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #10</td>
+                                                        <td id="sensor_10_name"></td>
+                                                        <td id="sensor_10_mapping1"></td>
+                                                        <td id="sensor_10_unit1"></td>
+                                                        <td id="sensor_10_mapping2"></td>
+                                                        <td id="sensor_10_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #11</td>
+                                                        <td id="sensor_11_name"></td>
+                                                        <td id="sensor_11_mapping1"></td>
+                                                        <td id="sensor_11_unit1"></td>
+                                                        <td id="sensor_11_mapping2"></td>
+                                                        <td id="sensor_11_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #12</td>
+                                                        <td id="sensor_12_name"></td>
+                                                        <td id="sensor_12_mapping1"></td>
+                                                        <td id="sensor_12_unit1"></td>
+                                                        <td id="sensor_12_mapping2"></td>
+                                                        <td id="sensor_12_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #13</td>
+                                                        <td id="sensor_13_name"></td>
+                                                        <td id="sensor_13_mapping1"></td>
+                                                        <td id="sensor_13_unit1"></td>
+                                                        <td id="sensor_13_mapping2"></td>
+                                                        <td id="sensor_13_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #14</td>
+                                                        <td id="sensor_14_name"></td>
+                                                        <td id="sensor_14_mapping1"></td>
+                                                        <td id="sensor_14_unit1"></td>
+                                                        <td id="sensor_14_mapping2"></td>
+                                                        <td id="sensor_14_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #15</td>
+                                                        <td id="sensor_15_name"></td>
+                                                        <td id="sensor_15_mapping1"></td>
+                                                        <td id="sensor_15_unit1"></td>
+                                                        <td id="sensor_15_mapping2"></td>
+                                                        <td id="sensor_15_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #16</td>
+                                                        <td id="sensor_16_name"></td>
+                                                        <td id="sensor_16_mapping1"></td>
+                                                        <td id="sensor_16_unit1"></td>
+                                                        <td id="sensor_16_mapping2"></td>
+                                                        <td id="sensor_16_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #17</td>
+                                                        <td id="sensor_17_name"></td>
+                                                        <td id="sensor_17_mapping1"></td>
+                                                        <td id="sensor_17_unit1"></td>
+                                                        <td id="sensor_17_mapping2"></td>
+                                                        <td id="sensor_17_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #18</td>
+                                                        <td id="sensor_18_name"></td>
+                                                        <td id="sensor_18_mapping1"></td>
+                                                        <td id="sensor_18_unit1"></td>
+                                                        <td id="sensor_18_mapping2"></td>
+                                                        <td id="sensor_18_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #19</td>
+                                                        <td id="sensor_19_name"></td>
+                                                        <td id="sensor_19_mapping1"></td>
+                                                        <td id="sensor_19_unit1"></td>
+                                                        <td id="sensor_19_mapping2"></td>
+                                                        <td id="sensor_19_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #20</td>
+                                                        <td id="sensor_20_name"></td>
+                                                        <td id="sensor_20_mapping1"></td>
+                                                        <td id="sensor_20_unit1"></td>
+                                                        <td id="sensor_20_mapping2"></td>
+                                                        <td id="sensor_20_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #21</td>
+                                                        <td id="sensor_21_name"></td>
+                                                        <td id="sensor_21_mapping1"></td>
+                                                        <td id="sensor_21_unit1"></td>
+                                                        <td id="sensor_21_mapping2"></td>
+                                                        <td id="sensor_21_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #22</td>
+                                                        <td id="sensor_22_name"></td>
+                                                        <td id="sensor_22_mapping1"></td>
+                                                        <td id="sensor_22_unit1"></td>
+                                                        <td id="sensor_22_mapping2"></td>
+                                                        <td id="sensor_22_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #23</td>
+                                                        <td id="sensor_23_name"></td>
+                                                        <td id="sensor_23_mapping1"></td>
+                                                        <td id="sensor_23_unit1"></td>
+                                                        <td id="sensor_23_mapping2"></td>
+                                                        <td id="sensor_23_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #24</td>
+                                                        <td id="sensor_24_name"></td>
+                                                        <td id="sensor_24_mapping1"></td>
+                                                        <td id="sensor_24_unit1"></td>
+                                                        <td id="sensor_24_mapping2"></td>
+                                                        <td id="sensor_24_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #25</td>
+                                                        <td id="sensor_25_name"></td>
+                                                        <td id="sensor_25_mapping1"></td>
+                                                        <td id="sensor_25_unit1"></td>
+                                                        <td id="sensor_25_mapping2"></td>
+                                                        <td id="sensor_25_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #26</td>
+                                                        <td id="sensor_26_name"></td>
+                                                        <td id="sensor_26_mapping1"></td>
+                                                        <td id="sensor_26_unit1"></td>
+                                                        <td id="sensor_26_mapping2"></td>
+                                                        <td id="sensor_26_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #27</td>
+                                                        <td id="sensor_27_name"></td>
+                                                        <td id="sensor_27_mapping1"></td>
+                                                        <td id="sensor_27_unit1"></td>
+                                                        <td id="sensor_27_mapping2"></td>
+                                                        <td id="sensor_27_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #28</td>
+                                                        <td id="sensor_28_name"></td>
+                                                        <td id="sensor_28_mapping1"></td>
+                                                        <td id="sensor_28_unit1"></td>
+                                                        <td id="sensor_28_mapping2"></td>
+                                                        <td id="sensor_28_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #29</td>
+                                                        <td id="sensor_29_name"></td>
+                                                        <td id="sensor_29_mapping1"></td>
+                                                        <td id="sensor_29_unit1"></td>
+                                                        <td id="sensor_29_mapping2"></td>
+                                                        <td id="sensor_29_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #30</td>
+                                                        <td id="sensor_30_name"></td>
+                                                        <td id="sensor_30_mapping1"></td>
+                                                        <td id="sensor_30_unit1"></td>
+                                                        <td id="sensor_30_mapping2"></td>
+                                                        <td id="sensor_30_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #31</td>
+                                                        <td id="sensor_31_name"></td>
+                                                        <td id="sensor_31_mapping1"></td>
+                                                        <td id="sensor_31_unit1"></td>
+                                                        <td id="sensor_31_mapping2"></td>
+                                                        <td id="sensor_31_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #32</td>
+                                                        <td id="sensor_32_name"></td>
+                                                        <td id="sensor_32_mapping1"></td>
+                                                        <td id="sensor_32_unit1"></td>
+                                                        <td id="sensor_32_mapping2"></td>
+                                                        <td id="sensor_32_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #33</td>
+                                                        <td id="sensor_33_name"></td>
+                                                        <td id="sensor_33_mapping1"></td>
+                                                        <td id="sensor_33_unit1"></td>
+                                                        <td id="sensor_33_mapping2"></td>
+                                                        <td id="sensor_33_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #34</td>
+                                                        <td id="sensor_34_name"></td>
+                                                        <td id="sensor_34_mapping1"></td>
+                                                        <td id="sensor_34_unit1"></td>
+                                                        <td id="sensor_34_mapping2"></td>
+                                                        <td id="sensor_34_unit2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sensor #35</td>
+                                                        <td id="sensor_35_name"></td>
+                                                        <td id="sensor_35_mapping1"></td>
+                                                        <td id="sensor_35_unit1"></td>
+                                                        <td id="sensor_35_mapping2"></td>
+                                                        <td id="sensor_35_unit2"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <button class="btn btn-primary mb-2 mr-2" id="save_config"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download">
+                                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                                </svg></button>
                                         </div>
                                     </div>
-                                    <br>
-                                    <p>You can read the <a href='docs.html'><mark class="bg-primary br-6">docs</mark></a> for more info.</p>
                                 </div>
                             </div>
                         </div>
@@ -214,14 +652,20 @@ raw_input * Math.log('sensor_id') + c;
         <!--  END CONTENT AREA  -->
     </div>
     <!-- END MAIN CONTAINER -->
-    
+
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script>let $ = require('jquery');</script>
-    <script>require('popper.js');</script>
-    <script>require('bootstrap');</script>
+    <script>
+        let $ = require("jquery");
+    </script>
+    <script>
+        require("popper.js");
+    </script>
+    <script>
+        require("bootstrap");
+    </script>
     <script src="plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="assets/js/app.js"></script>
-    
+
     <script>
         $(document).ready(function() {
             App.init();
@@ -229,12 +673,15 @@ raw_input * Math.log('sensor_id') + c;
     </script>
     <!-- Electron Styles -->
     <style>
-        *, *::after, *::before {
+        *,
+        *::after,
+        *::before {
             -webkit-user-select: none;
             -webkit-user-drag: none;
             -webkit-app-region: no-drag;
             cursor: default;
         }
+
         ::-webkit-scrollbar {
             display: none;
         }
@@ -244,20 +691,37 @@ raw_input * Math.log('sensor_id') + c;
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!--  BEGIN CUSTOM SCRIPTS FILE  -->
+    <script src="plugins/file-upload/file-upload-with-preview.min.js"></script>
     <script src="assets/js/scrollspyNav.js"></script>
     <script>
-        require( 'select2' )($);
+        require("select2")($);
     </script>
     <script src="plugins/select2/custom-select2.js"></script>
-    <script>const swal = require('sweetalert2');
-            window.Swal = swal
+    <script>
+        const swal = require("sweetalert2");
+        window.Swal = swal;
     </script>
     <script>
-        $("#submit_map").on('click', function () {
-            Swal.fire('Success');
-        })
+        var firstUpload = new FileUploadWithPreview('myFirstImage');
+        var secondUpload = new FileUploadWithPreview('mySecondImage');
+        $("#submit_map").on("click", function() {
+            Swal.fire("Successful");
+        });
+        $("#submit_name").on("click", function() {
+            Swal.fire("Successful");
+        });
+        $("#load_names").on("click", function() {
+            Swal.fire("Successful");
+        });
+        $("#load_mappings").on("click", function() {
+            Swal.fire("Successful");
+        });
+        $("#save_config").on("click", function() {
+            Swal.fire("Successful", "Saved to documents");
+        });
     </script>
     <!-- BEGIN PAGE ELECTRON SCRIPTS -->
-    <script src='../customize.js'></script>
+    <script src="../customize.js"></script>
 </body>
+
 </html>
