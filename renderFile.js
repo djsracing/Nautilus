@@ -24,10 +24,6 @@ submitFormButton.addEventListener("submit", function(event){
 
 ipcRenderer.on('form-received', function(event, args){
   responseParagraph.innerHTML = "Connected to " + args;
-    /*
-        you could choose to submit the form here after the main process completes
-        and use this as a processing step
-    */
 });
 
 ipcRenderer.on('action-port', function(event, args) {
