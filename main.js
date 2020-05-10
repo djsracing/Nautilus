@@ -1,8 +1,18 @@
 // Imports
+let {config} = require('./config');
+
 const {app, BrowserWindow, Menu, ipcMain} = require('electron');
 const url = require('url');
 const path = require('path');
 const SerialPort = require('serialport');
+const fs = require('fs');
+
+// Set global variables
+const _sharedObj = {config:config};
+
+global.sharedObj = _sharedObj;
+fs.writeFileSync('./test.json', JSON.stringify(config))
+// console.log(app.getPath('documents'));
 
 // Set environment
 process.env.NODE_ENV = 'development';
@@ -10,11 +20,12 @@ process.env.NODE_ENV = 'development';
 // Set serial port handlers
 const Readline = SerialPort.parsers.Readline;
 
-// Set global variables
+// Set main process variables
 let mainWindow;
 let changePort;
 let port;
 let parser;
+let data;
 
 // Listen for app to be ready
 app.on('ready', function() {
@@ -59,6 +70,7 @@ exports.handleForm = function handleForm(targetWindow, com_port) {
     parser = new Readline();
     port.pipe(parser);
     parser.on('data', function(data) {
+        data = data.split(',');
         mainWindow.webContents.send('ser-data', data);
     });
     targetWindow.webContents.send('form-received', com_port);
