@@ -9,7 +9,7 @@
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet" />
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/plugins-dark.css" rel="stylesheet" type="text/css" id="plugins"/>
         <!-- END GLOBAL MANDATORY STYLES -->
 
         <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
@@ -23,8 +23,15 @@
             }
         </style>
         <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+        <!-- LOADER -->
+        <link href="assets/css/loader.css" rel="stylesheet" type="text/css" />
     </head>
     <body class="alt-menu sidebar-noneoverflow">
+        <!-- BEGIN LOADER -->
+        <div id="load_screen"> <div class="loader"> <div class="loader-content">
+            <div class="spinner-grow align-self-center"></div>
+        </div></div></div>
+        <!--  END LOADER -->
         <!--  BEGIN NAVBAR  -->
         <div class="header-container fixed-top">
             <header class="header navbar navbar-expand-sm expand-header">
@@ -66,16 +73,18 @@
                                 </form>
                             </div>
                             <p id="response"></p>
-                            <p>Render graphs</p>
+                            <input type=button id="mode" text="Switch Mode" class="btn btn-primary" value="Switch To Day Mode" />
+                            <!-- <p>Render graphs</p>
                             <label class="switch s-primary mb-4 mr-2">
                                 <input type="checkbox" checked="" id="renderGraphsBtn" />
                                 <span class="slider round"></span>
-                            </label>
+                            </label> -->
                             <!-- <select class="form-control  basic">
                             <option selected="selected">orange</option>
                             <option>white</option>
                             <option>purple</option>
                         </select> -->
+
                         </div>
                     </li>
                 </ul>
@@ -316,8 +325,8 @@
         <script src="assets/js/custom.js"></script>
         <!-- END GLOBAL MANDATORY SCRIPTS -->
 
-        <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-
-        <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+        <!-- BEGIN PAGE LEVEL ELECTRON SCRIPTS -->
+        <script src='../zed.js'></script>
+        <!-- BEGIN PAGE LEVEL ELECTRON SCRIPTS -->
     </body>
 </html>

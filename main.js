@@ -11,7 +11,7 @@ const fs = require('fs');
 const _sharedObj = {config:config};
 
 global.sharedObj = _sharedObj;
-fs.writeFileSync('./test.json', JSON.stringify(config))
+// fs.writeFileSync('./test.json', JSON.stringify(config))
 // console.log(app.getPath('documents'));
 
 // Set environment
@@ -54,27 +54,6 @@ app.on('ready', function() {
     // Insert menu
     Menu.setApplicationMenu(mainMenu);
 });
-
-// Handle change COM Port
-exports.handleForm = function handleForm(targetWindow, com_port) {
-    // console.log("this is the name of the port ->", com_port)
-    
-    // Set serial port
-    port = null;
-    parser = null;
-    port = new SerialPort(com_port, {
-        baudRate: 9600,
-        flowControl: false,
-        parser: new SerialPort.parsers.Readline("\n")
-    });
-    parser = new Readline();
-    port.pipe(parser);
-    parser.on('data', function(data) {
-        data = data.split(',');
-        mainWindow.webContents.send('ser-data', data);
-    });
-    targetWindow.webContents.send('form-received', com_port);
-};
 
 // Create new template
 const mainMenuTemplate = [
@@ -122,3 +101,56 @@ if(process.env.NODE_ENV !== 'production') {
         ]
     })
 }
+
+// Handle change COM Port
+exports.handleForm = function handleForm(targetWindow, com_port) {
+    // console.log("this is the name of the port ->", com_port)
+    
+    // Set serial port
+    port = null;
+    parser = null;
+    port = new SerialPort(com_port, {
+        baudRate: 9600,
+        flowControl: false,
+        parser: new SerialPort.parsers.Readline("\n")
+    });
+    parser = new Readline();
+    port.pipe(parser);
+    parser.on('data', function(data) {
+        data = data.split(',');
+        mainWindow.webContents.send('ser-data', data);
+    });
+    targetWindow.webContents.send('form-received', com_port);
+};
+
+exports.handleNameChange = function handleNameChange(targetWindow, sensorID, newName) {
+    global.sharedObj.config[sensorID] = newName;
+    targetWindow.webContents.send('name-changed', newName);
+}
+
+exports.handleMapChange = function handleMapChange(targetWindow, sensorID, map1, unit1, map2, unit2) {
+    global.sharedObj.config[sensorID+'_mapping1'] = map1;
+    global.sharedObj.config[sensorID+'_unit1'] = unit1;
+    global.sharedObj.config[sensorID+'_mapping2'] = map2;
+    global.sharedObj.config[sensorID+'_unit2'] = unit2;
+    targetWindow.webContents.send('map-changed');
+}
+
+exports.handleLoadConfig = function handleLoadConfig(targetWindow, fileName) {
+    try {
+        let newConfig = JSON.parse(fs.readFileSync(fileName, 'utf8'));
+        global.sharedObj.config = newConfig;
+        targetWindow.webContents.send('config-success');
+    }catch (err){
+        console.log(err);
+        console.log("Couldn't load config.");
+        targetWindow.webContents.send('config-failure');
+    }
+}
+
+exports.handleChangeMode = function handleChangeMode(targetWindow, mode) {
+    exports.mode = mode;
+}
+
+exports.savePath = app.getPath('documents');
+exports.mode = 'light';

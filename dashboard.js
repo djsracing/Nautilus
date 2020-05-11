@@ -1,26 +1,61 @@
 const {remote, ipcRenderer} = require('electron');
-const {handleForm} = remote.require('./main');
+const {handleForm, mode, handleChangeMode} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
+var {config} = remote.getGlobal('sharedObj');
 
 const submitFormButton = document.querySelector("#portForm");
 const responseParagraph = document.getElementById('response');
-const renderGraphsButton = document.querySelector('#renderGraphsBtn');
+// const renderGraphsButton = document.querySelector('#renderGraphsBtn');
 const submitMapButton = document.querySelector("#submit_map");
 const slideButton = document.querySelector("#slideBtn");
 
-var {config} = remote.getGlobal('sharedObj');
+$(document).ready(async function(){
+    // var {mode} = remote.require('./main');
+    // App.init();
+    if(mode=='light') {
+        $('#mode').attr('value','Switch To Night Mode');
+        $('link#plugins').attr('href','assets/css/plugins-light.css');
+        $('link#modules').attr('href','assets/css/widgets/modules-widgets-light.css');
+    }
+    
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    await delay(500);
+    
+    var load_screen = document.getElementById("load_screen");
+    document.body.removeChild(load_screen);
+    
+    $('#mode').click(async function(){
+        await delay(300);
+        if($('link#plugins').attr('href')=="assets/css/plugins-light.css"){
+            $('#mode').attr('value','Switch To Day Mode')
+            $('link#plugins').attr('href','assets/css/plugins-dark.css');
+            $('link#modules').attr('href','assets/css/widgets/modules-widgets-dark.css');
+            handleChangeMode(currentWindow, 'dark');
+        }else {
+            $('#mode').attr('value','Switch To Night Mode');
+            $('link#plugins').attr('href','assets/css/plugins-light.css');
+            $('link#modules').attr('href','assets/css/widgets/modules-widgets-light.css');
+            handleChangeMode(currentWindow, 'light');
+        }
+    });
+});
 
 // Set mapping mode
 var map_mode = '1';
 
 // Initialize sensors view
-for (var i = 1; i <= 35; i++) {
-    const sensorField = document.querySelector('#sensor_' + i);
-    sensorField.innerHTML = config['sensor_' + i];
+function initPage() {
+    for (var i = 1; i <= 35; i++) {
+        const sensorField = document.querySelector('#sensor_' + i);
+        sensorField.innerHTML = config['Sensor #' + i];
+    }
 }
 
-// Since the button is active
-renderGraphsButton.checked = true;
+initPage();
+
+// Since the buttons are active
+// renderGraphsButton.checked = true;
+slideButton.checked = true;
 
 // Stores the current state of COM Port toggle
 var portToggle = false;
@@ -35,14 +70,14 @@ submitFormButton.addEventListener("submit", function(event) {
     handleForm(currentWindow, port_name)
 });
 
-renderGraphsButton.addEventListener('change', function(event) {
-    event.preventDefault(); // stop the form from submitting
-    if (!this.checked) {
-        renderGraphs = false;
-    } else {
-        renderGraphs = true;
-    }
-});
+// renderGraphsButton.addEventListener('change', function(event) {
+//     event.preventDefault(); // stop the form from submitting
+//     if (!this.checked) {
+//         renderGraphs = false;
+//     } else {
+//         renderGraphs = true;
+//     }
+// });
 
 slideButton.addEventListener('change', function(event) {
     event.preventDefault();
@@ -77,6 +112,6 @@ ipcRenderer.on('ser-data', function(event, data) {
         // console.log('#sensor_'+eval(i+1)+'_data');
         const sensorDataField = document.querySelector('#sensor_' + eval(i + 1) + '_data');
         console.log(map_mode);
-        sensorDataField.innerHTML = data[i] * 1.03 + ' ' + config['sensor_' + eval(i + 1) + '_unit' + map_mode];
+        sensorDataField.innerHTML = data[i] * 1.03 + ' ' + config['Sensor #' + eval(i + 1) + '_unit' + map_mode];
     }
 });
