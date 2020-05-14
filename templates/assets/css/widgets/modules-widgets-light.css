@@ -911,12 +911,16 @@
       background: #e6ffbf; }
     .widget-three .widget-content .summary-list:nth-child(3) .w-icon {
       background: #ffeccb; }
+    .widget-three .widget-content .summary-list:nth-child(4) .w-icon {
+      color: #91c8ff; }
     .widget-three .widget-content .summary-list:nth-child(1) .w-icon svg {
       color: #5c1ac3; }
     .widget-three .widget-content .summary-list:nth-child(2) .w-icon svg {
       color: #009688; }
     .widget-three .widget-content .summary-list:nth-child(3) .w-icon svg {
       color: #e2a03f; }
+    .widget-three .widget-content .summary-list:nth-child(4) .w-icon svg {
+      color: #007EFF; }
     .widget-three .widget-content .w-summary-details {
       width: 100%;
       align-self: center; }
