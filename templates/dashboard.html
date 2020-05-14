@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
     <link href="assets/css/components/cards/card.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/dashboard/dash_2-light.css" rel="stylesheet" type="text/css" id="dash"/>
     <link rel="stylesheet" type="text/css" href="assets/css/widgets/modules-widgets-dark.css" id="modules">
     <!-- END PAGE LEVEL STYLES -->
     <!-- LOADER -->
@@ -32,7 +32,6 @@
         <div class="spinner-grow align-self-center"></div>
     </div></div></div>
     <!--  END LOADER -->
-
     <!--  BEGIN NAVBAR  -->
     <div class="header-container fixed-top">
         <header class="header navbar navbar-expand-sm expand-header">
@@ -249,7 +248,7 @@
 
                                             <div class="w-summary-stats">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-gradient-secondary" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-gradient-secondary" role="progressbar" style="width: 90%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="10" id="brakePressure"></div>
                                                 </div>
                                             </div>
 
@@ -273,7 +272,7 @@
 
                                             <div class="w-summary-stats">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 65%" aria-valuenow="6" aria-valuemin="0" aria-valuemax="10" id="steeringAngle"></div>
                                                 </div>
                                             </div>
 
@@ -296,7 +295,7 @@
 
                                             <div class="w-summary-stats">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 80%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="10" id="cellTemp"></div>
                                                 </div>
                                             </div>
 
@@ -306,21 +305,18 @@
 
                                     <div class="summary-list">
                                         <div class="w-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-stop-circle">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <rect x="9" y="9" width="6" height="6"></rect>
-                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                                         </div>
                                         <div class="w-summary-details">
 
                                             <div class="w-summary-info">
                                                 <h6>Throttle</h6>
-                                                <p class="summary-count">90°</p>
+                                                <p class="summary-count"></p>
                                             </div>
 
                                             <div class="w-summary-stats">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 65%" aria-valuenow="6" aria-valuemin="0" aria-valuemax="10" id="throttle"></div>
                                                 </div>
                                             </div>
 
