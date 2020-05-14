@@ -82,27 +82,27 @@ renderGraphsButton.addEventListener('change', function(event) {
 });
 
 ipcRenderer.on('ser-data', function (event,data) {
-  if(renderGraphs) {
+  // if(renderGraphs) {
     //Update acceleration chart
     chart1.updateSeries([{
       name: 'AccelX',
-      data: data.split(',').slice(0, -2),
+      data: data.slice(0, -10),
     }, {
         name: 'AccelY',
-        data: data.split(',').slice(0, -2),
+        data: data.slice(0, -10),
     }]);
 
     // Update state of charge chart
     d_2C_2.updateSeries([{
       name: 'Charge %',
-      data: data.split(',').slice(0, -2),
+      data: data.slice(0, -10),
     }]);
 
     // Updatee Motor RPM chart
     d_2C_1.updateSeries([{
       name: 'RPM',
-      data: data.split(',').slice(0,-2),
+      data: data.slice(0,-10),
     }]);
-  } 
+  // } 
   responseParagraph.innerHTML = data;
 });
