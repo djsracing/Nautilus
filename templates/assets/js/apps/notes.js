@@ -10,8 +10,10 @@ var sline = {
     },
     events: {
       mounted: function(ctx, config) {
+        const len = ctx.w.config.series[0].data.length;
+        // console.log(ctx.w.config.series[0].data[len-1]);
+        // const highest1 = ctx.w.config.series[0].data[len-1];
         const highest1 = ctx.getHighestValueInSeries(0);
-        // const highest2 = ctx.getHighestValueInSeries(1);
 
         ctx.addPointAnnotation({
           x: new Date(ctx.w.globals.seriesX[0][ctx.w.globals.series[0].indexOf(highest1)]).getTime(),
@@ -55,7 +57,7 @@ var sline = {
   },
   series: [{
     name: "Coordinates",
-    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+    data: [0]
   }],
   title: {
     show: false,
