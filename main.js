@@ -1,7 +1,7 @@
 // Imports
 let {config} = require('./config');
 
-const {app, BrowserWindow, Menu, ipcMain} = require('electron');
+const {app, BrowserWindow, Menu, ipcMain, systemPreferences} = require('electron');
 const url = require('url');
 const path = require('path');
 const SerialPort = require('serialport');
@@ -31,6 +31,7 @@ let data;
 app.on('ready', function() {
 
     mainWindow = new BrowserWindow({
+        // frame:false,
         webPreferences: {
             // Enable Node.js integration
             nodeIntegration: true
@@ -152,5 +153,9 @@ exports.handleChangeMode = function handleChangeMode(targetWindow, mode) {
     exports.mode = mode;
 }
 
-exports.savePath = app.getPath('documents');
 exports.mode = 'light';
+
+exports.savePath = app.getPath('documents');
+if(systemPreferences.isDarkMode()){
+    exports.mode = 'dark';
+}
