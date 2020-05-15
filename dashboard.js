@@ -30,14 +30,12 @@ $(document).ready(async function(){
             $('link#modules').attr('href','assets/css/widgets/modules-widgets-dark.css');
             $('link#dash').attr('href','assets/css/dashboard/dash_2-dark.css');
             handleChangeMode(currentWindow, 'dark');
-            // titlebar.updateBackground(customTitlebar.Color.fromHex('#191E3A'));
         }else {
             $('#mode').attr('value','Switch To Night Mode');
             $('link#plugins').attr('href','assets/css/plugins-light.css');
             $('link#modules').attr('href','assets/css/widgets/modules-widgets-light.css');
             $('link#dash').attr('href','assets/css/dashboard/dash_2-light.css');
             handleChangeMode(currentWindow, 'light');
-            // titlebar.updateBackground(customTitlebar.Color.fromHex('#FFFFFF'));
         }
     });
 });
@@ -72,15 +70,6 @@ submitFormButton.addEventListener("submit", function(event) {
     handleForm(currentWindow, port_name)
 });
 
-// renderGraphsButton.addEventListener('change', function(event) {
-//     event.preventDefault(); // stop the form from submitting
-//     if (!this.checked) {
-//         renderGraphs = false;
-//     } else {
-//         renderGraphs = true;
-//     }
-// });
-
 slideButton.addEventListener('change', function(event) {
     event.preventDefault();
     if (!this.checked) {
@@ -109,11 +98,8 @@ ipcRenderer.on('action-port', function(event, args) {
 })
 
 ipcRenderer.on('ser-data', function(event, data) {
-    // console.log(data)
     for (var i = 0; i < 35; i++) {
-        // console.log('#sensor_'+eval(i+1)+'_data');
         const sensorDataField = document.querySelector('#sensor_' + eval(i + 1) + '_data');
-        // console.log(map_mode);
         var exp = config['Sensor #'+eval(i + 1)+'_mapping'+map_mode];
         var x = data[i] * 1.03;
         var value = eval(exp);
@@ -121,19 +107,15 @@ ipcRenderer.on('ser-data', function(event, data) {
     }
     $("#brakePressure").attr('aria-valuenow', data[10]);
     $("#brakePressure").attr('style', 'width:'+eval(data[10]*10)+'%');
-    // $( "#brakePressure" ).load(window.location.href + " #brakePressure" );
 
     $("#steeringAngle").attr('aria-valuenow', data[11]);
     $("#steeringAngle").attr('style', 'width:'+eval(data[11]*10)+'%');
-    // $("#steeringAngle").load(window.location.href + " #steeringAngle" );
 
     $("#cellTemp").attr('aria-valuenow', data[12]);
     $("#cellTemp").attr('style', 'width:'+eval(data[12]*10)+'%');
-    // $( "#cellTemp" ).load(window.location.href + " #cellTemp" );
 
     $("#throttle").attr('aria-valuenow', data[13]);
     $("#throttle").attr('style', 'width:'+eval(data[13]*10)+'%');
-    // $( "#throttle" ).load(window.location.href + " #throttle" );
 
     chart.appendData([{
         data: [data.slice(0,1)],
