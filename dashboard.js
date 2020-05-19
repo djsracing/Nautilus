@@ -8,6 +8,8 @@ const responseParagraph = document.getElementById('response');
 const submitMapButton = document.querySelector("#submit_map");
 const slideButton = document.querySelector("#slideBtn");
 
+var time_step = 1;
+
 $(document).ready(async function(){
     if(mode=='light') {
         $('#mode').attr('value','Switch To Night Mode');
@@ -38,6 +40,24 @@ $(document).ready(async function(){
             handleChangeMode(currentWindow, 'light');
         }
     });
+
+    chart.addPointAnnotation({
+        id: 'car-point',
+        x: time_step,
+        y: 0,
+        label: {
+          style: {
+            cssClass: 'd-none'
+          }
+        },
+        customSVG: {
+            SVG: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="#1b55e2" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg>',
+            cssClass: undefined,
+            offsetX: -8,
+            offsetY: 5
+        }
+      });
+    time_step++;
 });
 
 // Set mapping mode
@@ -102,9 +122,13 @@ ipcRenderer.on('ser-data', function(event, data) {
         const sensorDataField = document.querySelector('#sensor_' + eval(i + 1) + '_data');
         var exp = config['Sensor #'+eval(i + 1)+'_mapping'+map_mode];
         var x = data[i] * 1.03;
-        var value = eval(exp);
+        var value = eval(exp).toFixed(2);
         sensorDataField.innerHTML = value + ' ' + config['Sensor #' + eval(i + 1) + '_unit' + map_mode];
     }
+    console.log(data[0]);
+    document.getElementById("lapCount").innerHTML = data[10];
+    document.getElementById("lapTiming").innerHTML = 'Lap timing : '+data[11]*1.03+'s';
+
     $("#brakePressure").attr('aria-valuenow', data[10]);
     $("#brakePressure").attr('style', 'width:'+eval(data[10]*10)+'%');
 
@@ -117,7 +141,25 @@ ipcRenderer.on('ser-data', function(event, data) {
     $("#throttle").attr('aria-valuenow', data[13]);
     $("#throttle").attr('style', 'width:'+eval(data[13]*10)+'%');
 
+    chart.removeAnnotation('car-point');
     chart.appendData([{
         data: [data.slice(0,1)],
-      }]);
+    }]);
+    chart.addPointAnnotation({
+        id: 'car-point',
+        x: time_step,
+        y: data[0],
+        label: {
+        style: {
+            cssClass: 'd-none'
+        }
+    },
+    customSVG: {
+        SVG: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="#1b55e2" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg>',
+        cssClass: undefined,
+        offsetX: -8,
+        offsetY: 5
+    }
+    });
+    time_step++;
 });
