@@ -125,7 +125,11 @@ ipcRenderer.on('ser-data', function(event, data) {
         var value = eval(exp).toFixed(2);
         sensorDataField.innerHTML = value + ' ' + config['Sensor #' + eval(i + 1) + '_unit' + map_mode];
     }
-    console.log(data[0]);
+    document.getElementById("brakePressureStat").innerHTML = data[10];
+    document.getElementById("steeringAngleStat").innerHTML = data[11] * 10 + ' °';
+    document.getElementById("cellTempStat").innerHTML = data[12] * 10 + ' °C';
+    document.getElementById("throttleStat").innerHTML = data[13] * 10;
+
     document.getElementById("lapCount").innerHTML = data[10];
     document.getElementById("lapTiming").innerHTML = 'Lap timing : '+data[11]*1.03+'s';
 
