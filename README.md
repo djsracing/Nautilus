@@ -50,7 +50,8 @@ A new directory will be created in ```/release_builds``` that contains the compi
   |__ package-lock.json
   |__ package.json
   |__ main.js
-  |__ renderFile.js
+  |__ page_render_files.js
+  |__ ...
   |__ node_modules
   |__ release_builds
   |__ templates
@@ -62,7 +63,8 @@ A new directory will be created in ```/release_builds``` that contains the compi
       |__ plugins
       |__ sass
       |
-      |__ index.html
+      |__ pages.html
+      |__ ...
 ```
 ***
 
