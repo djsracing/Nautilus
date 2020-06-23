@@ -6,6 +6,7 @@ const url = require('url');
 const path = require('path');
 const SerialPort = require('serialport');
 const fs = require('fs');
+const { Console } = require('console');
 
 // Set global variables
 const _sharedObj = {config:config};
@@ -48,6 +49,12 @@ app.on('ready', function() {
     mainWindow.once('ready-to-show', function (){
         mainWindow.show();
         mainWindow.focus();
+    });
+
+    mainWindow.on('closed', function() {
+        const path = require('path');
+        const fs = require('fs');
+        fs.writeFileSync(path.join(exports.appConfigPath, './config.json'), JSON.stringify(config));
     });
 
     // Build menu from template
@@ -156,6 +163,8 @@ exports.handleChangeMode = function handleChangeMode(targetWindow, mode) {
 exports.mode = 'light';
 
 exports.savePath = app.getPath('documents');
+exports.appConfigPath = app.getPath('userData');
+
 if(systemPreferences.isDarkMode()){
     exports.mode = 'dark';
 }
