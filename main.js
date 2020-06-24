@@ -54,7 +54,7 @@ app.on('ready', function() {
     mainWindow.on('closed', function() {
         const path = require('path');
         const fs = require('fs');
-        fs.writeFileSync(path.join(exports.appConfigPath, './config.json'), JSON.stringify(config));
+        fs.writeFileSync(path.join(exports.appConfigPath, './config.json'), JSON.stringify(global.sharedObj.config));
     });
 
     // Build menu from template
