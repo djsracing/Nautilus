@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Blank Page | CORK - Multipurpose Bootstrap Dashboard Template </title>
+    <title>Analysis | Nautilus </title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
     <link href="assets/css/loader.css" rel="stylesheet" type="text/css" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -15,6 +15,8 @@
     
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
+    <link rel="stylesheet" type="text/css" href="plugins/jquery-step/jquery.steps.css">
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
 </head>
@@ -181,34 +183,60 @@
         </div>
         <!--  END SIDEBAR  -->
         
-        <!--  BEGIN CONTENT AREA  -->
-        <div id="content" class="main-content">
-            <div class="layout-px-spacing">
-
-                <div class="page-header">
-                    <div class="page-title">
-                        <h3>Blank Page</h3>
+                <!--  BEGIN CONTENT AREA  -->
+                <div id="content" class="main-content">
+                    <div class="layout-px-spacing">                
+                            
+                        <div class="account-settings-container layout-top-spacing">
+        
+                            <div class="account-content">
+                                <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
+                                    <div class="row">                
+                                        <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                                            <form id="edu-experience" class="section edu-experience">
+                                                <div class="info">
+                                                    <div class="widget-content widget-content-area">
+                                                        <h4>Analysis</h4>
+                                                        <div id="example-basic">
+                                                            <h3>Sensors</h3>
+                                                            <section>
+                                                                <p>Select upto 5 sensors.</p>                                                             
+                                                                <div class="n-chk">
+                                                                    <label class="new-control new-checkbox checkbox-primary">
+                                                                      <input type="checkbox" class="new-control-input">
+                                                                      <span class="new-control-indicator"></span>Sensor #1
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                            <h3>Sensors</h3>
+                                                            <section>
+                                                                <p>Select a lap</p>
+                                                            </section>
+                                                            <h3>Analyse</h3>
+                                                            <section> <p>Map</p> </section>
+                                                            <!-- <h3>Settings</h3>
+                                                            <section> <p>The next and previous buttons help you to navigate through your content.</p> </section> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
                     </div>
                 </div>
+                <!--  END CONTENT AREA  -->
 
-
-                <!-- CONTENT AREA -->
-                
-
-
-
-
-                <!-- CONTENT AREA -->
-
-            </div>
-        </div>
-        <!--  END CONTENT AREA  -->
     </div>
     <!-- END MAIN CONTAINER -->
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script>
-        let $ = require("jquery");
+        // let $ = require("jquery");
+        window.$ = window.jQuery = require('jquery');
     </script>
     <script>
         require("popper.js");
@@ -227,9 +255,19 @@
     <script src="assets/js/custom.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-
     <!-- BEGIN PAGE LEVEL ELECTRON SCRIPTS -->
     <script src="../analysis.js"></script>
+
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="plugins/jquery-step/jquery.steps.min.js"></script>
+    <script>
+        $("#example-basic").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            autoFocus: true,
+            cssClass: 'pill wizard'
+        });
+    </script>
 </body>
 </html>
