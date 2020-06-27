@@ -1,5 +1,5 @@
 const {remote, ipcRenderer} = require('electron');
-const {handleForm, handleNameChange, handleMapChange, savePath, handleLoadConfig, mode, handleChangeMode} = remote.require('./main');
+const {handleForm, handleNameChange, handleMapChange, savePath, handleLoadConfig, mode, handleChangeMode, handleResetConfig} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
 const Swal = require('sweetalert2');
 
@@ -8,6 +8,7 @@ const responseParagraph = document.getElementById('response');
 const submitMapButton = document.querySelector("#submitMap");
 const submitNameButton = document.querySelector("#submitName");
 const saveConfigButton = document.querySelector("#saveConfig");
+const resetConfigButton = document.querySelector("#resetDefault");
 const loadConfigButton = document.querySelector("#loadConfigForm");
 
 $(document).ready(async function(){
@@ -125,6 +126,16 @@ saveConfigButton.addEventListener('click', function(event) {
     const fs = require('fs');
     fs.writeFileSync(path.join(savePath, './config.json'), JSON.stringify(config));
     Swal.fire("Successful", "Saved to Documents as 'config.json'");
+});
+
+resetConfigButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    handleResetConfig(currentWindow);
+    initPage();
+});
+
+ipcRenderer.on('reset-success', function(event, args) {
+    Swal.fire("Successful");
 });
 
 loadConfigButton.addEventListener('submit', function(event) {

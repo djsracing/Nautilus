@@ -8,12 +8,30 @@ const SerialPort = require('serialport');
 const fs = require('fs');
 const { Console } = require('console');
 
+// Set exports
+exports.mode = 'light';
+
+exports.savePath = app.getPath('documents');
+exports.appConfigPath = app.getPath('userData');
+
+if(systemPreferences.isDarkMode()){
+    exports.mode = 'dark';
+}
+
 // Set global variables
 const _sharedObj = {config:config};
 
 global.sharedObj = _sharedObj;
 // fs.writeFileSync('./test.json', JSON.stringify(config))
 // console.log(app.getPath('documents'));
+try {
+    let newConfig = JSON.parse(fs.readFileSync(path.join(exports.appConfigPath, './config.json'), 'utf8'));
+    global.sharedObj.config = newConfig;
+    console.log("Continuing last session.");
+}catch (err){
+    console.log(err);
+    console.log("Couldn't load last session.");
+}
 
 // Set environment
 process.env.NODE_ENV = 'development';
@@ -156,15 +174,11 @@ exports.handleLoadConfig = function handleLoadConfig(targetWindow, fileName) {
     }
 }
 
-exports.handleChangeMode = function handleChangeMode(targetWindow, mode) {
-    exports.mode = mode;
+exports.handleResetConfig = function handleResetConfig(targetWindow) {
+    global.sharedObj.config = config;
+    targetWindow.webContents.send('reset-success');
 }
 
-exports.mode = 'light';
-
-exports.savePath = app.getPath('documents');
-exports.appConfigPath = app.getPath('userData');
-
-if(systemPreferences.isDarkMode()){
-    exports.mode = 'dark';
+exports.handleChangeMode = function handleChangeMode(targetWindow, mode) {
+    exports.mode = mode;
 }
