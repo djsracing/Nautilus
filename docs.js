@@ -15,7 +15,20 @@ $(document).ready(async function(){
     document.body.removeChild(load_screen);
     
     $('#mode').click(async function(){
-        await delay(300);
+        var loadDiv = document.createElement("div");
+        var loader = document.createElement("div");
+        var loaderContent = document.createElement("div");
+        var spinner = document.createElement("div");
+
+        loadDiv.setAttribute("id", "load_screen");
+        loader.setAttribute("class", "loader");
+        loaderContent.setAttribute("class", "loader-content");
+        spinner.setAttribute("class", "spinner-grow align-self-center");
+        
+        document.getElementById("mainBody").appendChild(loadDiv);
+        loadDiv.appendChild(loader);
+        loader.appendChild(loaderContent);
+        loaderContent.appendChild(spinner);
         if($('link#plugins').attr('href')=="assets/css/plugins-light.css"){
             $('#mode').attr('value','Switch To Day Mode')
             $('link#plugins').attr('href','assets/css/plugins-dark.css');
@@ -27,5 +40,8 @@ $(document).ready(async function(){
             $('link#scroll').attr('href','assets/css/scrollspyNav-light.css');
             handleChangeMode(currentWindow, 'light');
         }
+        await delay(800);
+        var load_screen = document.getElementById("load_screen");
+        load_screen.parentNode.removeChild(load_screen);
     });
 });
