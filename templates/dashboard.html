@@ -21,6 +21,8 @@
     <link href="assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/dashboard/dash_2-light.css" rel="stylesheet" type="text/css" id="dash"/>
     <link rel="stylesheet" type="text/css" href="assets/css/widgets/modules-widgets-dark.css" id="modules">
+    <link href="plugins/animate/animate.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/components/custom-modal-dark.css" rel="stylesheet" type="text/css" id="modals">
     <!-- END PAGE LEVEL STYLES -->
     <!-- LOADER -->
     <link href="assets/css/loader.css" rel="stylesheet" type="text/css" />
@@ -43,6 +45,14 @@
 
             <ul class="navbar-item flex-row ml-auto">
 
+                <li>
+                    <!-- <button type="button" class="btn btn-primary mb-2 mr-2" data-toggle="modal" data-target="#exampleModal">
+                        Launch modal
+                      </button> -->
+                    <a href="javascript:void(0);" class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                    </a>
+                </li>
                 <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1" id="portContainer">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings">
@@ -608,6 +618,35 @@
         </div>
         <!--  END CONTENT AREA  -->
 
+    </div>
+    <!-- Mapping Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create a Track Map</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>⠀⠀Kalman Filter⠀⠀</p>
+                        <!-- <p>Mapping #1</p> -->
+                        <label class="switch s-primary  mb-4 mr-2">
+                            <input type="checkbox" checked="" id="kfBtn">
+                            <span class="slider round"></span>
+                        </label>
+                        <!-- <p>Mapping #2</p> -->
+                    </div>
+                    <p class="modal-text">Mauris mi tellus, pharetra vel mattis sed, tempus ultrices eros. Phasellus egestas sit amet velit sed luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse potenti. Vivamus ultrices sed urna ac pulvinar. Ut sit amet ullamcorper mi. </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" id="saveTrackMap"><i class="flaticon-cancel-12"></i>Reset</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Save</button>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- END MAIN CONTAINER -->
     <!-- Electron Styles -->

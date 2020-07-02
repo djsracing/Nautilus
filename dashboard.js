@@ -16,6 +16,7 @@ $(document).ready(async function(){
         $('link#plugins').attr('href','assets/css/plugins-light.css');
         $('link#modules').attr('href','assets/css/widgets/modules-widgets-light.css');
         $('link#dash').attr('href','assets/css/dashboard/dash_2-light.css');
+        $('link#modals').attr('href','assets/css/components/custom-modal-light.css');
     }
     
     const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -44,12 +45,14 @@ $(document).ready(async function(){
             $('link#plugins').attr('href','assets/css/plugins-dark.css');
             $('link#modules').attr('href','assets/css/widgets/modules-widgets-dark.css');
             $('link#dash').attr('href','assets/css/dashboard/dash_2-dark.css');
+            $('link#modals').attr('href','assets/css/components/custom-modal-dark.css');
             $('#mode').attr('value','Switch To Day Mode')
             handleChangeMode(currentWindow, 'dark');
         }else {
             $('link#plugins').attr('href','assets/css/plugins-light.css');
             $('link#modules').attr('href','assets/css/widgets/modules-widgets-light.css');
             $('link#dash').attr('href','assets/css/dashboard/dash_2-light.css');
+            $('link#modals').attr('href','assets/css/components/custom-modal-light.css');
             $('#mode').attr('value','Switch To Night Mode');
             handleChangeMode(currentWindow, 'light');
         }
@@ -84,7 +87,9 @@ var map_mode = '1';
 function initPage() {
     for (var i = 1; i <= 35; i++) {
         const sensorField = document.querySelector('#sensor_' + i);
+        const sensorDataField = document.querySelector('#sensor_' + i + '_data');
         sensorField.innerHTML = config['Sensor #' + i];
+        sensorDataField.innerHTML = '0 ' + config['Sensor #' + eval(i + 1) + '_unit' + map_mode];
     }
 }
 
