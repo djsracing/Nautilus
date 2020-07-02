@@ -14,9 +14,9 @@
     <!-- END GLOBAL MANDATORY STYLES -->
     
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="plugins/jquery-step/jquery.steps.css">
+    <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min-dark.css" id="select2"/>
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
 </head>
@@ -55,11 +55,6 @@
                         </div>
                         <p id="response"></p>
                         <input type=button id="mode" text="Switch Mode" class="btn btn-primary" value="Switch To Day Mode" />
-                        <!-- <select class="form-control  basic">
-                            <option selected="selected">orange</option>
-                            <option>white</option>
-                            <option>purple</option>
-                        </select> -->
                     </div>
                 </li>
             </ul>
@@ -198,19 +193,48 @@
                                                     <div class="widget-content widget-content-area">
                                                         <h4>Analysis</h4>
                                                         <div id="example-basic">
-                                                            <h3>Sensors</h3>
+                                                            <h3>Setup</h3>
                                                             <section>
-                                                                <p>Select upto 5 sensors.</p>                                                             
-                                                                <div class="n-chk">
-                                                                    <label class="new-control new-checkbox checkbox-primary">
-                                                                      <input type="checkbox" class="new-control-input">
-                                                                      <span class="new-control-indicator"></span>Sensor #1
-                                                                    </label>
-                                                                </div>
-                                                            </section>
-                                                            <h3>Lap</h3>
-                                                            <section>
-                                                                <p>Select a lap</p>
+                                                                <br>
+                                                                <br>
+                                                                <p>Select upto 5 sensors.</p>  
+                                                                <select class="form-control tagging" multiple="multiple" id="sensors">
+                                                                    <option id="sensor_1">Sensor #1</option>
+                                                                    <option id="sensor_2">Sensor #2</option>
+                                                                    <option id="sensor_3">Sensor #3</option>
+                                                                    <option id="sensor_4">Sensor #4</option>
+                                                                    <option id="sensor_5">Sensor #5</option>
+                                                                    <option id="sensor_6">Sensor #6</option>
+                                                                    <option id="sensor_7">Sensor #7</option>
+                                                                    <option id="sensor_8">Sensor #8</option>
+                                                                    <option id="sensor_9">Sensor #9</option>
+                                                                    <option id="sensor_10">Sensor #10</option>
+                                                                    <option id="sensor_11">Sensor #11</option>
+                                                                    <option id="sensor_12">Sensor #12</option>
+                                                                    <option id="sensor_13">Sensor #13</option>
+                                                                    <option id="sensor_14">Sensor #14</option>
+                                                                    <option id="sensor_15">Sensor #15</option>
+                                                                    <option id="sensor_16">Sensor #16</option>
+                                                                    <option id="sensor_17">Sensor #17</option>
+                                                                    <option id="sensor_18">Sensor #18</option>
+                                                                    <option id="sensor_19">Sensor #19</option>
+                                                                    <option id="sensor_20">Sensor #20</option>
+                                                                    <option id="sensor_21">Sensor #21</option>
+                                                                    <option id="sensor_22">Sensor #22</option>
+                                                                    <option id="sensor_23">Sensor #23</option>
+                                                                    <option id="sensor_24">Sensor #24</option>
+                                                                    <option id="sensor_25">Sensor #25</option>
+                                                                    <option id="sensor_26">Sensor #26</option>
+                                                                    <option id="sensor_27">Sensor #27</option>
+                                                                    <option id="sensor_28">Sensor #28</option>
+                                                                    <option id="sensor_29">Sensor #29</option>
+                                                                    <option id="sensor_30">Sensor #30</option>
+                                                                    <option id="sensor_31">Sensor #31</option>
+                                                                    <option id="sensor_32">Sensor #32</option>
+                                                                    <option id="sensor_33">Sensor #33</option>
+                                                                    <option id="sensor_34">Sensor #34</option>
+                                                                    <option id="sensor_35">Sensor #35</option>
+                                                                </select>
                                                             </section>
                                                             <h3>Analyse</h3>
                                                             <section> <p>Map</p> </section>
@@ -240,9 +264,8 @@
     </script>
     <script>
         require("popper.js");
-    </script>
-    <script>
         require("bootstrap");
+        require("select2")($);
     </script>
     <script src="plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="assets/js/app.js"></script>
@@ -260,6 +283,8 @@
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="plugins/jquery-step/jquery.steps.min.js"></script>
+    <script src="plugins/select2/custom-select2.js"></script>
+    <script src="assets/js/custom.js"></script>
     <script>
         $("#example-basic").steps({
             headerTag: "h3",
@@ -267,6 +292,10 @@
             transitionEffect: "slideLeft",
             autoFocus: true,
             cssClass: 'pill wizard'
+        });
+        $("#sensors").select2({
+            tags: true,
+            maximumSelectionLength: 5
         });
     </script>
 </body>

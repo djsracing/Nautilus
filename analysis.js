@@ -1,9 +1,16 @@
 const {remote, ipcRenderer, currentWindow} = require('electron');
 const {handleChangeMode, mode} = remote.require('./main');
+var {config} = remote.getGlobal('sharedObj');
+
+function initPage() {
+    for (var i = 1; i <= 35; i++) {
+        const sensorField = document.querySelector('#sensor_' + i);
+        sensorField.innerHTML = config['Sensor #' + i];
+    }
+}
 
 $(document).ready(async function(){
-    // var {mode} = remote.require('./main');
-    // App.init();
+    initPage();
     if(mode=='light') {
         $('#mode').attr('value','Switch To Night Mode');
         $('link#plugins').attr('href','assets/css/plugins-light.css');
