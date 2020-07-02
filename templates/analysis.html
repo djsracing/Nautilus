@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="plugins/jquery-step/jquery.steps.css">
     <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min-dark.css" id="select2"/>
+    <link href="plugins/file-upload/file-upload-with-preview-dark.min.css" rel="stylesheet" type="text/css" id="fileUpload">
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
 </head>
@@ -29,7 +30,9 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container fixed-top">
+
         <header class="header navbar navbar-expand-sm expand-header">
+            
             <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -37,7 +40,6 @@
                 </svg></a>
 
             <ul class="navbar-item flex-row ml-auto">
-
                 <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1" id="portContainer">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings">
@@ -235,6 +237,22 @@
                                                                     <option id="sensor_34">Sensor #34</option>
                                                                     <option id="sensor_35">Sensor #35</option>
                                                                 </select>
+                                                                <br>
+                                                                <br>
+                                                                <br>
+                                                                <p>Load Session (Optional)</p>
+                                                                <form id="loadSessionForm">
+                                                                    <div class="custom-file-container" data-upload-id="myFirstImage">
+                                                                        <label>Upload (Single File) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+                                                                        <label class="custom-file-container__custom-file">
+                                                                            <input type="file" id="fileNameField" class="custom-file-container__custom-file__custom-file-input" accept="application/JSON" required="">
+                                                                            <input type="hidden" name="MAX_FILE_SIZE" value="104857603333" />
+                                                                            <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                                                        </label>
+                                                                        <div class="custom-file-container__image-preview" hidden></div>
+                                                                    </div>
+                                                                    <input type="submit" class="mt-4 btn btn-primary success" id="loadSessionBtn"/>
+                                                                </form>
                                                             </section>
                                                             <h3>Analyse</h3>
                                                             <section> <p>Map</p> </section>
@@ -285,6 +303,7 @@
     <script src="plugins/jquery-step/jquery.steps.min.js"></script>
     <script src="plugins/select2/custom-select2.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script src="plugins/file-upload/file-upload-with-preview.min.js"></script>
     <script>
         $("#example-basic").steps({
             headerTag: "h3",
@@ -297,6 +316,7 @@
             tags: true,
             maximumSelectionLength: 5
         });
+        var firstUpload = new FileUploadWithPreview('myFirstImage');
     </script>
 </body>
 </html>
