@@ -1,7 +1,8 @@
-const {remote, ipcRenderer} = require('electron');
-const {handleForm, mode, handleChangeMode} = remote.require('./main');
+const {remote, ipcRenderer, ipcMain} = require('electron');
+const { error } = require('jquery');
+const {handleForm, mode, handleChangeMode, handleChangeTrackMap} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
-var {config} = remote.getGlobal('sharedObj');
+var {config, trackMap} = remote.getGlobal('sharedObj');
 
 const submitFormButton = document.querySelector("#portForm");
 const responseParagraph = document.getElementById('response');
@@ -9,6 +10,12 @@ const submitMapButton = document.querySelector("#submit_map");
 const slideButton = document.querySelector("#slideBtn");
 
 var time_step = 1;
+
+// Temporary variables used in mapping
+var trackMapInitialized = false;
+var switchToTrackMapping = false;
+
+var map = [];
 
 $(document).ready(async function(){
     if(mode=='light') {
@@ -85,11 +92,14 @@ var map_mode = '1';
 
 // Initialize sensors view
 function initPage() {
+    chart.updateSeries([{
+        data:trackMap
+    }]);
     for (var i = 1; i <= 35; i++) {
         const sensorField = document.querySelector('#sensor_' + i);
         const sensorDataField = document.querySelector('#sensor_' + i + '_data');
         sensorField.innerHTML = config['Sensor #' + i];
-        sensorDataField.innerHTML = '0 ' + config['Sensor #' + eval(i + 1) + '_unit' + map_mode];
+        sensorDataField.innerHTML = '0 ' + config['Sensor #' + i + '_unit' + map_mode];
     }
 }
 
@@ -140,52 +150,97 @@ ipcRenderer.on('action-port', function(event, args) {
 })
 
 ipcRenderer.on('ser-data', function(event, data) {
-    for (var i = 0; i < 35; i++) {
-        const sensorDataField = document.querySelector('#sensor_' + eval(i + 1) + '_data');
-        var exp = config['Sensor #'+eval(i + 1)+'_mapping'+map_mode];
-        var x = data[i] * 1.03;
-        var value = eval(exp).toFixed(2);
-        sensorDataField.innerHTML = value + ' ' + config['Sensor #' + eval(i + 1) + '_unit' + map_mode];
-    }
-    document.getElementById("brakePressureStat").innerHTML = data[10];
-    document.getElementById("steeringAngleStat").innerHTML = data[11] * 10 + ' °';
-    document.getElementById("cellTempStat").innerHTML = data[12] * 10 + ' °C';
-    document.getElementById("throttleStat").innerHTML = data[13] * 10;
-
-    document.getElementById("lapCount").innerHTML = data[10];
-    document.getElementById("lapTiming").innerHTML = 'Lap timing : '+data[11]*1.03+'s';
-
-    $("#brakePressure").attr('aria-valuenow', data[10]);
-    $("#brakePressure").attr('style', 'width:'+eval(data[10]*10)+'%');
-
-    $("#steeringAngle").attr('aria-valuenow', data[11]);
-    $("#steeringAngle").attr('style', 'width:'+eval(data[11]*10)+'%');
-
-    $("#cellTemp").attr('aria-valuenow', data[12]);
-    $("#cellTemp").attr('style', 'width:'+eval(data[12]*10)+'%');
-
-    $("#throttle").attr('aria-valuenow', data[13]);
-    $("#throttle").attr('style', 'width:'+eval(data[13]*10)+'%');
-
-    chart.removeAnnotation('car-point');
-    chart.appendData([{
-        data: [data.slice(0,1)],
-    }]);
-    chart.addPointAnnotation({
-        id: 'car-point',
-        x: time_step,
-        y: data[0],
-        label: {
-        style: {
-            cssClass: 'd-none'
+    if(switchToTrackMapping) {
+        map.push({
+            x:data[0],
+            y:data[1]
+        });
+        mapChart.updateSeries([{
+            data: map
+        }]);
+    }else {
+        for (var i = 0; i < 35; i++) {
+            const sensorDataField = document.querySelector('#sensor_' + eval(i + 1) + '_data');
+            var exp = config['Sensor #'+eval(i + 1)+'_mapping'+map_mode];
+            var x = data[i] * 1.03;
+            var value = eval(exp).toFixed(2);
+            sensorDataField.innerHTML = value + ' ' + config['Sensor #' + eval(i + 1) + '_unit' + map_mode];
         }
-    },
-    customSVG: {
-        SVG: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="#1b55e2" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg>',
-        cssClass: undefined,
-        offsetX: -8,
-        offsetY: 5
+        document.getElementById("brakePressureStat").innerHTML = data[10];
+        document.getElementById("steeringAngleStat").innerHTML = data[11] * 10 + ' °';
+        document.getElementById("cellTempStat").innerHTML = data[12] * 10 + ' °C';
+        document.getElementById("throttleStat").innerHTML = data[13] * 10;
+
+        document.getElementById("lapCount").innerHTML = data[10];
+        document.getElementById("lapTiming").innerHTML = 'Lap timing : '+data[11]*1.03+'s';
+
+        $("#brakePressure").attr('aria-valuenow', data[10]);
+        $("#brakePressure").attr('style', 'width:'+eval(data[10]*10)+'%');
+
+        $("#steeringAngle").attr('aria-valuenow', data[11]);
+        $("#steeringAngle").attr('style', 'width:'+eval(data[11]*10)+'%');
+
+        $("#cellTemp").attr('aria-valuenow', data[12]);
+        $("#cellTemp").attr('style', 'width:'+eval(data[12]*10)+'%');
+
+        $("#throttle").attr('aria-valuenow', data[13]);
+        $("#throttle").attr('style', 'width:'+eval(data[13]*10)+'%');
+
+        try{
+            if(!trackMapInitialized) {
+                chart.removeAnnotation('car-point');
+            }
+
+            chart.addPointAnnotation({
+                id: 'car-point',
+                x: data[0],
+                y: data[1],
+                label: {
+                style: {
+                    cssClass: 'd-none'
+                }
+            },
+            customSVG: {
+                SVG: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="#1b55e2" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg>',
+                cssClass: undefined,
+                offsetX: -8,
+                offsetY: 5
+            }
+            });
+            time_step++;
+        }catch {
+            console.log("Error");
+        }
     }
-    });
-    time_step++;
+});
+
+$('#loadTrackMapBtn').click(function() {
+    map = []
+    switchToTrackMapping = true;
+});
+
+$("#saveSessionBtn").click(function() {
+    Snackbar.show({text: 'Session saved.', duration: 5000});
+});
+
+$("#exampleModal").on("hidden.bs.modal", function () {
+    switchToTrackMapping = false;
+});
+
+$('#resetTrackMap').click(function() {
+    map = []
+    mapChart.updateSeries([{
+        data: map
+    }]);
+});
+
+$("#saveTrackMap").click(function() {
+    switchToTrackMapping = false;
+    trackMap = map;
+    handleChangeTrackMap(currentWindow, map);
+});
+
+ipcRenderer.on('track-map-change-success', function(event, args) {
+    Snackbar.show({text: 'Track saved.', duration: 5000});
+    initPage();
 });

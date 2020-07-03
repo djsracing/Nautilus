@@ -18,8 +18,14 @@ if(systemPreferences.isDarkMode()){
     exports.mode = 'dark';
 }
 
+var session = {};
+var trackMap = {
+    'lat': [],
+    'long': [], 
+}
+
 // Set global variables
-const _sharedObj = {config:config};
+const _sharedObj = {config:config, session:session, trackMap:trackMap};
 
 global.sharedObj = _sharedObj;
 // fs.writeFileSync('./test.json', JSON.stringify(config))
@@ -181,4 +187,9 @@ exports.handleResetConfig = function handleResetConfig(targetWindow) {
 
 exports.handleChangeMode = function handleChangeMode(targetWindow, mode) {
     exports.mode = mode;
+}
+
+exports.handleChangeTrackMap = function handleChangeTrackMap(targetWindow, map) {
+    global.sharedObj.trackMap = map;
+    targetWindow.webContents.send('track-map-change-success');
 }
