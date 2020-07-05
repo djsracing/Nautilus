@@ -191,6 +191,7 @@ exports.handleChangeSessionPath = function handleChangeSessionPath(targetWindow,
     }
     
     global.sharedObj.config["sessionSavePath"] = sessionSavePath;
+    global.sharedObj.sessionSavePath = sessionSavePath;
     targetWindow.webContents.send('session-change-success');
 }
 
