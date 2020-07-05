@@ -26,7 +26,7 @@ var sessionSavePath = path.join(app.getPath('documents'), './Nautilus/');
 var trackMap = [];
 
 // Set global variables
-const _sharedObj = {config:config, session:session, trackMap:trackMap};
+const _sharedObj = {config:config, session:session, trackMap:trackMap, sessionSavePath:sessionSavePath};
 
 global.sharedObj = _sharedObj;
 // fs.writeFileSync('./test.json', JSON.stringify(config))
@@ -184,6 +184,12 @@ exports.handleSaveSession = function handleSaveSession(targetWindow) {
 
 exports.handleChangeSessionPath = function handleChangeSessionPath(targetWindow, pathName) {
     sessionSavePath = pathName;
+    if(process.platform == 'darwin' || process.platform == 'linux') {
+        sessionSavePath += '/';
+    }else {
+        sessionSavePath += '\\';
+    }
+    
     global.sharedObj.config["sessionSavePath"] = sessionSavePath;
     targetWindow.webContents.send('session-change-success');
 }

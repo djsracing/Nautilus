@@ -659,15 +659,8 @@
                                         <div id="sessionSavePath">
                                             <h2>Session Save Path</h2>
                                             <form id="changeSessionPathForm">
-                                                <div class="custom-file-container" data-upload-id="sessionSaveForm">
-                                                    <label>Upload (Single File) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
-                                                    <label class="custom-file-container__custom-file" >
-                                                        <!-- <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*"> -->
-                                                        <!-- <input type="hidden" name="MAX_FILE_SIZE" value="10485760" /> -->
-                                                        <span class="custom-file-container__custom-file__custom-file-control"></span>
-                                                    </label>
-                                                    <div class="custom-file-container__image-preview" hidden></div>
-                                                </div>
+                                                <p id="currentSessionSavePath">Undefined</p>
+                                                <button class="btn btn-primary mb-2" id="choosePathBtn">Change</button>
                                             </form>
                                         </div>
                                     </div>
@@ -732,7 +725,6 @@
     </script>
     <script>
         var firstUpload = new FileUploadWithPreview('myFirstImage');
-        var sessionSaveForm = new FileUploadWithPreview('sessionSaveForm');
     </script>
     <!-- BEGIN PAGE ELECTRON SCRIPTS -->
     <script src="../customize.js"></script>

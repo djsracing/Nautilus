@@ -1,7 +1,9 @@
 const {remote, ipcRenderer} = require('electron');
-const {handleForm, handleNameChange, handleMapChange, savePath, handleLoadConfig, mode, handleChangeMode, handleResetConfig} = remote.require('./main');
+const {handleForm, handleNameChange, handleMapChange, savePath, handleLoadConfig, mode, handleChangeMode, handleResetConfig, handleChangeSessionPath} = remote.require('./main');
+const {dialog} = require('electron').remote
 const currentWindow = remote.getCurrentWindow();
 const Swal = require('sweetalert2');
+var {config, sessionSavePath} = remote.getGlobal('sharedObj');
 
 const submitFormButton = document.querySelector("#portForm");
 const responseParagraph = document.getElementById('response');
@@ -10,6 +12,7 @@ const submitNameButton = document.querySelector("#submitName");
 const saveConfigButton = document.querySelector("#saveConfig");
 const resetConfigButton = document.querySelector("#resetDefault");
 const loadConfigButton = document.querySelector("#loadConfigForm");
+const choosePathButton = document.querySelector("#choosePathBtn");
 
 $(document).ready(async function(){
     // var {mode} = remote.require('./main');
@@ -68,7 +71,8 @@ $(document).ready(async function(){
 });
 
 function initPage() {
-    var {config} = remote.getGlobal('sharedObj');
+    document.getElementById("currentSessionSavePath").innerHTML = 'Current path: ' + sessionSavePath;
+
     for (var i = 1; i <= 35; i++) {
         const sensorNameField = document.querySelector('#sensor_' + i + '_name');
         sensorNameField.innerHTML = config['Sensor #' + i];
@@ -165,6 +169,26 @@ ipcRenderer.on('config-failure', function(event, args) {
     Swal.fire('Error', 'Bad file format.');
 });
 
+choosePathButton.addEventListener('click', function(event, args) {
+    event.preventDefault();
+    dialog.showOpenDialog({
+            properties: ['openDirectory']
+        }, callbackSession
+    ).then(result => {
+        if(!result.canceled) {
+            sessionSavePath = result.filePaths[0];
+            handleChangeSessionPath(currentWindow, sessionSavePath);
+            document.getElementById("currentSessionSavePath").innerHTML = 'Current path: ' + sessionSavePath;
+        }
+    }).catch(err => {
+        console.log(err)
+    });
+});
+
+function callbackSession(filename) {
+    console.log(filename);
+}
+
 ipcRenderer.on('action-port', function(event, args) {
     if (!portToggle) {
         document.getElementById("portContainer").setAttribute("class", "nav-item dropdown user-profile-dropdown order-lg-0 order-1 show")
@@ -178,7 +202,3 @@ ipcRenderer.on('action-port', function(event, args) {
         portToggle = false;
     }
 })
-
-submitNameButton.addEventListener("submit", function(event) {
-    event.preventDefault(); // stop the form from submitting
-});
