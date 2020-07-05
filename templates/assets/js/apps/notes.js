@@ -17,7 +17,7 @@ var sline = {
     axisBorder: {
       show: false,
     },
-    type: 'numeric'
+    // type: 'numeric'
   },
   yaxis: {
     labels: {
@@ -76,7 +76,7 @@ var mapLine = {
     axisBorder: {
       show: false,
     },
-    type: 'numeric'
+    // type: 'numeric'
   },
   yaxis: {
     labels: {

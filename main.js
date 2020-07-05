@@ -6,7 +6,7 @@ const url = require('url');
 const path = require('path');
 const SerialPort = require('serialport');
 const fs = require('fs');
-const { Console } = require('console');
+const mkdirp = require('mkdirp');
 
 // Set exports
 exports.mode = 'light';
@@ -19,10 +19,11 @@ if(systemPreferences.isDarkMode()){
 }
 
 var session = {};
-var trackMap = {
-    'lat': [],
-    'long': [], 
-}
+var d = new Date()
+var sessionTimestamp = d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate() + '_' + d.getHours() + '_' + d.getMinutes() + '_' + d.getSeconds();
+var sessionSavePath = path.join(app.getPath('documents'), './Nautilus/');
+
+var trackMap = [];
 
 // Set global variables
 const _sharedObj = {config:config, session:session, trackMap:trackMap};
@@ -166,6 +167,25 @@ exports.handleMapChange = function handleMapChange(targetWindow, sensorID, map1,
     global.sharedObj.config[sensorID+'_mapping2'] = map2;
     global.sharedObj.config[sensorID+'_unit2'] = unit2;
     targetWindow.webContents.send('map-changed');
+}
+
+exports.handleSaveSession = function handleSaveSession(targetWindow) {
+    try {
+        var tempPath = sessionSavePath + sessionTimestamp + '.json'
+        mkdirp(sessionSavePath);
+        fs.writeFileSync(tempPath, JSON.stringify(session));
+        targetWindow.webContents.send('session-save-success');
+    }catch (err){
+        console.log(err);
+        console.log("Couldn't save session.");
+        targetWindow.webContents.send('session-save-failure');
+    }
+}
+
+exports.handleChangeSessionPath = function handleChangeSessionPath(targetWindow, pathName) {
+    sessionSavePath = pathName;
+    global.sharedObj.config["sessionSavePath"] = sessionSavePath;
+    targetWindow.webContents.send('session-change-success');
 }
 
 exports.handleLoadConfig = function handleLoadConfig(targetWindow, fileName) {

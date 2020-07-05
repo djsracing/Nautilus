@@ -1,6 +1,6 @@
 const {remote, ipcRenderer, ipcMain} = require('electron');
 const { error } = require('jquery');
-const {handleForm, mode, handleChangeMode, handleChangeTrackMap} = remote.require('./main');
+const {handleForm, mode, handleChangeMode, handleChangeTrackMap, handleSaveSession} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
 var {config, trackMap} = remote.getGlobal('sharedObj');
 
@@ -219,8 +219,21 @@ $('#loadTrackMapBtn').click(function() {
     switchToTrackMapping = true;
 });
 
-$("#saveSessionBtn").click(function() {
+$("#saveSessionBtn").click(function(event, args) {
+    event.preventDefault();
+    handleSaveSession(currentWindow);
+});
+
+ipcRenderer.on('session-save-success', function() {
     Snackbar.show({text: 'Session saved.', duration: 5000});
+});
+
+ipcRenderer.on('session-save-failure', function() {
+    Snackbar.show({
+        text: "Couldn't save current session.",
+        actionTextColor: '#fff',
+        backgroundColor: '#e2a03f'
+    });
 });
 
 $("#exampleModal").on("hidden.bs.modal", function () {
