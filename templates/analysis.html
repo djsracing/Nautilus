@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="plugins/jquery-step/jquery.steps.css">
     <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min-dark.css" id="select2"/>
+    <link rel="stylesheet" type="text/css" href="plugins/bootstrap-select/bootstrap-select.min.css">
     <link href="plugins/file-upload/file-upload-with-preview-dark.min.css" rel="stylesheet" type="text/css" id="fileUpload">
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
@@ -255,7 +256,18 @@
                                                                 </form>
                                                             </section>
                                                             <h3>Analyse</h3>
-                                                            <section> <p>Map</p> </section>
+                                                            <section>
+                                                                <select class="placeholder js-states form-control" id="lapSelect">
+                                                                    <option>Select a Lap</option>
+                                                                    <option value="1">Lap 1</option>
+                                                                    <option value="2">Lap 2</option>
+                                                                    <option value="3">Lap 3</option>
+                                                                    <option value="4">Lap 4</option>
+                                                                    <option value="5">Lap 5</option>
+                                                                </select>
+                                                                <br>
+                                                                <p>Map</p> 
+                                                            </section>
                                                             <!-- <h3>Settings</h3>
                                                             <section> <p>The next and previous buttons help you to navigate through your content.</p> </section> -->
                                                         </div>
@@ -303,6 +315,7 @@
     <script src="plugins/jquery-step/jquery.steps.min.js"></script>
     <script src="plugins/select2/custom-select2.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="plugins/file-upload/file-upload-with-preview.min.js"></script>
     <script>
         $("#example-basic").steps({
@@ -315,6 +328,10 @@
         $("#sensors").select2({
             tags: true,
             maximumSelectionLength: 5
+        });
+        $("#lapSelect").select2({
+            placeholder: "Make a Selection",
+            allowClear: false
         });
         var firstUpload = new FileUploadWithPreview('myFirstImage');
     </script>
