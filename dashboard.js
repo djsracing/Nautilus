@@ -1,13 +1,13 @@
 const {remote, ipcRenderer, ipcMain} = require('electron');
 const { error } = require('jquery');
-const {handleForm, mode, handleChangeMode, handleChangeTrackMap, handleSaveSession} = remote.require('./main');
+const {handleForm, mode, handleChangeMode, handleChangeTrackMap, handleSaveSession, handleNewSession, handleConnectToCloud, handleDisconnectToCloud} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
-var {config, trackMap} = remote.getGlobal('sharedObj');
+var {config, trackMap, connectedToCloud, connectedToSer, cloudURL, serPortName} = remote.getGlobal('sharedObj');
 
 const submitFormButton = document.querySelector("#portForm");
 const responseParagraph = document.getElementById('response');
-const submitMapButton = document.querySelector("#submit_map");
 const slideButton = document.querySelector("#slideBtn");
+const connectToCloudForm = document.querySelector("#cloudForm")
 
 var time_step = 1;
 
@@ -92,6 +92,19 @@ var map_mode = '1';
 
 // Initialize sensors view
 function initPage() {
+    var {connectedToCloud, connectedToSer, cloudURL, serPortName} = remote.getGlobal('sharedObj');
+    var btn = document.getElementById("cloudConnectBtn");
+    if(connectedToCloud) {
+        console.log(cloudURL);
+        $("#basic-url").attr('value', cloudURL);
+        responseParagraph.innerHTML = "Connected to AWS.";
+        $("#cloudConnectBtn").attr('class', 'btn btn-danger mt-2 mb-2 btn-block')
+        btn.innerHTML = "Disconnect";
+        btn.value = "connected";
+    }else if(connectedToSer) {
+        responseParagraph.innerHTML = "Connected to " + serPortName;
+    }
+
     chart.updateSeries([{
         data:trackMap
     }]);
@@ -118,6 +131,16 @@ var locked = false;
 
 submitFormButton.addEventListener("submit", function(event) {
     event.preventDefault(); // stop the form from submitting
+
+    // Disconnect from cloud
+    var btn = document.getElementById("cloudConnectBtn");
+    $("#cloudConnectBtn").attr('class', 'btn btn-primary mt-2 mb-2 btn-block')
+    handleDisconnectToCloud(currentWindow);
+    btn.innerHTML = "Connect";
+    responseParagraph.innerHTML = "";
+    btn.value = "disconnected";
+    connectToCloudForm.cloudFormSubmitBtn.disabled = false;
+
     let port_name = document.getElementById("port_input").value;
     handleForm(currentWindow, port_name)
 });
@@ -133,6 +156,10 @@ slideButton.addEventListener('change', function(event) {
 
 ipcRenderer.on('form-received', function(event, args) {
     responseParagraph.innerHTML = "Connected to " + args;
+});
+
+ipcRenderer.on('form-not-received', function(event, args) {
+    responseParagraph.innerHTML = "Couldn't connect to " + args;
 });
 
 ipcRenderer.on('action-port', function(event, args) {
@@ -219,10 +246,25 @@ $('#loadTrackMapBtn').click(function() {
     switchToTrackMapping = true;
 });
 
+$("#newSessionBtn").click(function (event, args) {
+    event.preventDefault();
+    handleNewSession(currentWindow);
+});
+
+ipcRenderer.on('new-session-success', function() {
+    Snackbar.show({text: 'Session Initialized.', duration: 5000});
+});
+
 $("#saveSessionBtn").click(function(event, args) {
     event.preventDefault();
     handleSaveSession(currentWindow);
 });
+
+function autoSaveSession() {
+    handleSaveSession(currentWindow);
+}
+
+setInterval(autoSaveSession, 60000);
 
 ipcRenderer.on('session-save-success', function() {
     Snackbar.show({text: 'Session saved.', duration: 5000});
@@ -256,4 +298,37 @@ $("#saveTrackMap").click(function() {
 ipcRenderer.on('track-map-change-success', function(event, args) {
     Snackbar.show({text: 'Track saved.', duration: 5000});
     initPage();
+});
+
+connectToCloudForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    var btn = document.getElementById("cloudConnectBtn");
+    connectToCloudForm.cloudFormSubmitBtn.disabled = true;
+    var cloud_url = document.getElementById("basic-url").value;
+
+    if(btn.value === "disconnected") {
+        $.get('https://' + cloud_url).done(function () {
+            handleConnectToCloud(currentWindow, cloud_url);
+            responseParagraph.innerHTML = "Connected to AWS.";
+            $("#cloudConnectBtn").attr('class', 'btn btn-danger mt-2 mb-2 btn-block')
+            btn.innerHTML = "Disconnect";
+            btn.value = "connected";
+            connectToCloudForm.cloudFormSubmitBtn.disabled = false;
+          }).fail(async function () {
+                $("#response").attr("style", "color:#e7515a");
+                responseParagraph.innerHTML = "Please provide a valid URL.";
+                await delay(1000);
+                responseParagraph.innerHTML = "";
+                $("#response").attr("style", "color:white");
+                connectToCloudForm.cloudFormSubmitBtn.disabled = false;
+          });
+    }else {
+        $("#cloudConnectBtn").attr('class', 'btn btn-primary mt-2 mb-2 btn-block')
+        handleDisconnectToCloud(currentWindow);
+        btn.innerHTML = "Connect";
+        responseParagraph.innerHTML = "";
+        btn.value = "disconnected";
+        connectToCloudForm.cloudFormSubmitBtn.disabled = false;
+    }
 });

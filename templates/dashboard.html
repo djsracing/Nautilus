@@ -47,6 +47,12 @@
             <ul class="navbar-item flex-row ml-auto">
 
                 <li>
+                    <a href="#" class="nav-link" id="newSessionBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </a>
+                </li>
+                
+                <li>
                     <a href="#" class="nav-link" id="saveSessionBtn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                     </a>
@@ -67,20 +73,8 @@
                         </svg>
                     </a>
                     <div class="dropdown-menu position-absolute e-animated e-fadeInUp" aria-labelledby="userProfileDropdown" id="containerFadeIn">
-                        <div class="form-group">
-                            <p>COM Port <code></code></p>
-                            <form action="#" id="portForm">
-                                <input id="port_input" type="text" placeholder="Eg. COM4" class="form-control" required="">
-                                <input type="submit" class="mt-4 btn btn-primary success" id="submit_port">
-                            </form>
-                        </div>
-                        <p id="response"></p>
+                        <button class="btn btn-primary mb-2" data-toggle="modal", data-target="#connectModal">Connect</button>
                         <input type=button id="mode" text="Switch Mode" class="btn btn-primary" value="Switch To Day Mode" />
-                        <!-- <select class="form-control  basic">
-                            <option selected="selected">orange</option>
-                            <option>white</option>
-                            <option>purple</option>
-                        </select> -->
                     </div>
                 </li>
             </ul>
@@ -652,6 +646,49 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade login-modal" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h4 class="modal-title">Connect</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div class="modal-body">
+              <p>Cloud</p>
+              <form class="mt-0" id="cloudForm">
+                <div class="input-group mb-4">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon7">https://</span>
+                  </div>
+                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="example.com" required="">
+                </div>                  
+                <button type="submit" name="cloudFormSubmitBtn" class="btn btn-primary mt-2 mb-2 btn-block" id="cloudConnectBtn"  value="disconnected">
+                    Connect
+                </button>
+              </form>
+
+              <div class="division">
+                    <span>OR</span>
+              </div>
+              <p>COM Port</p>
+              <form class="mt-0" action="#" id="portForm">
+                <div class="input-group mb-4">
+                    <input id="port_input" type="text" placeholder="Eg. COM4" class="form-control" required="">
+                    <button type="submit" class="btn btn-primary mt-2 mb-2 btn-block" id="submit_port">Submit</button>
+                </div>
+              </form>
+              <p id="response"></p>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <div class="forgot login-footer">
+                  <span>Looking for help? <a href="./docs.html">Read the docs.</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <!-- END MAIN CONTAINER -->
     <!-- Electron Styles -->
     <style>

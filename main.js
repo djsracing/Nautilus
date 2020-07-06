@@ -1,5 +1,5 @@
 // Imports
-let {config} = require('./config');
+const {config} = require('./config');
 
 const {app, BrowserWindow, Menu, ipcMain, systemPreferences} = require('electron');
 const url = require('url');
@@ -18,15 +18,37 @@ if(systemPreferences.isDarkMode()){
     exports.mode = 'dark';
 }
 
-var session = {};
-var d = new Date()
-var sessionTimestamp = d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate() + '_' + d.getHours() + '_' + d.getMinutes() + '_' + d.getSeconds();
-var sessionSavePath = path.join(app.getPath('documents'), './Nautilus/');
+let session;
+let d;
+let sessionTimestamp;
+var sessionSavePath = path.join(app.getPath('documents'), './Nautilus/');;
+
+function initSession() {
+    session = {};
+    d = new Date()
+    sessionTimestamp = d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate() + '_' + d.getHours() + '_' + d.getMinutes() + '_' + d.getSeconds();
+}
+
+initSession();
 
 var trackMap = [];
 
 // Set global variables
-const _sharedObj = {config:config, session:session, trackMap:trackMap, sessionSavePath:sessionSavePath};
+var connectedToCloud = false;
+var connectedToSer = false;
+var fetchDataFromSer = true;
+var cloudURL = ''
+var serPortName = '';
+
+const _sharedObj = {config:config, 
+                    session:session, 
+                    trackMap:trackMap, 
+                    sessionSavePath:sessionSavePath, 
+                    cloudURL:cloudURL, 
+                    connectedToCloud:connectedToCloud, 
+                    connectedToSer:connectedToSer, 
+                    serPortName:serPortName
+};
 
 global.sharedObj = _sharedObj;
 // fs.writeFileSync('./test.json', JSON.stringify(config))
@@ -45,6 +67,17 @@ process.env.NODE_ENV = 'development';
 
 // Set serial port handlers
 const Readline = SerialPort.parsers.Readline;
+
+// Cloud Connection
+var cloudURL = '';
+
+function fetchDataFromAWS() {
+    if(!fetchDataFromSer && cloudURL != '') {
+
+    }
+}
+
+var cloudInterval = setInterval(fetchDataFromAWS, 150);
 
 // Set main process variables
 let mainWindow;
@@ -77,8 +110,17 @@ app.on('ready', function() {
     });
 
     mainWindow.on('closed', function() {
-        const path = require('path');
         const fs = require('fs');
+        try {
+            var tempPath = sessionSavePath + sessionTimestamp + '.json'
+            mkdirp(sessionSavePath);
+            fs.writeFileSync(tempPath, JSON.stringify(session));
+        }catch (err){
+            console.log(err);
+            console.log("Couldn't save session.");
+        }
+        const path = require('path');
+        mkdirp(path.join(exports.appConfigPath, './config.json'));
         fs.writeFileSync(path.join(exports.appConfigPath, './config.json'), JSON.stringify(global.sharedObj.config));
     });
 
@@ -94,7 +136,7 @@ const mainMenuTemplate = [
         label:'Actions',
         submenu:[
             {
-                label: 'Select Port',
+                label: 'Settings',
                 accelerator: process.platform == 'darwin' ? 'Command+D' : 'Ctrl+D',
                 click() {
                     mainWindow.webContents.send('action-port', 'clicked');
@@ -137,24 +179,59 @@ if(process.env.NODE_ENV !== 'production') {
 
 // Handle change COM Port
 exports.handleForm = function handleForm(targetWindow, com_port) {
-    // console.log("this is the name of the port ->", com_port)
-    
-    // Set serial port
-    port = null;
-    parser = null;
-    port = new SerialPort(com_port, {
-        baudRate: 9600,
-        flowControl: false,
-        parser: new SerialPort.parsers.Readline("\n")
-    });
-    parser = new Readline();
-    port.pipe(parser);
-    parser.on('data', function(data) {
-        data = data.split(',');
-        mainWindow.webContents.send('ser-data', data);
-    });
-    targetWindow.webContents.send('form-received', com_port);
+    try{
+
+        // Set serial port
+        port = null;
+        parser = null;
+        port = new SerialPort(com_port, {
+            baudRate: 9600,
+            flowControl: false,
+            parser: new SerialPort.parsers.Readline("\n")
+        });
+        parser = new Readline();
+        port.pipe(parser);
+        parser.on('data', function(data) {
+            data = data.split(',');
+            if(fetchDataFromSer) {
+                mainWindow.webContents.send('ser-data', data);
+            }
+        });
+
+        fetchDataFromSer = true;
+
+        global.sharedObj.connectedToCloud = false;
+        global.sharedObj.connectedToSer = true;
+
+        global.sharedObj.serPortName = com_port;
+
+        targetWindow.webContents.send('form-received', com_port);
+
+    }catch {
+        targetWindow.webContents.send('form-not-received', com_port);
+    }
 };
+
+exports.handleNewSession = function handleNewSession(targetWindow) {
+    initSession();
+    targetWindow.webContents.send('new-session-success');
+}
+
+exports.handleConnectToCloud = function handleConnectToCloud(targetWindow, url) {
+    global.sharedObj.connectedToCloud = true;
+    global.sharedObj.connectedToSer = false;
+    fetchDataFromSer = false;
+    cloudInterval = null;
+    cloudURL = url;
+    global.sharedObj.cloudURL = url;
+    cloudInterval = setInterval(fetchDataFromAWS, 150);
+}
+
+exports.handleDisconnectToCloud = function handleDisconnectToCloud(targetWindow) {
+    cloudURL = '';
+    global.sharedObj.cloudURL = '';
+    cloudInterval = null;
+}
 
 exports.handleNameChange = function handleNameChange(targetWindow, sensorID, newName) {
     global.sharedObj.config[sensorID] = newName;

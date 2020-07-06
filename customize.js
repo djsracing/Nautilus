@@ -71,6 +71,8 @@ $(document).ready(async function(){
 });
 
 function initPage() {
+    var {config} = remote.getGlobal('sharedObj');
+
     document.getElementById("currentSessionSavePath").innerHTML = 'Current path: ' + sessionSavePath;
 
     for (var i = 1; i <= 35; i++) {
