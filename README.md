@@ -71,3 +71,17 @@ A new directory will be created in ```/release_builds``` that contains the compi
 ### Screenshots
 
 -
+
+1. Replace sensor selection view with select2. - done
+2. Remove lap tab. - done
+3. Add lap selection dropdown menu in Analyse tab. - done
+4. Automatic save session function. - done
+5. Session file dialog menu. - done
+6. Set default file location to "Documents/Nautilus" with timestamp. - done
+7. Add mapping modal. - done
+8. Show progress of mapping. - done
+9. Don't replace current mapping until save button is pressed. - done
+10. Add Kalman Filter for GPS data. - done
+11. Save session interval. - done
+12. Display current unit. - done
+13. Django backend. - done

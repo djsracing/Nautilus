@@ -302,7 +302,7 @@ connectToCloudForm.addEventListener('submit', async function(event) {
     var cloud_url = document.getElementById("basic-url").value;
 
     if(btn.value === "disconnected") {
-        $.get('https://' + cloud_url).done(function () {
+        $.get('http://' + cloud_url).done(function () {
             handleConnectToCloud(currentWindow, cloud_url);
             responseParagraph.innerHTML = "Connected to AWS.";
             $("#cloudConnectBtn").attr('class', 'btn btn-danger mt-2 mb-2 btn-block')

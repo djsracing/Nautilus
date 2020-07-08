@@ -6,6 +6,7 @@ const window = require('electron').BrowserWindow;
 const url = require('url');
 const path = require('path');
 const SerialPort = require('serialport');
+const io = require('socket.io-client');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 
@@ -72,20 +73,20 @@ const Readline = SerialPort.parsers.Readline;
 // Cloud Connection
 var cloudURL = '';
 
-function fetchDataFromAWS() {
-    if(!fetchDataFromSer && cloudURL != '') {
+// function fetchDataFromAWS() {
+//     if(!fetchDataFromSer && cloudURL != '') {
 
-    }
-}
+//     }
+// }
 
-var cloudInterval = setInterval(fetchDataFromAWS, 150);
+// var cloudInterval = setInterval(fetchDataFromAWS, 150);
 
 // Set main process variables
-let mainWindow;
-let changePort;
-let port;
-let parser;
-let data;
+var mainWindow;
+var port;
+var parser;
+var data;
+var socket;
 
 // Listen for app to be ready
 app.on('ready', function() {
@@ -96,7 +97,7 @@ app.on('ready', function() {
             // Enable Node.js integration
             nodeIntegration: true
         },
-        icon: __dirname + '/templates/assets/img/djsr.jpg'
+        icon: __dirname + '/templates/assets/img/djsr.png'
     });
     // Load html into window
     mainWindow.loadURL(url.format({
@@ -219,13 +220,38 @@ exports.handleNewSession = function handleNewSession(targetWindow) {
 }
 
 exports.handleConnectToCloud = function handleConnectToCloud(targetWindow, url) {
+    
+    url = 'http://' + url;
+    
     global.sharedObj.connectedToCloud = true;
     global.sharedObj.connectedToSer = false;
     fetchDataFromSer = false;
     cloudInterval = null;
     cloudURL = url;
+
     global.sharedObj.cloudURL = url;
-    cloudInterval = setInterval(fetchDataFromAWS, 150);
+
+    // Create socket connection
+    socket = io(cloudURL);
+    const roomData = {
+        'room':'DJSR'
+    };
+    socket.emit('join', "{'room':'DJSR'}");
+    
+    console.log(cloudURL);
+
+    socket.on('connect', function() {
+        console.log("Connected");
+    });
+
+    socket.on('response', function(data) {
+        console.log("Joined a room!");
+    });
+
+    socket.on('disconnect', function() {
+        console.log("Disconnected");
+    });
+
 }
 
 exports.handleDisconnectToCloud = function handleDisconnectToCloud(targetWindow) {
@@ -262,7 +288,7 @@ exports.handleSaveSession = function handleSaveSession(targetWindow) {
 
 function autoSaveSession() {
     try{
-        let focusedWindow = window.getFocusedWindow();
+        let focusedWindow = window.getAllWindows()[0];
         exports.handleSaveSession(focusedWindow);
     }catch (e){
         console.log(e);
