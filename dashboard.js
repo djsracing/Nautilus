@@ -260,12 +260,6 @@ $("#saveSessionBtn").click(function(event, args) {
     handleSaveSession(currentWindow);
 });
 
-function autoSaveSession() {
-    handleSaveSession(currentWindow);
-}
-
-setInterval(autoSaveSession, 60000);
-
 ipcRenderer.on('session-save-success', function() {
     Snackbar.show({text: 'Session saved.', duration: 5000});
 });

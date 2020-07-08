@@ -2,6 +2,7 @@
 const {config} = require('./config');
 
 const {app, BrowserWindow, Menu, ipcMain, systemPreferences} = require('electron');
+const window = require('electron').BrowserWindow;
 const url = require('url');
 const path = require('path');
 const SerialPort = require('serialport');
@@ -258,6 +259,17 @@ exports.handleSaveSession = function handleSaveSession(targetWindow) {
         targetWindow.webContents.send('session-save-failure');
     }
 }
+
+function autoSaveSession() {
+    try{
+        let focusedWindow = window.getFocusedWindow();
+        exports.handleSaveSession(focusedWindow);
+    }catch (e){
+        console.log(e);
+    }
+}
+
+setInterval(autoSaveSession, 60000);
 
 exports.handleChangeSessionPath = function handleChangeSessionPath(targetWindow, pathName) {
     sessionSavePath = pathName;
