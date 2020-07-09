@@ -73,14 +73,6 @@ const Readline = SerialPort.parsers.Readline;
 // Cloud Connection
 var cloudURL = '';
 
-// function fetchDataFromAWS() {
-//     if(!fetchDataFromSer && cloudURL != '') {
-
-//     }
-// }
-
-// var cloudInterval = setInterval(fetchDataFromAWS, 150);
-
 // Set main process variables
 var mainWindow;
 var port;
@@ -113,6 +105,13 @@ app.on('ready', function() {
 
     mainWindow.on('closed', function() {
         const fs = require('fs');
+
+        try{
+            socket.disconnect();
+        }catch (_) {
+            console.log("Already disconnected");
+        }
+
         try {
             var tempPath = sessionSavePath + sessionTimestamp + '.json'
             mkdirp(sessionSavePath);
@@ -226,26 +225,39 @@ exports.handleConnectToCloud = function handleConnectToCloud(targetWindow, url) 
     global.sharedObj.connectedToCloud = true;
     global.sharedObj.connectedToSer = false;
     fetchDataFromSer = false;
-    cloudInterval = null;
     cloudURL = url;
 
     global.sharedObj.cloudURL = url;
 
     // Create socket connection
-    socket = io(cloudURL);
-    const roomData = {
-        'room':'DJSR'
-    };
-    socket.emit('join', "{'room':'DJSR'}");
+    socket = io.connect(cloudURL, {
+                'reconnection': true,
+                'reconnectionDelay': 500,
+                'reconnectionAttempts': 10
+                });
     
     console.log(cloudURL);
 
     socket.on('connect', function() {
+        socket.emit('join', "{'room':'DJSR'}");
         console.log("Connected");
     });
 
     socket.on('response', function(data) {
         console.log("Joined a room!");
+    });
+
+    socket.on('data', function(data) {
+        if(!fetchDataFromSer) {
+            let focusedWindow = window.getAllWindows()[0];
+            focusedWindow.webContents.send('ser-data', data['data_string']);
+        }
+    });
+
+    socket.on('reconnecting', function() {
+        let focusedWindow = window.getAllWindows()[0];
+        console.log('Reconnecting');
+        focusedWindow.webContents.send('cloud-connection-failed');
     });
 
     socket.on('disconnect', function() {
@@ -257,7 +269,7 @@ exports.handleConnectToCloud = function handleConnectToCloud(targetWindow, url) 
 exports.handleDisconnectToCloud = function handleDisconnectToCloud(targetWindow) {
     cloudURL = '';
     global.sharedObj.cloudURL = '';
-    cloudInterval = null;
+    socket.disconnect();
 }
 
 exports.handleNameChange = function handleNameChange(targetWindow, sensorID, newName) {
