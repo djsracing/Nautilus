@@ -3,12 +3,8 @@ const {config} = require('./config');
 
 const {app, BrowserWindow, Menu, ipcMain, systemPreferences} = require('electron');
 const window = require('electron').BrowserWindow;
-const url = require('url');
 const path = require('path');
-const SerialPort = require('serialport');
-const io = require('socket.io-client');
 const fs = require('fs');
-const mkdirp = require('mkdirp');
 
 // Set exports
 exports.mode = 'light';
@@ -67,9 +63,6 @@ try {
 // Set environment
 process.env.NODE_ENV = 'development';
 
-// Set serial port handlers
-const Readline = SerialPort.parsers.Readline;
-
 // Cloud Connection
 var cloudURL = '';
 
@@ -92,6 +85,7 @@ app.on('ready', function() {
         icon: __dirname + '/templates/assets/img/djsr.png'
     });
     // Load html into window
+    let url = require('url');
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'templates/dashboard.html'),
         protocol:'file:',
@@ -104,11 +98,12 @@ app.on('ready', function() {
     });
 
     mainWindow.on('closed', function() {
-        const fs = require('fs');
+        let fs = require('fs');
+        let mkdirp = require('mkdirp');
 
         try{
             socket.disconnect();
-        }catch (_) {
+        }catch (err) {
             console.log("Already disconnected");
         }
 
@@ -120,7 +115,6 @@ app.on('ready', function() {
             console.log(err);
             console.log("Couldn't save session.");
         }
-        const path = require('path');
         mkdirp(path.join(exports.appConfigPath, './config.json'));
         fs.writeFileSync(path.join(exports.appConfigPath, './config.json'), JSON.stringify(global.sharedObj.config));
     });
@@ -183,6 +177,7 @@ exports.handleForm = function handleForm(targetWindow, com_port) {
     try{
 
         // Set serial port
+        let SerialPort = require('serialport');
         port = null;
         parser = null;
         port = new SerialPort(com_port, {
@@ -190,7 +185,9 @@ exports.handleForm = function handleForm(targetWindow, com_port) {
             flowControl: false,
             parser: new SerialPort.parsers.Readline("\n")
         });
-        parser = new Readline();
+
+        // Set serial port handlers
+        parser = new SerialPort.parsers.Readline();
         port.pipe(parser);
         parser.on('data', function(data) {
             data = data.split(',');
@@ -230,17 +227,19 @@ exports.handleConnectToCloud = function handleConnectToCloud(targetWindow, url) 
     global.sharedObj.cloudURL = url;
 
     // Create socket connection
+    const io = require('socket.io-client');
     socket = io.connect(cloudURL, {
                 'reconnection': true,
                 'reconnectionDelay': 500,
-                'reconnectionAttempts': 10
+                'reconnectionAttempts': 100
                 });
     
     console.log(cloudURL);
 
     socket.on('connect', function() {
         socket.emit('join', "{'room':'DJSR'}");
-        console.log("Connected");
+        let focusedWindow = window.getAllWindows()[0];
+        focusedWindow.webContents.send('cloud-connection-success');
     });
 
     socket.on('response', function(data) {
@@ -255,13 +254,12 @@ exports.handleConnectToCloud = function handleConnectToCloud(targetWindow, url) 
     });
 
     socket.on('reconnecting', function() {
-        let focusedWindow = window.getAllWindows()[0];
         console.log('Reconnecting');
-        focusedWindow.webContents.send('cloud-connection-failed');
     });
 
     socket.on('disconnect', function() {
-        console.log("Disconnected");
+        let focusedWindow = window.getAllWindows()[0];
+        focusedWindow.webContents.send('cloud-connection-failed');
     });
 
 }
@@ -287,6 +285,7 @@ exports.handleMapChange = function handleMapChange(targetWindow, sensorID, map1,
 
 exports.handleSaveSession = function handleSaveSession(targetWindow) {
     try {
+        let mkdirp = require('mkdirp');
         var tempPath = sessionSavePath + sessionTimestamp + '.json'
         mkdirp(sessionSavePath);
         fs.writeFileSync(tempPath, JSON.stringify(session));

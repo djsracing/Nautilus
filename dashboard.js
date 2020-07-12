@@ -1,5 +1,4 @@
 const {remote, ipcRenderer, ipcMain} = require('electron');
-const { error } = require('jquery');
 const {handleForm, mode, handleChangeMode, handleChangeTrackMap, handleSaveSession, handleNewSession, handleConnectToCloud, handleDisconnectToCloud} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
 var {config, trackMap, connectedToCloud, connectedToSer, cloudURL, serPortName} = remote.getGlobal('sharedObj');
@@ -198,7 +197,7 @@ ipcRenderer.on('ser-data', function(event, data) {
         document.getElementById("cellTempStat").innerHTML = data[12] * 10 + ' °C';
         document.getElementById("throttleStat").innerHTML = data[13] * 10;
 
-        document.getElementById("lapCount").innerHTML = data[10];
+        document.getElementById("lapCount").innerHTML = data[2];
         document.getElementById("lapTiming").innerHTML = 'Lap timing : '+data[11]*1.03+'s';
 
         $("#brakePressure").attr('aria-valuenow', data[10]);
@@ -213,49 +212,38 @@ ipcRenderer.on('ser-data', function(event, data) {
         $("#throttle").attr('aria-valuenow', data[13]);
         $("#throttle").attr('style', 'width:'+eval(data[13]*10)+'%');
 
-        try{
-            if(!trackMapInitialized) {
-                chart.removeAnnotation('car-point');
-            }
+        chart.clearAnnotations();
 
-            chart.addPointAnnotation({
-                id: 'car-point',
-                x: data[0],
-                y: data[1],
-                label: {
-                style: {
-                    cssClass: 'd-none'
-                }
-            },
-            customSVG: {
-                SVG: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="#1b55e2" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg>',
-                cssClass: undefined,
-                offsetX: -8,
-                offsetY: 5
-            }
-            });
-            time_step++;
-        }catch {
-            console.log("Error");
+        chart.addPointAnnotation({
+            id: 'car-point',
+            x: data[0],
+            y: data[1],
+        customSVG: {
+            SVG: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="#1b55e2" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg>',
+            cssClass: undefined,
+            offsetX: -8,
+            offsetY: 5
         }
+        });
+        time_step++;
     }
 });
 
-$('#loadTrackMapBtn').click(function() {
+$('#loadTrackMapBtn').click(async function() {
     map = []
     switchToTrackMapping = true;
 });
 
-$("#newSessionBtn").click(function (event, args) {
+$("#newSessionBtn").click(async function (event, args) {
     event.preventDefault();
     handleNewSession(currentWindow);
 });
 
-ipcRenderer.on('new-session-success', function() {
+ipcRenderer.on('new-session-success', async function() {
     Snackbar.show({text: 'Session Initialized.', duration: 5000});
 });
 
-$("#saveSessionBtn").click(function(event, args) {
+$("#saveSessionBtn").click(async function(event, args) {
     event.preventDefault();
     handleSaveSession(currentWindow);
 });
@@ -272,12 +260,13 @@ ipcRenderer.on('session-save-failure', function() {
     });
 });
 
-$("#exampleModal").on("hidden.bs.modal", function () {
+$("#exampleModal").on("hidden.bs.modal", async function () {
+    map = [];
     switchToTrackMapping = false;
 });
 
 $('#resetTrackMap').click(function() {
-    map = []
+    map = [];
     mapChart.updateSeries([{
         data: map
     }]);
@@ -286,12 +275,31 @@ $('#resetTrackMap').click(function() {
 $("#saveTrackMap").click(function() {
     switchToTrackMapping = false;
     trackMap = map;
+    trackMapInitialized = true;
     handleChangeTrackMap(currentWindow, map);
 });
 
 ipcRenderer.on('track-map-change-success', function(event, args) {
     Snackbar.show({text: 'Track saved.', duration: 5000});
     initPage();
+});
+
+ipcRenderer.on('cloud-connection-success', function(event, args) {
+    Snackbar.show({
+        text: 'Connected',
+        actionTextColor: '#fff',
+        backgroundColor: '#8dbf42',
+        duration: 5000
+    });
+});
+
+ipcRenderer.on('cloud-connection-failed', function(event, args) {
+    Snackbar.show({
+        text: "Disconnected from the server.",
+        actionTextColor: '#fff',
+        backgroundColor: '#e2a03f',
+        duration: 5000
+    });
 });
 
 connectToCloudForm.addEventListener('submit', async function(event) {
