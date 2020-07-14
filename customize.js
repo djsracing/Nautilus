@@ -3,7 +3,7 @@ const {handleForm, handleNameChange, handleMapChange, savePath, handleLoadConfig
 const {dialog} = require('electron').remote
 const currentWindow = remote.getCurrentWindow();
 const Swal = require('sweetalert2');
-var {config, sessionSavePath} = remote.getGlobal('sharedObj');
+var {sessionSavePath} = remote.getGlobal('sharedObj');
 
 const submitFormButton = document.querySelector("#portForm");
 const responseParagraph = document.getElementById('response');
@@ -71,7 +71,7 @@ $(document).ready(async function(){
 });
 
 function initPage() {
-    var {config} = remote.getGlobal('sharedObj');
+    let {config} = remote.getGlobal('sharedObj');
 
     document.getElementById("currentSessionSavePath").innerHTML = 'Current path: ' + sessionSavePath;
 
@@ -138,7 +138,7 @@ ipcRenderer.on('name-changed', function(event, args) {
 
 saveConfigButton.addEventListener('click', function(event) {
     event.preventDefault();
-    var {config} = remote.getGlobal('sharedObj');
+    let {config} = remote.getGlobal('sharedObj');
     const path = require('path');
     const fs = require('fs');
     fs.writeFileSync(path.join(savePath, './config.json'), JSON.stringify(config));
