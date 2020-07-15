@@ -176,6 +176,12 @@ if(process.env.NODE_ENV !== 'production') {
 exports.handleForm = function handleForm(targetWindow, com_port) {
     try{
 
+        try{
+            port.close();
+        }catch (_)  {
+            console.log("Already disconnected.");
+        }
+
         // Set serial port
         let SerialPort = require('serialport');
         port = null;
@@ -189,6 +195,10 @@ exports.handleForm = function handleForm(targetWindow, com_port) {
         // Set serial port handlers
         parser = new SerialPort.parsers.Readline();
         port.pipe(parser);
+        port.on('close', function() { 
+            port = null;
+            parser = null;
+        });
         parser.on('data', function(data) {
             data = data.split(',');
             if(fetchDataFromSer) {
@@ -217,6 +227,12 @@ exports.handleNewSession = function handleNewSession(targetWindow) {
 
 exports.handleConnectToCloud = function handleConnectToCloud(targetWindow, url) {
     
+    try{
+        port.close();
+    }catch (_)  {
+        console.log("Already disconnected.");
+    }
+
     url = 'http://' + url;
     
     global.sharedObj.connectedToCloud = true;
@@ -267,7 +283,11 @@ exports.handleConnectToCloud = function handleConnectToCloud(targetWindow, url) 
 exports.handleDisconnectToCloud = function handleDisconnectToCloud(targetWindow) {
     cloudURL = '';
     global.sharedObj.cloudURL = '';
-    socket.disconnect();
+    try{
+        socket.disconnect();
+    }catch (_) {
+        console.log("Already disconnected.");
+    }
 }
 
 exports.handleNameChange = function handleNameChange(targetWindow, sensorID, newName) {
