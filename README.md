@@ -85,3 +85,8 @@ A new directory will be created in ```/release_builds``` that contains the compi
 11. Save session interval. - done
 12. Display current unit. - done
 13. Django backend. - done
+14. Fix reset button - done
+15. Replace accel chart by scatter plot (x vs y)
+16. Save session every lap.
+17. Add seperate plots in Analysis
+18. Integration and diff.
