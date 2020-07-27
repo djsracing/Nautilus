@@ -70,8 +70,7 @@ A new directory will be created in ```/release_builds``` that contains the compi
 
 ### Screenshots
 
--
-
+### TODO
 15. Replace accel chart by scatter plot (x vs y)
 16. Save session every lap.
 17. Add seperate plots in Analysis
