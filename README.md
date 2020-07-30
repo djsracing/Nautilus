@@ -15,7 +15,7 @@ Nautilus is a cross-platform visualization tool for sensor data in serial form.
         <p>ApexCharts</p>
     </li>
     <li>
-        node - serialport
+        node-serialport
     </li>
 </ul>
 
