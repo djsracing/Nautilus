@@ -49,8 +49,7 @@ const _sharedObj = {config:config,
 };
 
 global.sharedObj = _sharedObj;
-// fs.writeFileSync('./test.json', JSON.stringify(config))
-// console.log(app.getPath('documents'));
+
 try {
     let newConfig = JSON.parse(fs.readFileSync(path.join(exports.appConfigPath, './config.json'), 'utf8'));
     global.sharedObj.config = newConfig;
