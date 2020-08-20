@@ -15,7 +15,7 @@ Nautilus is a cross-platform visualization tool for sensor data in serial form.
         <p>ApexCharts</p>
     </li>
     <li>
-        node - serialport
+        node-serialport
     </li>
 </ul>
 
@@ -70,8 +70,7 @@ A new directory will be created in ```/release_builds``` that contains the compi
 
 ### Screenshots
 
--
-
+### TODO
 15. Replace accel chart by scatter plot (x vs y)
 16. Save session every lap.
 17. Add seperate plots in Analysis
