@@ -107,7 +107,7 @@ function initPage() {
     chart.updateSeries([{
         data:trackMap
     }]);
-    for (var i = 1; i <= 35; i++) {
+    for (var i = 1; i <= 64; i++) {
         const sensorField = document.querySelector('#sensor_' + i);
         const sensorDataField = document.querySelector('#sensor_' + i + '_data');
         sensorField.innerHTML = config['Sensor #' + i];
@@ -185,7 +185,7 @@ ipcRenderer.on('ser-data', function(event, data) {
             data: map
         }]);
     }else {
-        for (var i = 0; i < 35; i++) {
+        for (var i = 0; i < 64; i++) {
             const sensorDataField = document.querySelector('#sensor_' + eval(i + 1) + '_data');
             var exp = config['Sensor #'+eval(i + 1)+'_mapping'+map_mode];
             var x = data[i] * 1.03;

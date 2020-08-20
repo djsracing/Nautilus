@@ -75,7 +75,7 @@ function initPage() {
 
     document.getElementById("currentSessionSavePath").innerHTML = 'Current path: ' + sessionSavePath;
 
-    for (var i = 1; i <= 35; i++) {
+    for (var i = 1; i <= 64; i++) {
         const sensorNameField = document.querySelector('#sensor_' + i + '_name');
         sensorNameField.innerHTML = config['Sensor #' + i];
 
