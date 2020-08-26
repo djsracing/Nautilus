@@ -202,41 +202,36 @@
                                                                 <br>
                                                                 <p>Select upto 5 sensors.</p>  
                                                                 <select class="form-control tagging" multiple="multiple" id="sensors">
-                                                                    <option id="sensor_1">Sensor #1</option>
-                                                                    <option id="sensor_2">Sensor #2</option>
-                                                                    <option id="sensor_3">Sensor #3</option>
-                                                                    <option id="sensor_4">Sensor #4</option>
-                                                                    <option id="sensor_5">Sensor #5</option>
-                                                                    <option id="sensor_6">Sensor #6</option>
-                                                                    <option id="sensor_7">Sensor #7</option>
-                                                                    <option id="sensor_8">Sensor #8</option>
-                                                                    <option id="sensor_9">Sensor #9</option>
-                                                                    <option id="sensor_10">Sensor #10</option>
-                                                                    <option id="sensor_11">Sensor #11</option>
-                                                                    <option id="sensor_12">Sensor #12</option>
-                                                                    <option id="sensor_13">Sensor #13</option>
-                                                                    <option id="sensor_14">Sensor #14</option>
-                                                                    <option id="sensor_15">Sensor #15</option>
-                                                                    <option id="sensor_16">Sensor #16</option>
-                                                                    <option id="sensor_17">Sensor #17</option>
-                                                                    <option id="sensor_18">Sensor #18</option>
-                                                                    <option id="sensor_19">Sensor #19</option>
-                                                                    <option id="sensor_20">Sensor #20</option>
-                                                                    <option id="sensor_21">Sensor #21</option>
-                                                                    <option id="sensor_22">Sensor #22</option>
-                                                                    <option id="sensor_23">Sensor #23</option>
-                                                                    <option id="sensor_24">Sensor #24</option>
-                                                                    <option id="sensor_25">Sensor #25</option>
-                                                                    <option id="sensor_26">Sensor #26</option>
-                                                                    <option id="sensor_27">Sensor #27</option>
-                                                                    <option id="sensor_28">Sensor #28</option>
-                                                                    <option id="sensor_29">Sensor #29</option>
-                                                                    <option id="sensor_30">Sensor #30</option>
-                                                                    <option id="sensor_31">Sensor #31</option>
-                                                                    <option id="sensor_32">Sensor #32</option>
-                                                                    <option id="sensor_33">Sensor #33</option>
-                                                                    <option id="sensor_34">Sensor #34</option>
-                                                                    <option id="sensor_35">Sensor #35</option>
+                                                                    <optgroup label="Aero">
+                                                                        <option>Pressure</option>
+                                                                        <option>Ride Height</option>
+                                                                        <option>Load Cell</option>
+                                                                        <option>Nose Pressure</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="Brakes">
+                                                                        <option>Rotor</option>
+                                                                        <option>Brake Pressure</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="Drivetrain">
+                                                                        <option>Wheel Speed</option>
+                                                                        <option>APPS</option>
+                                                                        <option>Current Sensor</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="Driverless">
+                                                                        <option>IMU</option>
+                                                                        <option>GPS Velocity</option>
+                                                                        <option>EKF Data</option>
+                                                                        <option>Odometer Velocity</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="HVI">
+                                                                        <option>SOC</option>
+                                                                        <option>Thermistor</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="Steering & Steering">
+                                                                        <option>Shock Pot</option>
+                                                                        <option>Steer Linear Pot</option>
+                                                                        <option>Steer Rotary Pot</option>
+                                                                    </optgroup>
                                                                 </select>
                                                                 <br>
                                                                 <br>
@@ -258,7 +253,7 @@
                                                             <h3>Analyse</h3>
                                                             <section>
                                                                 <select class="placeholder js-states form-control" id="lapSelect">
-                                                                    <option>Select a Lap</option>
+                                                                    <option value="0">Select a Lap</option>
                                                                     <option value="1">Lap 1</option>
                                                                     <option value="2">Lap 2</option>
                                                                     <option value="3">Lap 3</option>
@@ -266,7 +261,11 @@
                                                                     <option value="5">Lap 5</option>
                                                                 </select>
                                                                 <br>
-                                                                <p>Map</p> 
+                                                                <br>
+                                                                <!-- <p>Map</p>  -->
+                                                                <div id="mapDiv">
+
+                                                                </div>
                                                             </section>
                                                             <!-- <h3>Settings</h3>
                                                             <section> <p>The next and previous buttons help you to navigate through your content.</p> </section> -->
@@ -310,6 +309,7 @@
         });
     </script>
     <script src="assets/js/custom.js"></script>
+    <script src="plugins/apex/apexcharts.min.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL ELECTRON SCRIPTS -->
@@ -327,15 +327,26 @@
             bodyTag: "section",
             transitionEffect: "slideLeft",
             autoFocus: true,
-            cssClass: 'pill wizard'
+            cssClass: 'pill wizard',
+            onStepChanging: function (event, currentIndex, newIndex) {
+                if (newIndex > currentIndex) {
+                    drawCharts(1);
+                }
+                return true;
+            }
         });
+
         $("#sensors").select2({
             tags: true,
             maximumSelectionLength: 5
         });
         $("#lapSelect").select2({
-            placeholder: "Make a Selection",
+            placeholder: "Select a Lap",
             allowClear: false
+        });
+
+        $("#lapSelect").on('change', function(){
+            drawCharts(this.value);
         });
         var firstUpload = new FileUploadWithPreview('myFirstImage');
     </script>
