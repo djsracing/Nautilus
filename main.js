@@ -19,12 +19,14 @@ if(systemPreferences.isDarkMode()){
 let session;
 let d;
 let sessionTimestamp;
-var sessionSavePath = path.join(app.getPath('documents'), './Nautilus/');;
+let currentIdx;
+var sessionSavePath = path.join(app.getPath('documents'), './Nautilus/');
 
 function initSession() {
     session = {};
-    d = new Date()
+    d = new Date();
     sessionTimestamp = d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate() + '_' + d.getHours() + '_' + d.getMinutes() + '_' + d.getSeconds();
+    currentIdx = 0;
 }
 
 initSession();
@@ -79,8 +81,10 @@ app.on('ready', function() {
         // frame:false,
         webPreferences: {
             // Enable Node.js integration
-            nodeIntegration: true
+            nodeIntegration: true,
         },
+        width: 800,
+        height:700,
         icon: __dirname + '/templates/assets/img/djsr.png'
     });
     // Load html into window
@@ -194,12 +198,24 @@ exports.handleForm = function handleForm(targetWindow, com_port) {
         // Set serial port handlers
         parser = new SerialPort.parsers.Readline();
         port.pipe(parser);
+        
         port.on('close', function() { 
             port = null;
             parser = null;
         });
+
         parser.on('data', function(data) {
             data = data.split(',');
+
+            if(data[2] > currentIdx) {
+                currentIdx++;
+                session[currentIdx] = [];
+                let focusedWindow = window.getAllWindows()[0];
+                exports.handleSaveSession(focusedWindow);
+            }
+
+            session[currentIdx].push(data);
+
             if(fetchDataFromSer) {
                 mainWindow.webContents.send('ser-data', data);
             }
@@ -262,6 +278,16 @@ exports.handleConnectToCloud = function handleConnectToCloud(targetWindow, url) 
     });
 
     socket.on('data', function(data) {
+
+        if(data['data_string'][2] > currentIdx) {
+            currentIdx++;
+            session[currentIdx] = [];
+            let focusedWindow = window.getAllWindows()[0];
+            exports.handleSaveSession(focusedWindow);
+        }
+
+        session[currentIdx].push(data['data_string']);
+
         if(!fetchDataFromSer) {
             let focusedWindow = window.getAllWindows()[0];
             focusedWindow.webContents.send('ser-data', data['data_string']);
@@ -302,7 +328,7 @@ exports.handleMapChange = function handleMapChange(targetWindow, sensorID, map1,
     targetWindow.webContents.send('map-changed');
 }
 
-exports.handleSaveSession = function handleSaveSession(targetWindow) {
+exports.handleSaveSession = async function handleSaveSession(targetWindow) {
     try {
         let mkdirp = require('mkdirp');
         var tempPath = sessionSavePath + sessionTimestamp + '.json'
@@ -325,7 +351,7 @@ function autoSaveSession() {
     }
 }
 
-setInterval(autoSaveSession, 60000);
+// setInterval(autoSaveSession, 60000);
 
 exports.handleChangeSessionPath = function handleChangeSessionPath(targetWindow, pathName) {
     sessionSavePath = pathName;
@@ -364,4 +390,9 @@ exports.handleChangeMode = function handleChangeMode(targetWindow, mode) {
 exports.handleChangeTrackMap = function handleChangeTrackMap(targetWindow, map) {
     global.sharedObj.trackMap = map;
     targetWindow.webContents.send('track-map-change-success');
+}
+
+exports.requestSessionData = function requestSessionData(targetWindow) {
+    // targetWindow.send('session-data-sent', session);
+    return session;
 }
