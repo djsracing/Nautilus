@@ -54,8 +54,8 @@ config = {
     'Sensor #51':'Ride Height 2',
     'Sensor #52':'Thermistor 1',
     'Sensor #53':'Thermistor 2',
-    'Sensor #54':'Linear Potentiometer',
-    'Sensor #55':'Rotary Potentiometer',
+    'Sensor #54':'Linear Pot',
+    'Sensor #55':'Rotary Pot',
     'Sensor #56':'MagX',
     'Sensor #57':'MagY',
     'Sensor #58':'MagZ',
@@ -65,6 +65,9 @@ config = {
     'Sensor #62':'GPS Ve',
     'Sensor #63':'GPS Vd',
     'Sensor #64':'Odom V',
+    'Sensor #65': 'EKF Yaw',
+    'Sensor #66': 'EKF Pitch',
+    'Sensor #67': 'EKF Roll',
 
     'Sensor #1_mapping1': 'x',
     'Sensor #2_mapping1': 'x',
@@ -260,6 +263,9 @@ config = {
     'Sensor #62_unit1': 'V',
     'Sensor #63_unit1': 'V',
     'Sensor #64_unit1': 'V',
+    'Sensor #65_unit1': 'rad',
+    'Sensor #66_unit1': 'rad',
+    'Sensor #67_unit1': 'rad',
 
     'Sensor #1_unit2': 'V',
     'Sensor #2_unit2': 'V',
@@ -325,6 +331,116 @@ config = {
     'Sensor #62_unit2': 'V',
     'Sensor #63_unit2': 'V',
     'Sensor #64_unit2': 'V',
+    'Sensor #65_unit2': 'rad',
+    'Sensor #66_unit2': 'rad',
+    'Sensor #67_unit2': 'rad',
+
+    'Sensor #33': 'AccelX',
+    'Sensor #34': 'AccelY',
+    'Sensor #35': 'AccelZ',
+
+    'IMU': [
+        'Sensor #33',
+        'Sensor #34',
+        'Sensor #35',
+        'Sensor #36',
+        'Sensor #37',
+        'Sensor #38',
+        'Sensor #56',
+        'Sensor #57',
+        'Sensor #58',
+        'Sensor #59',
+        'Sensor #60',
+        'Sensor #61',
+        'Sensor #62',
+        'Sensor #63',
+        'Sensor #64',
+    ],
+    'Pressure': [
+        'Sensor #39',
+        'Sensor #17',
+        'Sensor #18',
+        'Sensor #19',
+        'Sensor #20',
+        'Sensor #21',
+        'Sensor #22',
+        'Sensor #23',
+        'Sensor #24',
+        'Sensor #25',
+        'Sensor #26',
+        'Sensor #27',
+        'Sensor #28',
+        'Sensor #29',
+        'Sensor #30',
+        'Sensor #31',
+        'Sensor #32'
+    ],
+    'Ride Height': [
+        'Sensor #50',
+        'Sensor #51'
+    ],
+    'Load Cell': [
+        'Sensor #9',
+        'Sensor #10',
+        'Sensor #11',
+        'Sensor #12'
+    ],
+    'Nose Pressure': [
+        'Sensor #46'
+    ],
+    'Rotor': [
+        'Sensor #5',
+        'Sensor #6',
+        'Sensor #7',
+        'Sensor #8'
+    ],
+    'Brake Pressure': [
+        'Sensor #45'
+    ],
+    'Wheel Speed': [
+        'Sensor #13',
+        'Sensor #14',
+        'Sensor #15',
+        'Sensor #16'
+    ],
+    'APPS': [
+        'Sensor #42'
+    ],
+    'Current Sensor': [
+        'Sensor #44'
+    ],
+    'GPS Velocity': [
+        'Sensor #61',
+        'Sensor #62',
+        'Sensor #63',
+    ],
+    'EKF Data': [
+        'Sensor #65',
+        'Sensor #66',
+        'Sensor #67'
+    ],
+    'Odometer Velocity': [
+        'Sensor #64'
+    ],
+    'SOC': [
+        'Sensor #43'
+    ],
+    'Thermistor': [
+        'Sensor #52',
+        'Sensor #53',
+    ],
+    'Shock Pot': [
+        'Sensor #1',
+        'Sensor #2',
+        'Sensor #3',
+        'Sensor #4'
+    ],
+    'Steer Linear Pot': [
+        'Sensor #40'
+    ],
+    'Steer Rotary Pot': [
+        'Sensor #41'
+    ]
 };
 
 module.exports = {
