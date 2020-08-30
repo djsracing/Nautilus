@@ -1,12 +1,12 @@
 const {remote, ipcRenderer, ipcMain} = require('electron');
 const {handleForm, mode, handleChangeMode, handleChangeTrackMap, handleSaveSession, handleNewSession, handleConnectToCloud, handleDisconnectToCloud} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
-var {config, trackMap, connectedToCloud, connectedToSer, cloudURL, serPortName} = remote.getGlobal('sharedObj');
+var {config, trackMap, connectedToCloud, connectedToSer, cloudURL, serPortName, globalMap} = remote.getGlobal('sharedObj');
 
 const submitFormButton = document.querySelector("#portForm");
 const responseParagraph = document.getElementById('response');
 const slideButton = document.querySelector("#slideBtn");
-const connectToCloudForm = document.querySelector("#cloudForm")
+const connectToCloudForm = document.querySelector("#cloudForm");
 
 var time_step = 1;
 
@@ -275,6 +275,7 @@ $('#resetTrackMap').click(function() {
 $("#saveTrackMap").click(function() {
     switchToTrackMapping = false;
     trackMap = map;
+    globalMap = map;
     trackMapInitialized = true;
     handleChangeTrackMap(currentWindow, map);
 });

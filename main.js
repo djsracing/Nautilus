@@ -17,6 +17,7 @@ if(systemPreferences.isDarkMode()){
 }
 
 let session;
+let globalMap = [];
 let d;
 let sessionTimestamp;
 let currentIdx;
@@ -47,7 +48,8 @@ const _sharedObj = {config:config,
                     cloudURL:cloudURL, 
                     connectedToCloud:connectedToCloud, 
                     connectedToSer:connectedToSer, 
-                    serPortName:serPortName
+                    serPortName:serPortName,
+                    globalMap:globalMap
 };
 
 global.sharedObj = _sharedObj;
