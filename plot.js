@@ -1,19 +1,29 @@
 const {remote, ipcRenderer} = require('electron');
-const {handleForm, mode, handleChangeMode} = remote.require('./main');
+const {handleForm, mode, handleChangeMode, handleConnectToCloud, handleDisconnectToCloud} = remote.require('./main');
+var {config, trackMap, connectedToCloud, connectedToSer, cloudURL, serPortName, globalMap} = remote.getGlobal('sharedObj');
 const currentWindow = remote.getCurrentWindow();
 
-const submitFormButton = document.querySelector("#portForm");
-const responseParagraph = document.getElementById('response');
 const renderGraphsButton = document.querySelector('#renderGraphsBtn');
-const submitMapButton = document.querySelector("#submit_map");
+const connectToCloudForm = document.querySelector("#cloudForm");
+
+var charge_data = [];
+var rpm_data = [];
+var length = 0;
+
+function initPage() {
+  chart.updateSeries([{
+    data:globalMap
+  }]);
+}
+
+initPage();
 
 $(document).ready(async function(){
-  // var {mode} = remote.require('./main');
-  // App.init();
   if(mode=='light') {
       $('#mode').attr('value','Switch To Night Mode');
       $('link#plugins').attr('href','assets/css/plugins-light.css');
       $('link#dash').attr('href','assets/css/dashboard/dash_2-light.css');
+      $('link#modals').attr('href','assets/css/components/custom-modal-light.css');
   }
   
   const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -42,11 +52,13 @@ $(document).ready(async function(){
       $('#mode').attr('value','Switch To Day Mode')
       $('link#plugins').attr('href','assets/css/plugins-dark.css');
       $('link#dash').attr('href','assets/css/dashboard/dash_2-dark.css');
+      $('link#modals').attr('href','assets/css/components/custom-modal-dark.css');
       handleChangeMode(currentWindow, 'dark');
     }else {
       $('#mode').attr('value','Switch To Night Mode');
       $('link#plugins').attr('href','assets/css/plugins-light.css');
       $('link#dash').attr('href','assets/css/dashboard/dash_2-light.css');
+      $('link#modals').attr('href','assets/css/components/custom-modal-light.css');
       handleChangeMode(currentWindow, 'light');
     }
     await delay(800);
@@ -63,17 +75,6 @@ var portToggle = false;
 // Decide whether to render graphs
 var renderGraphs = true;
 
-submitFormButton.addEventListener("submit", function(event){
-        event.preventDefault();   // stop the form from submitting
-        let port_name = document.getElementById("port_input").value;
-        // console.log(port_name)
-        handleForm(currentWindow, port_name)
-});
-
-ipcRenderer.on('form-received', function(event, args){
-  responseParagraph.innerHTML = "Connected to " + args;
-});
-
 ipcRenderer.on('action-port', function(event, args) {
   if(!portToggle) {
     document.getElementById("portContainer").setAttribute("class", "nav-item dropdown user-profile-dropdown order-lg-0 order-1 show")
@@ -89,7 +90,6 @@ ipcRenderer.on('action-port', function(event, args) {
 })
 
 renderGraphsButton.addEventListener('change', function(event) {
-  // console.log(submitFormButton.checked + ' boi');
   event.preventDefault();
   if(!this.checked) {
     renderGraphs = false;
@@ -98,28 +98,90 @@ renderGraphsButton.addEventListener('change', function(event) {
   }
 });
 
-ipcRenderer.on('ser-data', function (event,data) {
-  // if(renderGraphs) {
-    //Update acceleration chart
-    chart1.updateSeries([{
+ipcRenderer.on('ser-data', function (event, data) {
+  if(renderGraphs) {
+    //Update GG Plot
+    chart1.appendSeries([{
       name: 'AccelX',
-      data: data.slice(0, -10),
-    }, {
-        name: 'AccelY',
-        data: data.slice(0, -10),
+      data: [data[0], data[1]],
     }]);
 
     // Update state of charge chart
+    charge_data.push(data[2]);
+    rpm_data.push(data[3]);
+    length++;
+
+    if(length > 60 * 5) {
+      charge_data.shift();
+    }
+    if(length > 60 * 5) {
+      rpm_data.shift();
+      length = 0;
+    }
     d_2C_2.updateSeries([{
       name: 'Charge %',
-      data: data.slice(0, -10),
+      data: charge_data,
     }]);
 
     // Updatee Motor RPM chart
     d_2C_1.updateSeries([{
       name: 'RPM',
-      data: data.slice(0,-10),
+      data: rpm_data,
     }]);
-  // } 
-  responseParagraph.innerHTML = data;
+    
+    $("#brakePressure").attr('style', 'width:'+eval(data[10]*10)+'%');
+    $("#steeringAngle").attr('style', 'width:'+eval(data[11]*10)+'%');
+    $("#cellTemp").attr('style', 'width:'+eval(data[12]*10)+'%');
+  }
+});
+
+connectToCloudForm.addEventListener('submit', async function(event) {
+  event.preventDefault();
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+  var btn = document.getElementById("cloudConnectBtn");
+  connectToCloudForm.cloudFormSubmitBtn.disabled = true;
+  var cloud_url = document.getElementById("basic-url").value;
+
+  if(btn.value === "disconnected") {
+      $.get('http://' + cloud_url).done(function () {
+          handleConnectToCloud(currentWindow, cloud_url);
+          responseParagraph.innerHTML = "Connected to AWS.";
+          $("#cloudConnectBtn").attr('class', 'btn btn-danger mt-2 mb-2 btn-block')
+          btn.innerHTML = "Disconnect";
+          btn.value = "connected";
+          connectToCloudForm.cloudFormSubmitBtn.disabled = false;
+        }).fail(async function () {
+              $("#response").attr("style", "color:#e7515a");
+              responseParagraph.innerHTML = "Please provide a valid URL.";
+              await delay(1000);
+              responseParagraph.innerHTML = "";
+              $("#response").attr("style", "color:white");
+              connectToCloudForm.cloudFormSubmitBtn.disabled = false;
+        });
+  }else {
+      $("#cloudConnectBtn").attr('class', 'btn btn-primary mt-2 mb-2 btn-block')
+      handleDisconnectToCloud(currentWindow);
+      btn.innerHTML = "Connect";
+      responseParagraph.innerHTML = "";
+      btn.value = "disconnected";
+      connectToCloudForm.cloudFormSubmitBtn.disabled = false;
+  }
+});
+
+ipcRenderer.on('cloud-connection-success', function(event, args) {
+  Snackbar.show({
+      text: 'Connected',
+      actionTextColor: '#fff',
+      backgroundColor: '#8dbf42',
+      duration: 5000
+  });
+});
+
+ipcRenderer.on('cloud-connection-failed', function(event, args) {
+  Snackbar.show({
+      text: "Disconnected from the server.",
+      actionTextColor: '#fff',
+      backgroundColor: '#e2a03f',
+      duration: 5000
+  });
 });
