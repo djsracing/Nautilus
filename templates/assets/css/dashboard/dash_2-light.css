@@ -57,7 +57,7 @@
 }
 .widget-two .w-numeric-value .w-icon {
     display: inline-block;
-    background: #ffeccb;
+    background: '#009688';
     padding: 13px 12px;
     border-radius: 50%;
     display: inline-flex;
@@ -67,7 +67,7 @@
 }
 .widget-two .w-numeric-value svg {
     display: block;
-    color: #e2a03f;
+    color: #009688;
     width: 20px;
     height: 20px;
 }
