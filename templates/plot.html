@@ -17,6 +17,8 @@
     <link href="plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
     <link href="assets/css/dashboard/dash_2-dark.css" rel="stylesheet" type="text/css" id="dash"/>
+    <link href="assets/css/components/custom-modal-dark.css" rel="stylesheet" type="text/css" id="modals">
+    <link href="plugins/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css">
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 </head>
 <body class="alt-menu sidebar-noneoverflow" id="mainBody">
@@ -38,26 +40,15 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                     </a>
                     <div class="dropdown-menu position-absolute e-animated e-fadeInUp" aria-labelledby="userProfileDropdown" id="containerFadeIn">
-                        <div class="form-group" style="border-bottom: 1px solid white;">
-                            <p>COM Port <code></code></p>
-                            <form action="#" id="portForm">
-                                <input id="port_input" type="text" placeholder="Eg. COM4" class="form-control" required="">
-                                <input type="submit" class="mt-4 btn btn-primary success" id="submit_port">
-                            </form>
-                            &nbsp;
-                        </div>
-                        <p id="response"></p>
-                        <p>Render graphs</p>
+                        <button class="btn btn-primary mb-2" data-toggle="modal", data-target="#connectModal">Connect</button>
+                        <input type=button id="mode" text="Switch Mode" class="btn btn-primary" value="Switch To Day Mode" />
+                        <br>
+                        &nbsp;
+                        <p>Render Graphs</p>
                         <label class="switch s-primary  mb-4 mr-2">
                             <input type="checkbox" checked="" id="renderGraphsBtn">
                             <span class="slider round"></span>
                         </label>
-                        <input type=button id="mode" text="Switch Mode" class="btn btn-primary" value="Switch To Day Mode" />
-                        <!-- <select class="form-control  basic">
-                            <option selected="selected">orange</option>
-                            <option>white</option>
-                            <option>purple</option>
-                        </select> -->
                     </div>
                 </li>
             </ul>
@@ -163,9 +154,9 @@
                     <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
                         <div class="widget widget-chart-one">
                             <div class="widget-heading">
-                                <h5 class="">Acceleration</h5>
+                                <h5 class="">GG Plot</h5>
                                 <ul class="tabs tab-pills">
-                                    <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">60s</a></li>
+                                    <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">Tools</a></li>
                                 </ul>
                             </div>
 
@@ -228,13 +219,13 @@
                                         <div class="w-summary-details">
                                             
                                             <div class="w-summary-info">
-                                                <h6>Break Pressure (PSI)</h6>
-                                                <p class="summary-count"></p>
+                                                <h6>Break Pressure</h6>
+                                                <p class="summary-count">00</p>
                                             </div>
 
                                             <div class="w-summary-stats">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-gradient-secondary" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-gradient-secondary" id="brakePressure" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
 
@@ -250,12 +241,12 @@
                                             
                                             <div class="w-summary-info">
                                                 <h6>Steering Angle</h6>
-                                                <p class="summary-count">90°</p>
+                                                <p class="summary-count">00</p>
                                             </div>
 
                                             <div class="w-summary-stats">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-gradient-success" id="steeringAngle" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
 
@@ -271,12 +262,12 @@
                                             
                                             <div class="w-summary-info">
                                                 <h6>Cell Temperature</h6>
-                                                <p class="summary-count">80 °C</p>
+                                                <p class="summary-count">00</p>
                                             </div>
 
                                             <div class="w-summary-stats">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-gradient-warning" id="cellTemp" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
 
@@ -316,6 +307,49 @@
         <!--  END CONTENT AREA  -->
 
     </div>
+    <!-- Modal -->
+    <div class="modal fade login-modal" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h4 class="modal-title">Connect</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div class="modal-body">
+              <p>Cloud</p>
+              <form class="mt-0" id="cloudForm">
+                <div class="input-group mb-4">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon7">http://</span>
+                  </div>
+                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="example.com" required="">
+                </div>                  
+                <button type="submit" name="cloudFormSubmitBtn" class="btn btn-primary mt-2 mb-2 btn-block" id="cloudConnectBtn"  value="disconnected">
+                    Connect
+                </button>
+              </form>
+
+              <div class="division">
+                    <span>OR</span>
+              </div>
+              <p>COM Port</p>
+              <form class="mt-0" action="#" id="portForm">
+                <div class="input-group mb-4">
+                    <input id="port_input" type="text" placeholder="Eg. COM4" class="form-control" required="">
+                    <button type="submit" class="btn btn-primary mt-2 mb-2 btn-block" id="submit_port">Submit</button>
+                </div>
+              </form>
+              <p id="response"></p>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <div class="forgot login-footer">
+                  <span>Looking for help? <a href="./docs.html">Read the docs.</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <!-- END MAIN CONTAINER -->
     <!-- Electron Styles -->
     <style>
@@ -329,6 +363,7 @@
     <script>require('bootstrap');</script>
     <script src="plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="assets/js/app.js"></script>
+    <script src="plugins/notification/snackbar/snackbar.min.js"></script>
     <script>
         $(document).ready(function() {
             App.init();
