@@ -15,9 +15,11 @@
     
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
-    <link rel="stylesheet" type="text/css" href="plugins/jquery-step/jquery.steps.css">
+    <link rel="stylesheet" type="text/css" href="plugins/jquery-step/jquery.steps-dark.css" id="steps">
     <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min-dark.css" id="select2"/>
-    <link rel="stylesheet" type="text/css" href="plugins/bootstrap-select/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="plugins/bootstrap-select/bootstrap-select.min.css" id="select2">
+    <link rel="stylesheet" type="text/css" href="plugins/animate/animate.css">
+    <link href="plugins/sweetalerts/sweetalert2-dark.min.css" rel="stylesheet" type="text/css" id="swal"/>
     <link href="plugins/file-upload/file-upload-with-preview-dark.min.css" rel="stylesheet" type="text/css" id="fileUpload">
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
@@ -237,7 +239,7 @@
                                                                 <br>
                                                                 <br>
                                                                 <p>Load Session (Optional)</p>
-                                                                <form id="loadSessionForm">
+                                                                <form id="sessionForm" onsubmit="return false;">
                                                                     <div class="custom-file-container" data-upload-id="myFirstImage">
                                                                         <label>Upload (Single File) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                                                         <label class="custom-file-container__custom-file">
@@ -247,18 +249,21 @@
                                                                         </label>
                                                                         <div class="custom-file-container__image-preview" hidden></div>
                                                                     </div>
-                                                                    <input type="submit" class="mt-4 btn btn-primary success" id="loadSessionBtn"/>
+                                                                    <button type="submit" onclick="clickConnect(event)" class="mt-4 btn btn-primary success" id="loadSessionBtn">Submit</button>
                                                                 </form>
+                                                                <script>
+                                                                    function clickConnect(event) {
+                                                                        event.preventDefault();
+                                                                        if(document.getElementById('fileNameField').files[0] == undefined)
+                                                                          return false;
+                                                                        clickCallback(document.getElementById('fileNameField').files[0].path);
+                                                                    }
+                                                                </script>
                                                             </section>
                                                             <h3>Analyse</h3>
                                                             <section>
                                                                 <select class="placeholder js-states form-control" id="lapSelect">
                                                                     <option value="0">Select a Lap</option>
-                                                                    <option value="1">Lap 1</option>
-                                                                    <option value="2">Lap 2</option>
-                                                                    <option value="3">Lap 3</option>
-                                                                    <option value="4">Lap 4</option>
-                                                                    <option value="5">Lap 5</option>
                                                                 </select>
                                                                 <br>
                                                                 <br>
@@ -310,17 +315,19 @@
     </script>
     <script src="assets/js/custom.js"></script>
     <script src="plugins/apex/apexcharts.min.js"></script>
+    <script src="plugins/blockui/jquery.blockUI.min.js"></script>
+    <script src="plugins/jquery-step/jquery.steps.min.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL ELECTRON SCRIPTS -->
     <script src="../analysis.js"></script>
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="plugins/jquery-step/jquery.steps.min.js"></script>
     <script src="plugins/select2/custom-select2.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="plugins/file-upload/file-upload-with-preview.min.js"></script>
+    <script src="plugins/blockui/custom-blockui.js"></script>
     <script>
         $("#example-basic").steps({
             headerTag: "h3",
@@ -328,9 +335,39 @@
             transitionEffect: "slideLeft",
             autoFocus: true,
             cssClass: 'pill wizard',
-            onStepChanging: function (event, currentIndex, newIndex) {
+            onStepChanging: async function (event, currentIndex, newIndex) {
                 if (newIndex > currentIndex) {
+                    let color;
+                    let renderMessage;
+                    if($('link#plugins').attr('href')=="assets/css/plugins-light.css"){
+                        color = '#fff';
+                        renderMessage = '<p style="font-color:black">Rendering Graphs<p><br><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader spin"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>';
+                    }else {
+                        color = '#1b2024';
+                        renderMessage =  'Rendering Graphs<br><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader spin"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>';
+                    }
+                    $.blockUI({
+                        message: renderMessage,
+                        fadeIn: 400, 
+                        // timeout: 2000, //unblock after 2 seconds
+                        overlayCSS: {
+                            backgroundColor: color,
+                            opacity: 0.9,
+                            zIndex: 1200,
+                            cursor: 'auto'
+                        },
+                        css: {
+                            border: 0,
+                            color: '#fff',
+                            zIndex: 1201,
+                            padding: 0,
+                            backgroundColor: 'transparent'
+                        }
+                    });
+                    const delay = ms => new Promise(res => setTimeout(res, ms));
+                    await delay(500);
                     drawCharts(1);
+                    $.unblockUI({});
                 }
                 return true;
             }
@@ -345,8 +382,38 @@
             allowClear: false
         });
 
-        $("#lapSelect").on('change', function(){
+        $("#lapSelect").on('change', async function(){
+            let color;
+            let renderMessage;
+            if($('link#plugins').attr('href')=="assets/css/plugins-light.css"){
+                color = '#fff';
+                renderMessage = '<p style="font-color:black">Rendering Graphs<p><br><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader spin"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>';
+            }else {
+                color = '#1b2024';
+                renderMessage =  'Rendering Graphs<br><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader spin"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>';
+            }
+            $.blockUI({
+                message: renderMessage,
+                fadeIn: 400, 
+                // timeout: 2000, //unblock after 2 seconds
+                overlayCSS: {
+                    backgroundColor: color,
+                    opacity: 0.9,
+                    zIndex: 1200,
+                    cursor: 'auto'
+                },
+                css: {
+                    border: 0,
+                    color: '#fff',
+                    zIndex: 1201,
+                    padding: 0,
+                    backgroundColor: 'transparent'
+                }
+            });
+            const delay = ms => new Promise(res => setTimeout(res, ms));
+            await delay(500);
             drawCharts(this.value);
+            $.unblockUI({});
         });
         var firstUpload = new FileUploadWithPreview('myFirstImage');
     </script>
