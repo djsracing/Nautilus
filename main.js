@@ -16,7 +16,7 @@ if(systemPreferences.isDarkMode()){
     exports.mode = 'dark';
 }
 
-let session;
+let session = {};
 let globalMap = [];
 let d;
 let sessionTimestamp;
