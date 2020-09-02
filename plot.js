@@ -5,6 +5,7 @@ const currentWindow = remote.getCurrentWindow();
 
 const renderGraphsButton = document.querySelector('#renderGraphsBtn');
 const connectToCloudForm = document.querySelector("#cloudForm");
+const responseParagraph = document.getElementById('response');
 
 var charge_data = [];
 var rpm_data = [];
