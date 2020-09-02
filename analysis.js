@@ -2,19 +2,34 @@ const {remote, ipcRenderer} = require('electron');
 const {handleChangeMode, mode, requestSessionData} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
 var {config} = remote.getGlobal('sharedObj');
-var session;
+var {session} = remote.require('./main');
 var lapCount = 0;
 
 const loadSessionBtn = document.querySelector('#loadSessionBtn');
 
 var loadFromFile = false;
-var session;
 
 function clickCallback(path) {
   const fs = require('fs');
   const Swal = require('sweetalert2');
-  session = JSON.parse(fs.readFileSync(path, 'utf8'));
-  Swal.fire('Successful');
+  try{
+    session = JSON.parse(fs.readFileSync(path, 'utf8'));
+    if(session != null){
+      let nLaps = Object.keys(session).length;
+      for(let i = 0; i < nLaps; i++) {
+        let node = document.createElement("option");
+        node.setAttribute('value', eval(i + 1));
+        node.innerHTML = 'Lap ' + eval(i + 1);
+        document.getElementById("lapSelect").appendChild(node);
+      }
+    }else {
+      Swal.fire('Bad file format');
+      return;
+    }
+    Swal.fire('Successful');
+  }catch (e) {
+    Swal.fire('Bad file format');
+  }
 }
 
 let sline = {
@@ -131,14 +146,19 @@ let sline = {
 };
 
 function initPage() {
-  let nLaps = Object.keys(session).length;
-  for(let i = 0; i < nLaps; i++) {
-    let node = document.createElement("option");
-    node.setAttribute('value', eval(i + 1));
-    node.innerHTML = 'Lap ' + eval(i + 1);
-    document.getElementById("lapSelect").appendChild(node);
+  console.log(session);
+  if(session != null){
+    let nLaps = Object.keys(session).length;
+    for(let i = 0; i < nLaps; i++) {
+      let node = document.createElement("option");
+      node.setAttribute('value', eval(i + 1));
+      node.innerHTML = 'Lap ' + eval(i + 1);
+      document.getElementById("lapSelect").appendChild(node);
+    }
   }
 }
+
+initPage();
 
 function drawCharts(lap) {
   session = requestSessionData(currentWindow);
