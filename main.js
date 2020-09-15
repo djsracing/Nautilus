@@ -353,8 +353,6 @@ function autoSaveSession() {
     }
 }
 
-// setInterval(autoSaveSession, 60000);
-
 exports.handleChangeSessionPath = function handleChangeSessionPath(targetWindow, pathName) {
     sessionSavePath = pathName;
     if(process.platform == 'darwin' || process.platform == 'linux') {

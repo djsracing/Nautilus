@@ -2,8 +2,6 @@ const {remote, ipcRenderer, currentWindow} = require('electron');
 const {handleChangeMode, mode} = remote.require('./main');
 
 $(document).ready(async function(){
-    // var {mode} = remote.require('./main');
-    // App.init();
     if(mode=='light') {
         $('#mode').attr('value','Switch To Night Mode');
         $('link#plugins').attr('href','assets/css/plugins-light.css');
