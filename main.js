@@ -1,7 +1,7 @@
 // Imports
 const {config} = require('./config');
 
-const {app, BrowserWindow, Menu, ipcMain, systemPreferences} = require('electron');
+const {app, BrowserWindow, Menu, ipcMain, nativeTheme} = require('electron');
 const window = require('electron').BrowserWindow;
 const path = require('path');
 const fs = require('fs');
@@ -12,7 +12,7 @@ exports.mode = 'light';
 exports.savePath = app.getPath('documents');
 exports.appConfigPath = app.getPath('userData');
 
-if(systemPreferences.isDarkMode()){
+if(nativeTheme.shouldUseDarkColors()){
     exports.mode = 'dark';
 }
 
