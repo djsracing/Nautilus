@@ -12,7 +12,7 @@ exports.mode = 'light';
 exports.savePath = app.getPath('documents');
 exports.appConfigPath = app.getPath('userData');
 
-if(nativeTheme.shouldUseDarkColors()){
+if(nativeTheme.shouldUseDarkColors){
     exports.mode = 'dark';
 }
 
