@@ -7,8 +7,6 @@ var lapCount = 0;
 
 const loadSessionBtn = document.querySelector('#loadSessionBtn');
 
-var loadFromFile = false;
-
 function clickCallback(path) {
   const fs = require('fs');
   const Swal = require('sweetalert2');
@@ -146,7 +144,6 @@ let sline = {
 };
 
 function initPage() {
-  console.log(session);
   if(session != null){
     let nLaps = Object.keys(session).length;
     for(let i = 0; i < nLaps; i++) {
@@ -158,16 +155,13 @@ function initPage() {
   }
 }
 
-initPage();
-
 function drawCharts(lap) {
-  session = requestSessionData(currentWindow);
+  // session = requestSessionData(currentWindow);
   if(lap == 0 || session[lap] == undefined)
     return;
 
   let sensorSelected = $("#sensors").val();
-  // console.log(session);
-  // let charts = [];
+  console.log('Lap chosen: ' + lap + 'Session: ' + session);
 
   let counter = 0;
   document.getElementById("mapDiv").innerHTML = '';
@@ -207,6 +201,8 @@ function drawCharts(lap) {
     // charts[i].render();
   // }
 }
+
+initPage();
 
 $(document).ready(async function(){
     initPage();
