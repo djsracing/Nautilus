@@ -19,8 +19,7 @@ Nautilus is a cross-platform visualization tool for sensor data in serial form.
     </li>
 </ul>
 
-Main GUI is based on <a href="https://themeforest.net/item/cork-responsive-admin-dashboard-template/25582188" > Cork Admin Template </a>
-(<a href="https://www14.zippyshare.com/v/rxtwUuAS/file.html">Download link</a> - do not distribute!).
+Main GUI is based on <a href="https://themeforest.net/item/cork-responsive-admin-dashboard-template/25582188" > CORK Admin Template.
 
 ***
 ### Download links
@@ -67,3 +66,5 @@ A new directory will be created in ```/release_builds``` that contains the compi
       |__ ...
 ```
 ***
+### TODO
+- Add experimental support for ROS simulations.
