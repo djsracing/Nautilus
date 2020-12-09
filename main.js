@@ -6,6 +6,14 @@ const window = require('electron').BrowserWindow;
 const path = require('path');
 const fs = require('fs');
 
+if (require('electron-squirrel-startup')) return;
+
+// this should be placed at top of main.js to handle setup events quickly
+if (handleSquirrelEvent(app)) {
+    // squirrel event handled and app will exit in 1000ms, so don't do anything else
+    return;
+}
+
 // Set exports
 exports.mode = 'light';
 
@@ -87,7 +95,7 @@ app.on('ready', function() {
         },
         width: 800,
         height:700,
-        icon: __dirname + '/templates/assets/img/djsr.png'
+        icon: __dirname + '/templates/assets/img/Nautilus.ico'
     });
     // Load html into window
     let url = require('url');
@@ -103,9 +111,6 @@ app.on('ready', function() {
     });
 
     mainWindow.on('closed', function() {
-        let fs = require('fs');
-        let mkdirp = require('mkdirp');
-
         try{
             socket.disconnect();
         }catch (err) {
@@ -113,6 +118,7 @@ app.on('ready', function() {
         }
 
         try {
+            let mkdirp = require('mkdirp');
             var tempPath = sessionSavePath + sessionTimestamp + '.json'
             mkdirp(sessionSavePath);
             fs.writeFileSync(tempPath, JSON.stringify(session));
@@ -120,8 +126,15 @@ app.on('ready', function() {
             console.log(err);
             console.log("Couldn't save session.");
         }
-        mkdirp(path.join(exports.appConfigPath, './config.json'));
-        fs.writeFileSync(path.join(exports.appConfigPath, './config.json'), JSON.stringify(global.sharedObj.config));
+
+        console.log('Saving to: ', path.join(exports.appConfigPath, './config.json'))
+        fs.writeFile(path.join(app.getPath('userData'), './config.json'),
+                     JSON.stringify(global.sharedObj.config),
+                     { flag: 'w' }, 
+                     (err) => {
+                        console.log(err)
+                     }
+        );
     });
 
     // Build menu from template
@@ -396,3 +409,53 @@ exports.requestSessionData = function requestSessionData(targetWindow) {
     // targetWindow.send('session-data-sent', session);
     return session;
 }
+
+function handleSquirrelEvent(application) {
+    if (process.argv.length === 1) {
+    return false;
+    }
+    const ChildProcess = require('child_process');
+    const path = require('path');
+    const appFolder = path.resolve(process.execPath, '..');
+    const rootAtomFolder = path.resolve(appFolder, '..');
+    const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
+    const exeName = path.basename(process.execPath);
+    const spawn = function(command, args) {
+    let spawnedProcess, error;
+    try {
+    spawnedProcess = ChildProcess.spawn(command, args, {
+    detached: true
+    });
+    } catch (error) {}
+    return spawnedProcess;
+    };
+    const spawnUpdate = function(args) {
+    return spawn(updateDotExe, args);
+    };
+    const squirrelEvent = process.argv[1];
+    switch (squirrelEvent) {
+    case '--squirrel-install':
+    case '--squirrel-updated':
+    // Optionally do things such as:
+    // - Add your .exe to the PATH
+    // - Write to the registry for things like file associations and
+    //   explorer context menus
+    // Install desktop and start menu shortcuts
+    spawnUpdate(['--createShortcut', exeName]);
+    setTimeout(application.quit, 1000);
+    return true;
+    case '--squirrel-uninstall':
+    // Undo anything you did in the --squirrel-install and
+    // --squirrel-updated handlers
+    // Remove desktop and start menu shortcuts
+    spawnUpdate(['--removeShortcut', exeName]);
+    setTimeout(application.quit, 1000);
+    return true;
+    case '--squirrel-obsolete':
+    // This is called on the outgoing version of your app before
+    // we update to the new version - it's the opposite of
+    // --squirrel-updated
+    application.quit();
+    return true;
+    }
+    };
