@@ -1,4 +1,6 @@
 /node_modules
-/release-builds
+/Nautilus-win32-x64
+/Nautilus-installers
+/builds
 /.vscode/launch.json
 package-lock.json
