@@ -1,11 +1,13 @@
 const {remote, ipcRenderer} = require('electron');
-const {handleChangeMode, mode, requestSessionData} = remote.require('./main');
+const {handleChangeMode, requestSessionData} = remote.require('./main');
+var {mode} = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
 var {config} = remote.getGlobal('sharedObj');
 var {session} = remote.require('./main');
 var lapCount = 0;
 
 const loadSessionBtn = document.querySelector('#loadSessionBtn');
+var selectedLap = 0;
 
 function clickCallback(path) {
   const fs = require('fs');
@@ -30,119 +32,6 @@ function clickCallback(path) {
   }
 }
 
-let sline = {
-  chart: {
-    height: 400,
-    type: 'line',
-    zoom: {
-      enabled: true
-    },
-    toolbar: {
-      show: true,
-    },
-    dropShadow: {
-      enabled: true,
-      opacity: 0.2,
-      blur: 5,
-      left: -7,
-      top: 17
-    },
-    foreColor: '#ededed'
-  },
-  colors: ['#1b55e2', '#e7515a'],
-  markers: {
-      discrete: [{
-      seriesIndex: 0,
-      dataPointIndex: 7,
-      fillColor: '#000',
-      strokeColor: '#000',
-      size: 5
-    }, {
-      seriesIndex: 2,
-      dataPointIndex: 11,
-      fillColor: '#000',
-      strokeColor: '#000',
-      size: 4
-    }]
-  },
-  stroke: {
-    curve: 'smooth',
-    width: 1,
-    lineCap: 'round'
-  },
-  series: [{
-    name: undefined,
-    data: undefined
-  }],
-  title: {  
-      text: undefined,
-      align: 'left',
-      margin: 0,
-      offsetX: -10,
-      offsetY: 0,
-      floating: false,
-      style: {
-        fontSize: '15px',
-        color:  '#bfc9d4'
-      },
-  },
-  grid: {
-    show: false,
-    row: {
-      colors: ['#464B5D', 'transparent'], // takes an array which will be repeated on columns
-      opacity: 0.5
-    },
-  },
-  xaxis: {
-    type: 'numeric',
-    labels: {
-      show: true,
-      format: 'fff',
-      tickAmount: undefined
-    },
-    title: {
-      text: 'Time'
-    }
-  },
-  yaxis: {
-    title: {
-      text: 'Value'
-    }
-  },
-  legend: {
-      position: 'top',
-      horizontalAlign: 'right',
-      offsetY: -50,
-      fontSize: '16px',
-      fontFamily: 'Nunito, sans-serif',
-      markers: {
-        width: 10,
-        height: 10,
-        strokeWidth: 0,
-        strokeColor: '#fff',
-        fillColors: undefined,
-        radius: 12,
-        onClick: undefined,
-        offsetX: 0,
-        offsetY: 0
-      },    
-      itemMargin: {
-        horizontal: 0,
-        vertical: 20
-      }
-  },
-  tooltip: {
-      enabled: true,
-      theme: 'dark',
-      marker: {
-        show: true,
-      },
-      x: {
-        show: true,
-      }
-  },
-};
-
 function initPage() {
   if(session != null){
     let nLaps = Object.keys(session).length;
@@ -156,12 +45,12 @@ function initPage() {
 }
 
 function drawCharts(lap) {
+  selectedLap = lap;
   // session = requestSessionData(currentWindow);
-  if(lap == 0 || session[lap] == undefined)
+  if(lap == 0 || session == undefined || session[lap] == undefined)
     return;
 
   let sensorSelected = $("#sensors").val();
-  console.log('Lap chosen: ' + lap + 'Session: ' + session);
 
   let counter = 0;
   document.getElementById("mapDiv").innerHTML = '';
@@ -182,6 +71,128 @@ function drawCharts(lap) {
         data.push([interval, session[lap][k][indx - 1] * 1.03]);
         interval += 0.2;
       }
+
+      let sline = {
+        chart: {
+          height: 400,
+          type: 'line',
+          zoom: {
+            enabled: true
+          },
+          toolbar: {
+            show: true,
+          },
+          dropShadow: {
+            enabled: true,
+            opacity: 0.2,
+            blur: 5,
+            left: -7,
+            top: 17
+          },
+          foreColor: '#ededed'
+        },
+        colors: ['#1b55e2', '#e7515a'],
+        markers: {
+            discrete: [{
+            seriesIndex: 0,
+            dataPointIndex: 7,
+            fillColor: '#000',
+            strokeColor: '#000',
+            size: 5
+          }, {
+            seriesIndex: 2,
+            dataPointIndex: 11,
+            fillColor: '#000',
+            strokeColor: '#000',
+            size: 4
+          }]
+        },
+        stroke: {
+          curve: 'smooth',
+          width: 1,
+          lineCap: 'round'
+        },
+        series: [{
+          name: undefined,
+          data: undefined
+        }],
+        title: {  
+            text: undefined,
+            align: 'left',
+            margin: 0,
+            offsetX: -10,
+            offsetY: 0,
+            floating: false,
+            style: {
+              fontSize: '15px',
+              color:  (mode == 'dark') ? '#bfc9d4' : '#000000'
+            },
+        },
+        grid: {
+          show: false,
+          row: {
+            colors: ['#464B5D', 'transparent'], // takes an array which will be repeated on columns
+            opacity: 0.5
+          },
+        },
+        xaxis: {
+          type: 'numeric',
+          labels: {
+            show: true,
+            format: 'fff',
+            tickAmount: undefined,
+            style: {colors: Array(data.length).fill((mode == 'dark') ? '#fff' : '#000000')}
+          },
+          title: {
+            text: 'Time',
+            style: {color: (mode == 'dark') ? '#fff' : '#000000'}
+          }
+        },
+        yaxis: {
+          labels: {
+            show: true,
+            format: 'fff',
+            tickAmount: undefined,
+            style: {colors: Array(data.length).fill((mode == 'dark') ? '#fff' : '#000000')}
+          },
+          title: {
+            text: 'Value',
+            style: {color: (mode == 'dark') ? '#fff' : '#000000'}
+          }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'right',
+            offsetY: -50,
+            fontSize: '16px',
+            fontFamily: 'Nunito, sans-serif',
+            markers: {
+              width: 10,
+              height: 10,
+              strokeWidth: 0,
+              strokeColor: (mode == 'dark') ? '#fff' : '#000000',
+              fillColors: undefined,
+              radius: 12,
+              onClick: undefined,
+              offsetX: 0,
+              offsetY: 0
+            },    
+            itemMargin: {
+              horizontal: 0,
+              vertical: 20
+            }
+        },
+        tooltip: {
+            enabled: true,
+            theme: (mode == 'dark')? 'dark' : 'light',
+            marker: {
+              show: true,
+            },
+            x: {
+              show: true,
+            }
+        },
+      };
 
       sline.series[0].name = config[sensors[j] + '_unit1'];
       sline.series[0].data = data;
@@ -245,6 +256,7 @@ $(document).ready(async function(){
             $('link#steps').attr('href','plugins/jquery-step/jquery.steps-dark.css');
             $('link#fileUpload').attr('href','plugins/file-upload/file-upload-with-preview-dark.min.css');
             handleChangeMode(currentWindow, 'dark');
+            mode = 'dark';
         }else {
             $('#mode').attr('value','Switch To Night Mode');
             $('link#plugins').attr('href','assets/css/plugins-light.css');
@@ -253,7 +265,9 @@ $(document).ready(async function(){
             $('link#steps').attr('href','plugins/jquery-step/jquery.steps-light.css');
             $('link#fileUpload').attr('href','plugins/file-upload/file-upload-with-preview-light.min.css');
             handleChangeMode(currentWindow, 'light');
+            mode = 'light';
         }
+        drawCharts(selectedLap);
         await delay(800);
         var load_screen = document.getElementById("load_screen");
         load_screen.parentNode.removeChild(load_screen);
