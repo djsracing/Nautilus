@@ -46,7 +46,7 @@ function initPage() {
 
 function drawCharts(lap) {
   selectedLap = lap;
-  // session = requestSessionData(currentWindow);
+
   if(lap == 0 || session == undefined || session[lap] == undefined)
     return;
 
@@ -203,14 +203,11 @@ function drawCharts(lap) {
         document.querySelector("#mapSubDiv" + eval(counter)),
         sline
       );
-      // charts.push(chart);
+
       counter++;
       chart.render();
     }
   }
-  // for(let i = 0, len = charts.length; i < len; i++) {
-    // charts[i].render();
-  // }
 }
 
 initPage();

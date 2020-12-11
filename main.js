@@ -406,7 +406,6 @@ exports.handleChangeTrackMap = function handleChangeTrackMap(targetWindow, map) 
 }
 
 exports.requestSessionData = function requestSessionData(targetWindow) {
-    // targetWindow.send('session-data-sent', session);
     return session;
 }
 
