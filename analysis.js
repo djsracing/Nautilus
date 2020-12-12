@@ -1,3 +1,4 @@
+const { Console } = require('console');
 const {remote, ipcRenderer} = require('electron');
 const {handleChangeMode, requestSessionData} = remote.require('./main');
 var {mode} = remote.require('./main');
@@ -7,6 +8,7 @@ var {session} = remote.require('./main');
 var lapCount = 0;
 
 const loadSessionBtn = document.querySelector('#loadSessionBtn');
+var loadFromFile = false;
 var selectedLap = 0;
 
 function clickCallback(path) {
@@ -27,6 +29,7 @@ function clickCallback(path) {
       return;
     }
     Swal.fire('Successful');
+    loadFromFile = true;
   }catch (e) {
     Swal.fire('Bad file format');
   }
@@ -35,6 +38,7 @@ function clickCallback(path) {
 function initPage() {
   if(session != null){
     let nLaps = Object.keys(session).length;
+    document.getElementById("lapSelect").innerHTML = '';
     for(let i = 0; i < nLaps; i++) {
       let node = document.createElement("option");
       node.setAttribute('value', eval(i + 1));
@@ -46,6 +50,11 @@ function initPage() {
 
 function drawCharts(lap) {
   selectedLap = lap;
+
+  if(!loadFromFile) {
+    session = requestSessionData(currentWindow);
+    initPage();
+  }
 
   if(lap == 0 || session == undefined || session[lap] == undefined)
     return;
@@ -89,7 +98,7 @@ function drawCharts(lap) {
             left: -7,
             top: 17
           },
-          foreColor: '#ededed'
+          foreColor: (mode == 'dark') ? '#ededed' : '#000000'
         },
         colors: ['#1b55e2', '#e7515a'],
         markers: {
