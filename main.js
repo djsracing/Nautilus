@@ -229,6 +229,10 @@ exports.handleForm = function handleForm(targetWindow, com_port) {
                 exports.handleSaveSession(focusedWindow);
             }
 
+            if(session[currentIdx] == undefined) {
+                session[currentIdx] = []
+            }
+
             session[currentIdx].push(data);
 
             if(fetchDataFromSer) {
