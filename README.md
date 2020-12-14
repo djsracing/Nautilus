@@ -1,4 +1,20 @@
 # Nautilus
+<span style="display: inline-block;">
+
+[![Version](https://img.shields.io/badge/Version-1.0.0b-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+
+
+[![made-with-electron](https://img.shields.io/badge/Made%20with-Electron-1f425f.svg)](https://www.python.org/)
+
+[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://www.javascript.com/)
+
+</span>
+
+<div style="text-align:center">
+<img src="templates\assets\img\Nautilus.png" height="40%", width="40%"/>
+</div>
+
+
 
 Nautilus is a cross-platform visualization tool for sensor data in serial form.
 
