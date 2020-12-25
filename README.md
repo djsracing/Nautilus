@@ -7,11 +7,9 @@
 
 </span>
 
-<div style="text-align:center">
-<img src="templates\assets\img\Nautilus.png" height="40%", width="40%"/>
-</div>
-
-
+<p align="center">
+  <img src="templates\assets\img\Nautilus.png" height="40%", width="40%">
+</p>
 
 Nautilus is a cross-platform visualization tool for sensor data in serial form.
 
