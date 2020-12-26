@@ -15,7 +15,6 @@ const loadConfigButton = document.querySelector("#loadConfigForm");
 const choosePathButton = document.querySelector("#choosePathBtn");
 
 $(document).ready(async function(){
-    // var {mode} = remote.require('./main');
     if(mode=='light') {
         $('#mode').attr('value','Switch To Night Mode');
         $('link#plugins').attr('href','assets/css/plugins-light.css');

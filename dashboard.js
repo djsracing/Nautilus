@@ -118,7 +118,6 @@ function initPage() {
 initPage();
 
 // Since the buttons are active
-// renderGraphsButton.checked = true;
 slideButton.checked = true;
 
 // Stores the current state of COM Port toggle
