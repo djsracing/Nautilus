@@ -157,7 +157,6 @@ ipcRenderer.on('reset-success', function(event, args) {
 loadConfigButton.addEventListener('submit', function(event) {
     event.preventDefault();
     let fileName = document.getElementById('fileNameField').files[0].path;
-    // console.log(fileName);
     handleLoadConfig(currentWindow, fileName);
 });
 
