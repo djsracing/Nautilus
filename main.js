@@ -88,7 +88,6 @@ var socket;
 app.on('ready', function() {
 
     mainWindow = new BrowserWindow({
-        // frame:false,
         webPreferences: {
             // Enable Node.js integration
             nodeIntegration: true,
