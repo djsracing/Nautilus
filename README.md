@@ -38,7 +38,7 @@ Main GUI is based on <a href="https://themeforest.net/item/cork-responsive-admin
 You can download the latest version of Nautilus for Windows, macOS and Debian based systems (Ubuntu, mint, etc.) from the <a href="https://github.com/djsracing/Nautilus/releases">releases page</a>.
 
 ***
-### Build from source
+### Run the app
 
 ```
 git clone
@@ -46,9 +46,6 @@ cd Nautilus
 npm install
 npm start
 ```
-
-A new directory will be created in ```/release_builds``` that contains the compiled binaries.
-
 
 ***
 ### Directory structure
