@@ -44,7 +44,7 @@ You can download the latest version of Nautilus for Windows, macOS and Debian ba
 git clone
 cd Nautilus
 npm install
-npm run package-win      # package-mac, package-linux for others
+npm start
 ```
 
 A new directory will be created in ```/release_builds``` that contains the compiled binaries.
