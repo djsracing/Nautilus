@@ -48,6 +48,13 @@ npm start
 ```
 
 ***
+### Package the app
+```
+npm run build
+node ./build.js
+```
+A new folder will be created which contains the installer files.
+***
 ### Directory structure
 
 ```
